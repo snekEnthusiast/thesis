@@ -1,0 +1,37 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=default] (0) at (-3, 13) {};
+		\node [style=default] (1) at (-3, 12) {};
+		\node [style=default] (2) at (-3, 11) {};
+		\node [style=default] (3) at (-3, 10) {};
+		\node [style=default] (4) at (-3, 9) {};
+		\node [style=default] (5) at (-3, 8) {};
+		\node [style=default] (6) at (-3, 7) {};
+		\node [style=deleted] (10) at (2, 10) {};
+		\node [style=none] (14) at (-4, 13) {4};
+		\node [style=none] (15) at (-4, 12) {4};
+		\node [style=none] (16) at (-4, 11) {4};
+		\node [style=none] (17) at (-4, 10) {4};
+		\node [style=none] (18) at (-4, 9) {4};
+		\node [style=none] (19) at (-4, 8) {4};
+		\node [style=none] (20) at (-4, 7) {4};
+		\node [style=none] (21) at (2.75, 10) {1};
+		\node [style=none] (22) at (2.75, 9) {2};
+		\node [style=none] (23) at (2.75, 8) {3};
+		\node [style=none] (24) at (2.75, 7) {4};
+		\node [style=none] (25) at (2.75, 11) {5};
+		\node [style=none] (26) at (2.75, 12) {6};
+		\node [style=none] (27) at (2.75, 13) {7};
+		\node [style=none] (28) at (-3.25, 6) {final degree};
+		\node [style=none] (29) at (2, 6) {arrival order};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (3) to (10);
+		\draw (1) to (10);
+		\draw (2) to (10);
+		\draw (4) to (10);
+		\draw (5) to (10);
+		\draw (6) to (10);
+		\draw [style=rtline] (0) to (10);
+	\end{pgfonlayer}
+\end{tikzpicture}

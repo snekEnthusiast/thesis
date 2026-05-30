@@ -1,0 +1,55 @@
+In this section we will introduce the classical smi-online model introduced by Kerp et al \cite{karp}
+
+Offline agents are vertices that belong to one anticlique and are always visible.
+Online agents are the vertices from the other anticlique and arrive in the online fashion.
+
+The adversary is oblivious as an adaptive adversary is trivial.
+\begin{remark}
+	No algorithm has a competitiveness asymptotically higher than $\frac{1}{2}$ against an adaptive adversary
+\end{remark}
+\begin{proof}
+Begin with $2n$ offline agents $V$ and $k=0,X_0=\emptyset$.\\
+Adversary repeats the following $n$ times: reveals an agent $u$ connected to $V\backslash X_k$. $k=k+1$, for some unmatched $v\in V; V_{k+1}=V_k\cup\{v\}$.\\
+Then adversary reveals $n$ agents $U'$ connected to already matched offline agents. The ultimate size of the matching is $n$.
+
+In the final graph (figure), all matched vertices $V'$ are connected to all online agents and all unmatched $v_i$ agents are connected to all $u_j$ such that $j\leq i$. Clearly, it is possible to match $v_i$ to $u_i$ and $V'$ to $U'$, forming a matching of size $2n$\\
+\end{proof}
+\begin{remark}
+	In the semi-online model, any deterministic algorithm has a competivineness no greater than $\frac{1}{2}$, there is a deterministic algorithm with competitiveness of $\frac{1}{2}$
+\end{remark}
+\begin{algorithm}
+	\caption{Naive}
+\begin{algorithmic}
+	\item on Arrival of vertex $v$: match it with any offline agent if available
+\end{algorithmic}
+\end{algorithm}
+\begin{proof}cannot
+	Trivially the competitiveness cannot be greater than $\frac{1}{2}$ as against a deterministic algorithm there is no difference between an adaptive and an oblivious adversary.
+
+	To prove that there is a deterministic algorithm with competitiveness of $\frac{1}{2}$ consider the a naive algorithm.
+	
+	for every $(u,v)\in E(G)$ either $u$ or $v$ is matched. Therefore at least half of all vertices that could be matched are matched, therefore the comptititveness isn't lower than $\frac{1}{2}$
+\end{proof}
+
+The main discovery of the Karp paper is the following algorithm
+
+\begin{algorithm}
+	\caption{Ranking}
+	\begin{algorithmic}
+		\item on Initialization: create a random permutation of the offline agents $\sigma$
+		\item on Arrival of vertex $v$: 
+	\end{algorithmic}
+\end{algorithm}
+
+as well as the following theorems
+
+\begin{theorem}
+	Ranking has asymptotic competitiveness of $1-\frac{1}{e}$
+\end{theorem}
+\begin{theorem}
+	No algorithm has asymptotic competitiveness higher than $1-\frac{1}{e}$
+\end{theorem}
+
+\subsection{Ranking Competitiveness}
+
+\subsection{Ranking Optimality}

@@ -1,0 +1,51 @@
+\documentclass{article}
+%tikz library setup
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\pgfdeclarelayer{nodelayer}
+\pgfdeclarelayer{edgelayer}
+\pgfsetlayers{edgelayer,nodelayer,main}
+\input{tikz/style.tikzstyles}
+%bibtex
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+\addbibresource{bib.bib}
+%other libraries
+\usepackage{graphicx}
+\usepackage[parfill]{parskip}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Theorems
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\numberwithin{remark}{section}
+\title{title}
+\author{Mikołaj Jachowicz}
+
+\begin{document}
+\begin{abstract}
+	\input{sections/abstract.tex}
+\end{abstract}
+
+\section{introduction}
+\input{sections/introduction.tex}
+
+\section{preliminaries}
+\input{sections/preliminaries.tex}
+
+\section{Semi-Online Model}
+\input{sections/classical.tex}
+
+\section{Final Degree Model}
+\input{sections/degree.tex}
+
+\printbibliography[]
+
+\end{document}
