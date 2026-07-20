@@ -19,25 +19,43 @@ sorting=ynt
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{amsthm}
+\usepackage{theoremref}
+\usepackage[skins]{tcolorbox}
 %Theorems
 \usepackage[english]{babel}
 \usepackage{csquotes}
 \newtheorem{theorem}{Theorem}
+\tcolorboxenvironment{theorem}{blanker,before skip=10pt,after skip=10pt}
 \newtheorem{remark}{Remark}
 \numberwithin{remark}{section}
+\tcolorboxenvironment{remark}{blanker,before skip=10pt,after skip=10pt}
+\newtheorem{lemma}{Lemma}
+\numberwithin{lemma}{section}
+\tcolorboxenvironment{lemma}{blanker,before skip=10pt,after skip=10pt}
+%maybe comment this out, it makes proofs non-breakable over pages
+\tcolorboxenvironment{proof}{blanker,before skip=10pt,after skip=10pt}
+
 \title{title}
 \author{Mikołaj Jachowicz}
 
+\relpenalty=10000
+\binoppenalty=10000
+\hyphenpenalty=10000 
+
 \begin{document}
+
+\input{newcommands.tex}
+
 \begin{abstract}
 	\input{sections/abstract.tex}
 \end{abstract}
 
-\section{introduction}
+\section{Introduction}
 \input{sections/introduction.tex}
 
-\section{preliminaries}
+\section{Preliminaries}
 \input{sections/preliminaries.tex}
 
 \section{Semi-Online Model}

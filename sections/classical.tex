@@ -1,7 +1,9 @@
-In this section we will introduce the classical smi-online model introduced by Kerp et al \cite{karp}
+In this section we will introduce the classical smi-online model introduced by Karp et al~\cite{karp}
 
+In this model the two anticliques of the bipartite graph are divided into offline and online agents.
 Offline agents are vertices that belong to one anticlique and are always visible.
 Online agents are the vertices from the other anticlique and arrive in the online fashion.
+When an online agent arrives edges incident to it are revealed.
 
 The adversary is oblivious as an adaptive adversary is trivial.
 \begin{remark}
@@ -23,7 +25,7 @@ In the final graph (figure), all matched vertices $V'$ are connected to all onli
 	\item on Arrival of vertex $v$: match it with any offline agent if available
 \end{algorithmic}
 \end{algorithm}
-\begin{proof}cannot
+\begin{proof}
 	Trivially the competitiveness cannot be greater than $\frac{1}{2}$ as against a deterministic algorithm there is no difference between an adaptive and an oblivious adversary.
 
 	To prove that there is a deterministic algorithm with competitiveness of $\frac{1}{2}$ consider the a naive algorithm.
@@ -37,7 +39,7 @@ The main discovery of the Karp paper is the following algorithm
 	\caption{Ranking}
 	\begin{algorithmic}
 		\item on Initialization: create a random permutation of the offline agents $\sigma$
-		\item on Arrival of vertex $v$: 
+		\item on Arrival of vertex $v$: match it with the first availible offline neighbor according to $\sigma$
 	\end{algorithmic}
 \end{algorithm}
 
@@ -50,6 +52,9 @@ as well as the following theorems
 	No algorithm has asymptotic competitiveness higher than $1-\frac{1}{e}$
 \end{theorem}
 
-\subsection{Ranking Competitiveness}
+for offline vertex $v$ $\sigma(v)$ is the rank of $v$
 
+\subsection{Ranking Competitiveness}
+	\input{sections/classical/rank_competitiveness.tex}
 \subsection{Ranking Optimality}
+	
