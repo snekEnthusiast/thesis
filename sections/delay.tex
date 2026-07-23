@@ -1,0 +1,20 @@
+In the Delay model the Algorithm ca wait a certain amount of time before matching a vertex
+
+\begin{theorem}
+	For delay no greater than $n/2$ any deterministic online algorithm has competitiveness of $0.5$
+\end{theorem}
+
+\begin{proof}
+	Consider the following graph $G$ (figure above): There are $k=n/2$ groups $\{Z_i|i\in[k]\}$. of two offline vertices\\
+	First, $k$ vertices $z_i^D$ arrive, each connected to both vertices of $Z_i$.\\
+	As $z_k^D$ arrives the cache is full, and $z_1^D$ has to be matched. Let the offline vertex it was matched to be $z_1^B$. Next, $z_1^C$ arrives, only connected to $z_1^B$, which is unmatchable. Let $z_1^A$ be the unmatched offline vertex.\\
+	After $z_1^A$ has arrived $z_2^D$ has to be matched. The procedure above is repeated until $z_k^C$ has arrived.\\
+	The perfect matching of $G$ connects all $z_i^A,z_i^D$ and $z_i^B,z_i^C$ pairs, while the algorithm connects only $z_i^B,z_i^D$ pairs, making the competitiveness $0.5$. The final graph is illustrated in the figure below.
+\end{proof}
+
+\begin{figure}[H]
+	\centering
+	\scalebox{.8}{\input{tikz/delay/deterministic_worst_case.tikz}}
+	\label{det-delay-figure}
+	\caption{Worst case scenario for a deterministic cache algorithm}
+\end{figure}

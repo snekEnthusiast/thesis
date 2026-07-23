@@ -1,1 +1,56 @@
-In this section we present a proof for Ranking Optimality (theorem 2) by \cite{fallback}
+In this section we present a proof for Ranking Optimality (theorem 2) by \cite{obmBound}. The main vehicle for this is Yao's lemma with a construction of a class of matching instances
+
+\begin{definition}
+	bipartite online matching instance $(n,\sigma)$ where $\sigma$ is a permutation of $[n]$ is constructed as follows:
+	\begin{itemize}
+		\item offline vertices are $f_i$ for $i\in[n]$
+		\item online vertices are $n_j$ for $j\in[n]$
+		\item $f_i,n_j$ are connected iff $i\leq j$
+		\item online vertices are repositioned according to $\sigma$ - $n_j$ becomes $n_{\sigma(j)}$ while preserving it's edges
+	\end{itemize}
+\end{definition}
+[figure]
+notice that perfect matching is achived only if $f_i$ is matched with $n_{\sigma(i)}$ for all $i\in[n]$\\
+The collection of all $n!$ $(n,\sigma)$ instances is $M$. $U(M)$ is the uniform distribution over $M$. $M^\star$ is $(n,(1,\dots,n))$, the original instance before permutation
+
+\begin{lemma}
+	\thlabel{dga-rga-equiv}
+	Let $\mathrm{DGA}$ be a greedy deterministic algorithm, $\mathrm{RGA}$ be randomized greedy algorithm that matches arriving vertices to random uniform availible offline vertices.\\
+	The expected performance of $\mathrm{DGA}$ on a random instance from $U(M)$ bounds the expected performance of $\mathrm{RGA}$ on $M^\star$\\
+	\[\underset{m\sim U(M)}{\mathbb{E}}[|\mathrm{DGA}(m)|]=\mathbb{E}[\mathrm{RGA}(M^\star)]\]
+\end{lemma}
+\begin{proof} To prove the lemma we first need to prove two cleims:\\
+	\begin{subtheorems}
+	\item[Claim 1] for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $M^\star$ if at time $t$ there are $k$ eligable offline vertices then they are equally likely to be any set of $k$ vertices among the last $n-t+1$ denominated $F(t)$
+	\item[Claim 2]  for each $k$ the probability that there are $k$ eligible offline vertices at time $t$, denominated $p_t$, is the same for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $M^\star$
+	\end{subtheorems}
+	Both claims are proven with induction on the 'step' of the algorithm - tha amount of online vertices that have already arrived. Note that induction base at step 0 is trivial since all offline vertices are eligible.
+	\begin{proof} of Claim 1\\
+		On step from time $t$ to $t+1$ $\mathrm{RGD}$ matches the arriving vertex randomly. Meanwhile $\mathrm{DGA}$ receives a random uniform vertex, and since it cannot view labels and is only dependent on the current eligibility set any eligible vertex is equally likely to be matched
+	\end{proof}
+	\begin{proof} of Claim 2\\
+		From Claim 1 we know that eligible sets are distributed uniformly.
+	\end{proof}
+	The lemma follows directly from claim 2 since after all vertices have arrived, the elegible vertices become unmatched and the size of the matching is $n-|\mathrm{unmatched}|$
+\end{proof}
+
+By using Yao's lemma we receive the following: for any algorithm $\mathrm{ALG}$
+\begin{equation}
+	|\mathrm{ALG}(M)|:=\underset{m\in M}{\min}\mathbb{E}[|\mathrm{ALG,m}|]\leq \underset{\mathrm{DALG}}{\max}\underset{m\sim U(M)}{\mathbb{E}}[|\mathrm{DALG}(m)|]=\mathbb{E}[|\mathrm{RGA}(M^\star)|]
+\end{equation}
+
+Since (as proven in the previous section) only instances with perfect matchings need be considered in competitiveness analysis, competitiveness of all algorithms is upper bounded by $\mathbb{E}[|\mathrm{RGA}(M^\star)|]/n$
+
+Now, all that is required to prove the following lemma 
+
+\begin{lemma}
+	\thlabel{rga-performance}
+	$\mathbb{E}[|\mathrm{RGA}(M^\star)|]\leq 1\frac{1}{e}+o(1)$
+\end{lemma}
+For each $t\in[n]$ $Y_t$ is the number of availible offline vertices nighboring the vertex arriving at time $t$ before matching by $\mathrm{RGA}$\\
+A Discrete-Time Death Process is a Markov Process on non-negative integers that, with each step, can either be reduced by 1 or remain unchanged
+\begin{definition}
+	Discrete-Time Death Process of $\{Y_t|t\in[n]\}$\\
+	is a Discrete-Time Death Process that starts at the state $Y_1=n$ and at any time $t\in[n]$ has the following transition probabilities:
+	\[\mathrm{Pr}[\Delta Y_t=-2|Y_t\geq 1]\]
+\end{definition}

@@ -20,9 +20,11 @@ sorting=ynt
 \usepackage{algpseudocode}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{enumitem}
 \usepackage{amsthm}
 \usepackage{theoremref}
 \usepackage[skins]{tcolorbox}
+
 %Theorems
 \usepackage[english]{babel}
 \usepackage{csquotes}
@@ -34,9 +36,19 @@ sorting=ynt
 \newtheorem{lemma}{Lemma}
 \numberwithin{lemma}{section}
 \tcolorboxenvironment{lemma}{blanker,before skip=10pt,after skip=10pt}
+\newtheorem{definition}{Definition}
+\numberwithin{definition}{section}
+\tcolorboxenvironment{definition}{blanker,before skip=10pt,after skip=10pt}
+\newtheorem{claim}{Claim}
+\numberwithin{claim}{section}
+\tcolorboxenvironment{claim}{blanker,before skip=10pt,after skip=10pt}
 %maybe comment this out, it makes proofs non-breakable over pages
 \tcolorboxenvironment{proof}{blanker,before skip=10pt,after skip=10pt}
-
+\newenvironment{subtheorems}
+ {\itemize[
+   nosep,font=\normalfont\bfseries,
+   leftmargin=3em,itemindent=-1em,align=left]}
+ {\enditemize}
 \title{title}
 \author{Mikołaj Jachowicz}
 
@@ -61,9 +73,13 @@ sorting=ynt
 \section{Semi-Online Model}
 \input{sections/classical.tex}
 
+\section{Delay Model}
+\input{sections/delay.tex}
+
 \section{Final Degree Model}
 \input{sections/degree.tex}
 
+\clearpage
 \printbibliography[]
 
 \end{document}
