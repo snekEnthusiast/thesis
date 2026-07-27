@@ -1,56 +1,136 @@
-In this section we present a proof for Ranking Optimality (theorem 2) by \cite{obmBound}. The main vehicle for this is Yao's lemma with a construction of a class of matching instances
+\label{section:rank-opt}
+In this section we present a proof for Ranking Optimality (\autoref{thm:rank-optimal}) by \cite{karp}. The main vehicle for this is Yao's lemma with a construction of a class of matching instances
+
+\begin{algorithm}
+	\caption{RGA}
+	\label{alg:RGA}
+	\begin{algorithmic}
+		\item on Arrival of vertex $v$: match it with a random availible offline neighbor
+	\end{algorithmic}
+\end{algorithm}
 
 \begin{definition}
 	bipartite online matching instance $(n,\sigma)$ where $\sigma$ is a permutation of $[n]$ is constructed as follows:
 	\begin{itemize}
 		\item offline vertices are $f_i$ for $i\in[n]$
 		\item online vertices are $n_j$ for $j\in[n]$
-		\item $f_i,n_j$ are connected iff $i\leq j$
-		\item online vertices are repositioned according to $\sigma$ - $n_j$ becomes $n_{\sigma(j)}$ while preserving it's edges
+		\item $f_i,n_j$ are connected iff $\sigma(i)\leq j$
 	\end{itemize}
 \end{definition}
+The collection of all $n!$ $(n,\sigma)$ instances is $M$. $U(M)$ is the uniform distribution over $M$. $M^\star$ is $(n,(1,\dots,n))$, the original instance without permutation
 [figure]
 notice that perfect matching is achived only if $f_i$ is matched with $n_{\sigma(i)}$ for all $i\in[n]$\\
-The collection of all $n!$ $(n,\sigma)$ instances is $M$. $U(M)$ is the uniform distribution over $M$. $M^\star$ is $(n,(1,\dots,n))$, the original instance before permutation
 
 \begin{lemma}
-	\thlabel{dga-rga-equiv}
-	Let $\mathrm{DGA}$ be a greedy deterministic algorithm, $\mathrm{RGA}$ be randomized greedy algorithm that matches arriving vertices to random uniform availible offline vertices.\\
+	\label{dga-rga-equiv}
+	Let $\mathrm{DGA}$ be a greedy deterministic algorithm.\\
 	The expected performance of $\mathrm{DGA}$ on a random instance from $U(M)$ bounds the expected performance of $\mathrm{RGA}$ on $M^\star$\\
-	\[\underset{m\sim U(M)}{\mathbb{E}}[|\mathrm{DGA}(m)|]=\mathbb{E}[\mathrm{RGA}(M^\star)]\]
+	\[\underset{m\sim U(M)}{\E}[|\mathrm{DGA}(m)|]=\E[\mathrm{RGA}(M^\star)]\]
 \end{lemma}
-\begin{proof} To prove the lemma we first need to prove two cleims:\\
+\begin{proof} To prove the lemma we first need to prove two claims:\\
+% -- ??? -- ??? -- ???
 	\begin{subtheorems}
 	\item[Claim 1] for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $M^\star$ if at time $t$ there are $k$ eligable offline vertices then they are equally likely to be any set of $k$ vertices among the last $n-t+1$ denominated $F(t)$
+	% -- ??? -- ??? -- ??? Think this is supposed to be 'all rows are equally likely to be eligible' since the n-t+1 applies only to RGA
 	\item[Claim 2]  for each $k$ the probability that there are $k$ eligible offline vertices at time $t$, denominated $p_t$, is the same for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $M^\star$
 	\end{subtheorems}
-	Both claims are proven with induction on the 'step' of the algorithm - tha amount of online vertices that have already arrived. Note that induction base at step 0 is trivial since all offline vertices are eligible.
+	Both claims are proven with induction on the 'step' of the algorithm - tha amount of online vertices that have already arrived. Note that induction base at step 0 is trivial since all offline vertices are eligible.\\
+	Note that a vertex is availible if it can still be matched ie isn't matched and isn't unmatchable
 	\begin{proof} of Claim 1\\
-		On step from time $t$ to $t+1$ $\mathrm{RGD}$ matches the arriving vertex randomly. Meanwhile $\mathrm{DGA}$ receives a random uniform vertex, and since it cannot view labels and is only dependent on the current eligibility set any eligible vertex is equally likely to be matched
+		for $\mathrm{RGA}$.
+		\[\Pr[S\ \text{Availible at time }t+1]=\sum\limits_{v\not\in S}\Pr[S\cup\{v\}\ \text{Availible at time }t]\Pr[v\ \text{picked at time }t]\]
+		and since probabilities at time $t$ are equal and the probability of choosing all $v$ is either equal or $0$ then the condition is maintained\\
+		for $\mathrm{DGA}$, since it is deterministic and the algorithm can't read labels, then the subsequent matching is determined by the current availible set, which is uniformly random, implying the next one is also uniformly random.
 	\end{proof}
 	\begin{proof} of Claim 2\\
-		From Claim 1 we know that eligible sets are distributed uniformly.
+		From Claim 1 we know that, conditional on the amount of eligible vertices, their placement is universal
 	\end{proof}
-	The lemma follows directly from claim 2 since after all vertices have arrived, the elegible vertices become unmatched and the size of the matching is $n-|\mathrm{unmatched}|$
+	The lemma follows directly from Claim 2 since the size of the matching is equal to the amount of steps required for there to be no eligible vertices
 \end{proof}
 
 By using Yao's lemma we receive the following: for any algorithm $\mathrm{ALG}$
 \begin{equation}
-	|\mathrm{ALG}(M)|:=\underset{m\in M}{\min}\mathbb{E}[|\mathrm{ALG,m}|]\leq \underset{\mathrm{DALG}}{\max}\underset{m\sim U(M)}{\mathbb{E}}[|\mathrm{DALG}(m)|]=\mathbb{E}[|\mathrm{RGA}(M^\star)|]
+	|\mathrm{ALG}(M)|:=\underset{m\in M}{\min}\E[|\mathrm{ALG,m}|]\leq \underset{\mathrm{DALG}}{\max}\underset{m\sim U(M)}{\E}[|\mathrm{DALG}(m)|]=\E[|\mathrm{RGA}(M^\star)|]
 \end{equation}
 
-Since (as proven in the previous section) only instances with perfect matchings need be considered in competitiveness analysis, competitiveness of all algorithms is upper bounded by $\mathbb{E}[|\mathrm{RGA}(M^\star)|]/n$
+Since (as proven in the previous section) only instances with perfect matchings need be considered in competitiveness analysis, competitiveness of all algorithms is upper bounded by $\E[|\mathrm{RGA}(M^\star)|]/n$
 
 Now, all that is required to prove the following lemma 
 
 \begin{lemma}
-	\thlabel{rga-performance}
-	$\mathbb{E}[|\mathrm{RGA}(M^\star)|]\leq 1\frac{1}{e}+o(1)$
+	\label{rga-performance}
+	$\E[|\mathrm{RGA}(M^\star)|]\leq n(1-\frac{1}{e})+o(1)$
 \end{lemma}
+The rest of this section is the proof of this lemma.
+
+\iffalse
+%Pan Xu analysis, uncertain of claims of errors
 For each $t\in[n]$ $Y_t$ is the number of availible offline vertices nighboring the vertex arriving at time $t$ before matching by $\mathrm{RGA}$\\
 A Discrete-Time Death Process is a Markov Process on non-negative integers that, with each step, can either be reduced by 1 or remain unchanged
 \begin{definition}
 	Discrete-Time Death Process of $\{Y_t|t\in[n]\}$\\
 	is a Discrete-Time Death Process that starts at the state $Y_1=n$ and at any time $t\in[n]$ has the following transition probabilities:
-	\[\mathrm{Pr}[\Delta Y_t=-2|Y_t\geq 1]\]
+	\begin{flalign}
+	\Pr[\Delta Y_t=-2|Y_t\geq 1]&=\frac{Y_t-1}{n-t+1}&&\\
+	\Pr[\Delta Y_t=-1|Y_t\geq 1]&=1-\frac{Y_t-1}{n-t+1}&&\\
+	\Pr[\Delta Y_t= 0|Y_t=0]&=1&&
+	\end{flalign}
 \end{definition}
+$Y_t$ is the amount of availible offline vertices at time $t$.
+$\Delta Y_t$ is the change in number of availible offline vertices at time $t$\\
+Note that $\Delta Y_t$ is either $-1$ or $-2$ while vertices are arriving and it is only $-2$ when, for an arriving vertex $n_i$:
+\begin{enumerate}
+	\item it's corresponding offline vertex $f_i$ is availible, and
+	\item $\mathrm{RGA}$ randomly samples a different vertex $f_j,i\neq j$
+\end{enumerate}
+in this situation $f_i$ becomes unmatchable and therefore is no longer availible to be matched.\\
+$T:=\min \{t|Y_{t+1}=0\}$ is the death time, and also the time when there are no more matchable offline vertices. This in turn means that is is the amount of vertices that were matched meaning $T=|\mathrm{RGA}(M^\star)|$ \footnote{This is not true for all cases but is true in the case of this specific graph and arrival pattern}
+\fi
+
+\iftrue
+%Original Karp et al analysis
+\newcommand*\rem{\mathrm{rem}}
+\newcommand*\avl{\mathrm{avl}}
+Let $\rem(t)$ be the random variable representing the number of remaining online vertices and $\avl(t)$ be the number of offline vertices availible for matching, at the time $t$. $\Delta f$ is used conventionally, as the change of $f(t)$ over $t$.\\
+$\Delta \rem$ is always $-1$ while $\Delta\avl$ is either $-1$ or $-2$. It is only $-2$ if $n_t$ is being matched and $f_t$ is availible (event $A_t^1$) and it isn't matched to $n_t$ (event $A_t^2$) since $f_t$ becomes unmatchable.\\
+Note that $\rem$ is essentially a clock ticking backwards since it has value $n-t$
+
+$\Pr[A^1_t|\avl,\rem]=\frac{\avl}{\rem+1}$ since from Claim 1 from \autoref{dga-rga-equiv} we know that all $\avl$ sized subsets are equally likely to be the availible subset\\
+$\Pr[A^2_t|\avl]=1-\frac{1}{\avl}=\frac{\avl-1}{\avl}$ since matched vertex is chosen randomly\\
+Since both events are independent $\Pr[A^1_t\land A^2_t]=\frac{\avl-1}{\rem+1}$\\
+$\E[\Delta\avl]=(-2)\frac{\avl-1}{\rem+1}+(-1)(1-\frac{\avl-1}{\rem+1})$
+
+finally
+\begin{equation}
+	\label{rank-opt-e-avl}
+	\E[\Delta\avl]==-1-\frac{\avl(t)-1}{\rem(t)}
+\end{equation}
+implying $\frac{\mathrm{E}[\Delta\avl]}{\mathrm{E}[\mathrm{\Delta\rem}]}=1+\frac{\rem(t)-1}{\avl(t)}$ since $\Delta\rem$ is always $-1$\\
+Though this is a discrete Markov Chain, we can approximate it by treating it as a continious function, whose rate of growth is already known
+\begin{equation}
+	\label{rank-opt-diff}
+	\frac{d\avl}{d\rem}=1+\frac{\avl-1}{\rem}
+\end{equation}
+We also havethe initial conditions, $\avl=\rem=n$, meaning we can find an approximating equation by solving $\autoref{rank-opt-diff}$
+
+\begin{align*}
+	\frac{d\avl}{d\rem}=1+\frac{\avl-1}{\rem} & \text{ can be rewritten as}\\
+	\frac{d\avl}{d\rem}-\frac{\avl}{\rem}=\frac{\rem-1}{\rem} & \text{ multiply both sides by }m(\rem)=e^{\int -1/\rem \,d\rem}\\
+	\frac{\frac{d\avl}{d\rem}}{\rem}+\frac{d}{d\rem}\left(\frac{1}{\rem}\right)\avl=\frac{\rem-1}{\rem^2} & \text{ apply product rune to LHS}\\
+	\frac{d}{d\rem}\left(\frac{\avl}{\rem}\right)=\frac{rem-1}{\rem^2} & \text{ integrate both sides}\\
+	\int\frac{d}{d\rem}\left(\frac{\avl}{\rem}\right)=\int\frac{\rem-1}{\rem^2}\\
+	\frac{\avl}{\rem}=\frac{1}{\rem} + \ln\rem + c & \text{ apply initial condition }\avl=\rem=n\\
+	1=\frac{1}{n}+\ln n + c\implies\\
+	\avl=1+\rem\left(\ln\rem-\ln n+1-\frac{1}{n}\right)
+\end{align*}
+
+giving us the final approximation
+
+\begin{equation}
+	\label{rank-opt-final}
+	\avl=1+\rem\left(\frac{n-1}{n}-\ln\frac{\rem}{n}\right)
+\end{equation}
+
+Bearing in mind that the initial Markov chain doesn't perfectly emulate the last step, we substitute $\rem=1$ instead $\rem=0$ and from \autoref{rank-opt-final} we receive that, when only 1 online vertex has yet to arrive, the number of remaining columns is $n\frac{1}{e}+o(1)$. Bearing in mind that the last arriving vertex will affect the performance by at most 1, the expected size of the final matching is $n\left(1-\frac{1}{e}\right)$
+
+%NOTE HERE: cite Yao, Kurtz precisely, finish RGA DGA lemma. This is a draft

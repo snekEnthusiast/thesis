@@ -22,8 +22,14 @@ sorting=ynt
 \usepackage{amsfonts}
 \usepackage{enumitem}
 \usepackage{amsthm}
-\usepackage{theoremref}
+
+\usepackage{hyperref}
+\newcommand{\algorithmautorefname}{Algorithm}
+\newcommand{\lemmaautorefname}{Lemma}
+\newcommand{\claimautorefname}{Claim}
+
 \usepackage[skins]{tcolorbox}
+\usepackage[bottom]{footmisc}
 
 %Theorems
 \usepackage[english]{babel}
@@ -58,7 +64,8 @@ sorting=ynt
 
 \begin{document}
 
-\input{newcommands.tex}
+%commands
+\newcommand*\E{\mathbb{E}}
 
 \begin{abstract}
 	\input{sections/abstract.tex}

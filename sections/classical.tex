@@ -1,4 +1,5 @@
-In this section we will introduce the classical smi-online model introduced by Karp et al~\cite{karp}
+\label{section:classical}
+In this section we will introduce the classical smi-online model introduced by Karp et al \cite{karp}
 
 In this model the two anticliques of the bipartite graph are divided into offline and online agents.
 Offline agents are vertices that belong to one anticlique and are always visible.
@@ -37,6 +38,7 @@ The main discovery of the Karp paper is the following algorithm
 
 \begin{algorithm}
 	\caption{Ranking}
+	\label{alg:ranking}
 	\begin{algorithmic}
 		\item on Initialization: create a random permutation of the offline agents $\sigma$
 		\item on Arrival of vertex $v$: match it with the first availible offline neighbor according to $\sigma$
@@ -46,13 +48,13 @@ The main discovery of the Karp paper is the following algorithm
 as well as the following theorems
 
 \begin{theorem}
+	\label{thm:rank-competitiveness}
 	Ranking has asymptotic competitiveness of $1-\frac{1}{e}$
 \end{theorem}
 \begin{theorem}
+	\label{thm:rank-optimal}
 	No algorithm has asymptotic competitiveness higher than $1-\frac{1}{e}$
 \end{theorem}
-
-for offline vertex $v$ $\sigma(v)$ is the rank of $v$
 
 \subsection{Ranking Competitiveness}
 	\input{sections/classical/rank_competitiveness.tex}

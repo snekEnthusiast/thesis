@@ -1,9 +1,21 @@
-In the Final Degree Model, The algoritm has, at all times, the knowledge of the what the degree of all offline edges is in the final graph. While this allows the algorithm to know how many opportunities a vertex will have to be matched, we will sho that this doesn't increase the asymptotic competitiveness of any deterministic algorithm beyond $0.5$
+\label{section:degree}
+In the Final Degree Model, The algoritm has, at all times, the knowledge of the what the degree of all offline edges is in the final graph. This allows an algorithm to know how many opportunities there will be for a vertex to be matched and let it focus on the most urgent vertex. A natural expression of this idea is the effective degree algorithm.
+
+\begin{algorithm}
+	\caption{Effective Degree}
+	\label{alg:effective-deg}
+	\begin{algorithmic}
+		\item on Initialization: for each offline vertex $u_i$ let $d_{u_i}=\deg(u_i)$
+		\item on Arrival of vertex $v$: $N$ are unmatched offline neighbors of $v$. If $N\neq\emptyset$, match $v$ to $\underset{u\in N}{\mathrm{argmin}}\ d_u$, $\underset{u\in N}{\forall}d_u-=1$
+	\end{algorithmic}
+\end{algorithm}
+Despite this algorithm seeming promising, it is only marginally more effective than a naive deterministic approach. We will show that in this model no deterministic algorithm has asymptocic competitiveness greater then $0.5$
 \begin{theorem}
+	\label{thm:deg-det-comp}
 	In the Final Degree model no deterministic algorithm has a competitiveness higher than $0.5$
 \end{theorem}
 \begin{proof}
-	Consider the following graph $G$ which has $n=2k+1$ offline vertices with final degree $k+1$\\
+	Consider the following graph $G_{\deg}$ which has $n=2k+1$ offline vertices with final degree $k+1$\\
 	$k+1$ vertices arrive, all connected to all unmatched offline vertices.\\
 	Notice that at this point $k+1$ vertices are matched and the remaining $k$ have degree $k+1$ in the current graph, meaning that they cannot be matched. All that remains is to fulfill the degree promise. This is easy as the degrees of the matched vertices are $1,2,\dots,k,k+1$ meaning that all that is required is for $k$ vertices connected to all offline vertices with unfulfilled degree promise to arrive.\\
 	The size of the matching found is $k+1$ while the graph has a perfect matching of size $n=2k+1$ which is achived when the $k$ vertices matched by the graph are instead matched to the vertices which fulfilled their degree promise while the remaining $k+1$ vertices are matched among themselves since they form a biclique $K_{k+1,k+1}$
@@ -12,3 +24,40 @@ In the Final Degree Model, The algoritm has, at all times, the knowledge of the 
 	\centering
 	\scalebox{.8}{\input{tikz/degree/deterministic3.tikz}}
 \end{figure}
+We will remark here that this model is a relaxation of the Semi-Online model, so competitiveness here isn't lower\\
+
+\subsection{Randomized Augmentation}
+As shown above, the information of a graph's final degree isn't helpful for deterministic algorithms. However, there is a good reason to believe that this might not be the case for rndomized algorithms\\
+Here, the fact that the competitiveness is only $0.5$ asymptotically and in actuality is $\frac{k+1}{2k+1}$ is key.
+
+\begin{claim}
+If all vertices have different degrees then the algorithm finds a perfect matching
+\end{claim}
+
+\begin{proof}
+	Let $G_n=(V,U,E)$ be a $n\times n$ bipartite graph with with all vertices in $U$ having different degrees. WLOG $G$ has a perfect matching, implying that the degrees of $u\in U$ are $1,\dots,n$. Let $u_k:=u\in U|deg(u)=k$\\
+	To force the algorithm to leave $n_k$ behind, $k$ online vertices need to arrive, each connected to a different $u'_i\in\{u_i|i<k\}$. The problem with this is that the size of $U'$ is $k-1$, maiing sich a thing impossible
+\end{proof}
+
+A much stronger realization can be gleamed from this reasoning to force a deterministic algorithm to leave a vertex $u$ behind, and for it to be possible for a randomized algorithm to leave that vertex behind, there must be $\deg(u)$ vertices $v$ such that $\deg(u)\geq\deg(v)$, which moreover won't be left behind.\\
+
+This line of reasoning leads directly to the graph $G_{\deg}$ used in the proof of \autoref{thm:deg-det-comp}. However, this also leads to a problem for an adversary. That graph is rather dense, which isn't a situation where randomized graphs perform poorly. Indeed, despite
+RGA (\autoref{alg:RGA}) having an expected competitiveness of $\frac{n}{2}+O(\log n)$, it is expected to find a matching of size $n(1-\frac{1}{e})$ on a 
+%reference
+graph which is actually a subgraph of the degree countergraph edgewise, meaning it would work at least as well here
+
+\begin{algorithm}
+	\caption{Randomized Effective Degree}
+	\label{alg:effective-deg-rand}
+	\begin{algorithmic}
+		\item on Initialization: for each offline vertex $u_i$ let $d_{u_i}=\deg(u_i)$
+		\item on Arrival of vertex $v$: $N$ are unmatched offline neighbors of $v$. If $N\neq\emptyset$, let $d=\underset{u\in N}{\mathrm{min}}\ d_u$. $v=\mathrm{random}(\{u\in N|\deg(v)=d\})$. Match $v$ to $u$, $\underset{u\in N}{\forall}d_u-=1$
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{lemma}
+	\autoref{alg:effective-deg-rand} has a performance of <insert> on $G_{\deg}$
+\end{lemma}
+\begin{proof}
+	Our approach here is similar to the one in \autoref{section:rank-opt} for proving $\autoref{thm:rank-optimal}$
+\end{proof}
