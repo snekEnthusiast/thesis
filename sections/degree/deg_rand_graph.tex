@@ -1,0 +1,25 @@
+as shown before, despite it's potential the Final Degree model doesn't allow for a better competitiveness. However, unlike in the Semi-Online model, the class of graphs that can force a pessimistic matching of size $\frac{n}{2}$ is very limited. For this reason, it is alwo worth analyzing performance in a much more forgiving, and realistic, enviorenment.
+
+\begin{definition}
+	\label{CLV-B Model}
+	The CLV-B model is a bipartite adaptation of the CLV model for general graphs introduced by Fan Chung, Linyuan Lu, and Van Vu. It is defined by two vectors, $\vec{p}\in[0,1]^n,\vec{q}\in[0,1]^m$.An edge between $u_j\in U,v_i\in V$ appears with probability $\vec{p}_j\vec{q}_i$. 
+	We assume WLOG that elements of $\vec{p}$ are in non-increasing order.\\
+	We denote the random graph of vectors $\vec{p},\vec{q}$ $I_{\vec{p},\vec{q}}$
+\end{definition}
+Do note that in this model the matching can no longer be expressed as a game since there are no choices for an adversary to make and $\vec{u},\vec{v}$ are merely descriptors of a class of random graphs\\
+\begin{theorem}
+	\autoref{alg:effective-deg-rand} (RED) is optimal in CLV-B model, meaning\\
+	for any algorithm $\mathrm{A}, t\in\mathbb{Z}_{+},\vec{p}\in[0,1]^n,\vec{q}\in[0,1]^m$ $\Pr[\mathrm{A}(I_{\vec{p},\vec{q}})>t]\leq \Pr[\mathrm{RED}(I_{\vec{p},\vec{q}})>t]$
+\end{theorem}
+
+the proof is using an approach used by \cite{obmDegree}
+
+\begin{lemma}
+	
+\end{lemma}
+
+
+\begin{lemma}
+	
+\end{lemma}
+

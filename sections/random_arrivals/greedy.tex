@@ -1,0 +1,180 @@
+We will present a proof by \cite{fallback}
+
+\begin{theorem}
+	\label{thm:rga-ra-comp}
+	In the random arrival model, RGA(\autoref{alg:RGA}) has a competitiveness of $1-\frac{1}{e}$
+\end{theorem}
+
+For ease of argumentation we will describe randomness of the algorithm not as an ability to make a truly random choice, but as seeded randomness, meaning that a deterministic algorithm is given an arbitrary number at initialization which can be used to make random decisions and is unknown to the adversary. The latter description of randomness is identical to the former in practice but it makes discussing runs on inputs easier easier. When runs are compared they can be assumed to have the same random seed.
+
+The proof is in three parts.
+
+\subsection{basic properties}
+
+We will begin by proving several properties of RGA.
+\begin{lemma}[Prefix]
+	\label{ra-greedy-prefix}
+	$\forall\sigma_1,\sigma_2\in\mathrm{Perm}([n]),t\in[n]|(\forall 0\leq k\leq t| \sigma_1(k)=\sigma_2(k))\implies\text{runs of RGA on }\sigma_1\ \text{and}\ \sigma_2\ \text{are identical}$
+\end{lemma}
+\begin{proof}
+	This lemma is relatively trivial. RGA doesn't have access to $\sigma$ so, while both permutations are identical the runs will be identical as well.
+\end{proof}
+
+Let $\Omega_p$ be a set of permutations where all vertices but $v_p$ have fixed positions, $\sigma_k\in\Omega_p$ be the permutation where $x_p$ is on position $k$, $G_s(t)$ be the set of offline vertices matched in time $1,\dots,t$ by RGA on $\sigma_s$
+
+\begin{lemma}[Monotonicity]
+	\label{ra-greedy-monotone}
+	$\forall 1\leq s<m\leq n$:
+	\begin{itemize}
+		\item $\forall 1\leq t\leq s-1$ $G_m(t)=G_s(t)$
+		\item $\forall s-1\leq t\leq m-1$ $G_m(t)\subseteq G_s(t+1)$
+	\end{itemize}
+\end{lemma}
+
+Another way of phrasing this lemma is to say that, if a vertex is moved up in the permutation then all offline vertices matched previously by time $t$ are expected to be matched by time $t+1$
+
+\begin{proof}
+	The first part is a direct consequence of \autoref{ra-greedy-prefix}. Proof of the second part will be by induction over time $t$, starting with $s-1$ which is directly implied by the first part.\\
+	Asumming the lemma holds at time $k$, $G_m(k)\subseteq G_s(k+1)$. Notice that $\sigma_m(k+1)=\sigma_s(k+2)$. Denote $v:=v_{\sigma_m(k+1)}$, matched to $u$ on RGA run on $\sigma_m$. Suppose $u\not\in G_s(k+2)$. Then $u$ was availible when RGA was matching $v$ on $\sigma_s$, but $v$ was instead matched to $u'\not\in G_s(k+1)$. By induction hypothesis $u'\not\in G_m(k)$ implying $u,u'$ availible at $t=k+1$ in run $\sigma_m$, RGA should have chosen $u'$ over $u$, contradiction implying $u\in G_s(k+2)$ implying step condition for $t=k+1$
+\end{proof}
+
+\newcommand*\good{\mathrm{good}}
+\newcommand*\bad{\mathrm{bad}}
+\newcommand*\miss{\mathrm{miss}}
+
+As context for the last lemma, we need to establish the following: what it means to miss a vertex, what is a good match and what is a bad match.
+
+A vertex is considered missed if it remains unmatched by the end of the run
+
+\[\miss_\sigma(s,p)=\begin{cases}
+	1 & \sigma(s)=p\land\ v_p\text{ unmatched at the end of RGA run on }\sigma\\
+	0 & \text{ else}
+\end{cases}\]
+
+if $v_p$ was missed then $u_p$ must have been matched to some $v_{p'}$ and $v_{p'}$ arrived before $v_p$. We define this match (between $u_p$ and $v_{p'}$) as a bad match since in the end it caused $v_p$ to be missed
+
+\[\bad_\sigma(s,q)=\begin{cases}
+	1 & u_q\text{ is matched to }v_{\sigma(s)}\land \sigma^-1(q)>s\\
+	0 & \text{ else}
+\end{cases}\]
+
+in contrast, a good match occurs when $v_{p'}$ arrives after $v_p$. In that situation we have a guarantee that $v_p$ wasn't missed since $u_p$ and $v_p$ are connected
+
+\[\good_\sigma(s,q)=\begin{cases}
+	1 & u_q\text{ is matched to }v_{\sigma(s)}\land \sigma^-1(q)\leq s\\
+	0 & \text{ else}
+\end{cases}\]
+
+\begin{lemma}[Partitioning]
+	\label{ra-greedy-partition}
+	$\forall p,\Omega_p$, during a run of RGA on $\sigma_n$. If $u_p$ is matched to $v_t$ then
+	\begin{align}
+		\forall x\in[1,t]: & \sum\limits_{1\leq s\leq t+1} \good_{\sigma_x}(s,p)=1
+		\forall x\in[t+1,n]: & \bad_{\sigma_x}(t,p)=1
+	\end{align}
+\end{lemma}
+
+\begin{proof}
+	1. from \autoref{ra-greedy-monotone} we know that $\forall x\in[1,t]$, in a run on $\sigma_x$ is matched to $v_k$ for some $k\in[x,t+1]$ $u_p$ is matched to $v_t$ implying inequality 1
+	2. from \autoref{ra-greedy-prefix} we know that $\forall x\in[t+1,n]$, in a run on $\sigma_x$ $u_p$ is matched to some $v_k$ for $k\in[x,t+1]$ implying inequality 2
+\end{proof}
+
+\subsection{bad/good/miss properties}
+
+The second part is to prove three helper lemmas about $\miss,\bad,\good$ with the basic properties
+
+\begin{lemma}
+	\label{ra-greedy-bgm-1}
+	$\forall\sigma\in\mathrm{Perm}([n]),t\in[n]$\\
+	$\sum\limits_{1\leq p\leq n}\miss_{\sigma}(t,p)+\sum\limits_{1\leq p\leq n}\bad_{\sigma}(t,p)+\sum\limits_{1\leq p\leq n}\good_{\sigma}(t,p)=1$
+\end{lemma}
+\begin{proof}
+	this lemma is rather trivial since a vertex is either missed or not, and if it is then either $p<p',p>p'$ or $p=p'$
+\end{proof}
+
+\begin{lemma}
+	\label{ra-greedy-bgm-2}
+	$\forall t\in[n]$\\
+	$\miss_{\sigma_t}(t,p)\leq\sum\limits_{\sigma\in\Omega_p}\sum\limits_{s<t}\frac{\bad_\sigma(s,p)}{n-s}$
+\end{lemma}
+\begin{proof}
+	If $\miss$ is $0$ then the inequality is trivially true since $\bad$ and $n-s$ are non-negative.\\ Assume $\miss=1$ from definition, in run on $\sigma_t$ $v_p$ that is on position $t$ remains unmatched, which is only possible if $u_p$ is matched to $v_{p'}$ on position $t'$, $t'<t$ using \autoref{ra-greedy-partition} we have
+	\begin{align*}
+		& \sum\limits_{\sigma\in\Omega_p}\sum\limits_{s<t}\frac{\bad_\sigma(s,p)}{n-s} & \\
+		\geq & \sum\limits_{\sigma\in\Omega_p}\frac{\bad_\sigma(t',p)}{n-t'}&t'<t\\
+		\geq & \sum\limits_{t'+1\leq s\leq n}\frac{\bad_{\sigma_s}(t',p)}{n-t'}\\
+		= & 1 & \text{Lemma }\ref{ra-greedy-partition}.2\\
+		= & \miss_{\sigma_t}(t,p)
+	\end{align*}
+	concluding the proof
+\end{proof}
+
+\begin{lemma}
+	\label{ra-greedy-bgm-3}
+	$\forall t\in[n-1]$:
+	$\sum\limits_{\sigma\in\Omega_p}\sum\limits_{s\leq t}\bad_\sigma(s,p)\frac{s}{n-s}\leq \sum\limits_{\sigma\in\Omega_p}\sum\limits_{s\leq t+1}\good_\sigma(s,p)$
+\end{lemma}
+\begin{proof}
+	\begin{description}
+		\item[Case 1] $u_p$ remains unmatched on a run on $\sigma_n$\\
+		Let $\sigma_x\in \Omega_p$, if $u_p$ is matched in a run on $\sigma_x$ hten by \autoref{ra-greedy-prefix} it has to be matched to $v_{x'},x'\leq x$ implying $\forall t | \bad_{\sigma_x}(t,p)=0$ and the lemma proof becomes trivial by non-negativity
+		\item[Case 2] $u_p$ is matched in a run on $\sigma_n$ to $v_{t'}$. We divide this case into two following cases
+		\begin{description}
+			\item[Case 2.1] $t<t'$\\
+				From \autoref{ra-greedy-partition} and \autoref{ra-greedy-bgm-1} we know which variables are $1$, and that for every $\sigma\in\Omega_p,s<t', \bad_\sigma(s,p)=0$, implying LHS is $0$ and the Lemma is again trivial
+			\item[Case 2.2] finally, if $t\geq t'$
+			\[\sum\limits_{\sigma\in\Omega_p}\sum\limits_{s\leq t}\bad_\sigma(s,p)\frac{s}{n-s}\]
+			\[=\sum\limits_{\sigma\in\Omega_p}\bad_\sigma(t',p)\frac{t'}{n-t'}\]
+			\[=t'\]
+			\[=\sum\limits_{\sigma\Omega_p}\sum\limits_{s\leq t'+1}\good_\sigma(s,p)\]
+			\[=\sum\limits_{\sigma\Omega_p}\sum\limits_{s\leq t+1}\good_\sigma(s,p)\]
+		\end{description}
+	\end{description}
+\end{proof}
+
+\subsection{final proof}
+
+From here we have the tools to prove the \autoref{thm:rga-ra-comp}\\
+Notice that the total size of the matching is $\sum_s E\left[\sum\limits_{p}\good_\sigma(s,p)\right]+\E\left[\sum\limits_{p}\bad_\sigma(s,p)\right]$. Informally, the three lemmas suggest that if there are many misses, then there must be many good and bad matches, bounding how small the expected matching can be.\\
+We will start by introducing generalized miss/bad/good variables
+
+\begin{align*}
+	\miss(s)&=\underset{\sigma\sim\mathrm{Perm}([n])}{\E}\left[\sum\limits_p\miss_\sigma(s,p)\right]\\
+	\bad(s)&=\underset{\sigma\sim\mathrm{Perm}([n])}{\E}\left[\sum\limits_p\bad_\sigma(s,p)\right]\\
+	\good(s)&=\underset{\sigma\sim\mathrm{Perm}([n])}{\E}\left[\sum\limits_p\good_\sigma(s,p)\right]
+\end{align*}
+
+By using \autoref{ra-greedy-bgm-2} and summing over all partitions $\Omega_p$ and all $p$ we receive thee following
+
+\[\forall t:\sum\limits_p\sum\limits_{\sigma\in\Omega}\miss_\sigma(t,p)\leq \sum\limits_p\sum\limits_{\sigma\in\Omega}\sum\limits_{s<t}\frac{\bad_\sigma(s,p)}{n-s}\]
+
+change summation order, divide by $|\Omega|$
+
+\[\forall t: \miss(t)\leq\sum\limits_{s<t}\frac{\bad(s)}{n-s}\]
+
+by doing the same on \autoref{ra-greedy-bgm-3} instead we get
+\[\forall t: \sum\limits_{s\leq t}\bad(s)\frac{s}{n-s}\leq\sum\limits_{s\leq t+1}\good(s)\]
+
+with these inequalities we can rewrite the lower bound on expected matching size as a solution of a linear program
+
+\begin{align*}
+& \text{minimize}   &                 & \sum\limits_{t}\left[\bad(t)+\good(t)\right]                                 &\\
+& \text{subject to} & \forall t<n     & \sum\limits_{s\leq t+1}\good(s) -\sum\limits_{s\leq t+1}\bad(s)\frac{s}{n-s} & \geq 0\\
+&                   & \forall t\leq n & \good(t)+\bad(t)+\sum\limits_{s<t}\frac{\bad(s)}{n-s}                        &\geq 1\\
+&                   &                 & \good(t),\bad(t),\miss(t)                                                    &\geq 0
+\end{align*}
+
+which can in turn be rewritten with $m_t=\good(t)+\bad(t),v_t=\frac{\bad(t)}{n-t}$ as the following primal and dual
+
+\begin{align*}
+\text{minimize} & & \sum\limits_{t}m_t& && \text{maximize} & & \sum\limits_i\alpha_i\\
+\text{subject to}\ & \forall t<n & m_{t+1}\sum\limits_{s\leq t}m_s -n\sum\limits_{s\leq t}v_s & \geq 0 && \text{subject to} & \forall t<n & \alpha_t+\sum\limits_{s> t}\alpha_s -n\sum\limits_{s\geq t}\beta_s & \leq 0\\
+& \forall t\leq n & m_t+\sum\limits_{s<t}v_s&\geq 1 && & \forall t\leq n\ & \alpha_t+\sum\limits_{s\geq t}\beta_s&\leq 1\\
+& & m_t,v_t&\geq 0 && & & \alpha_t,\beta_t&\geq 0
+\end{align*}
+
+Notice that both primal and dual constraints are satisfied when all inequalities are tight, which in turn implies the optimality of that solution by weak duality.\\
+
+\[m_t=\alpha_{n+1-t}=(1-\frac{1}{n})^{i-1}\\v_t=\beta_{n+1-t}=\frac{1}{n}(1-\frac{1}{n})^{i-1}\]
+
+with the objective being $\sum m_t\approx n(1-\frac{1}{e})$, concluding the proof
