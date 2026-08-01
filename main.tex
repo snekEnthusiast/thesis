@@ -27,6 +27,7 @@ sorting=ynt
 \newcommand{\algorithmautorefname}{Algorithm}
 \newcommand{\lemmaautorefname}{Lemma}
 \newcommand{\claimautorefname}{Claim}
+\newcommand{\modelautorefname}{Model}
 
 \usepackage[skins]{tcolorbox}
 \usepackage[bottom]{footmisc}
@@ -48,8 +49,14 @@ sorting=ynt
 \newtheorem{claim}{Claim}
 \numberwithin{claim}{section}
 \tcolorboxenvironment{claim}{blanker,before skip=10pt,after skip=10pt}
+\newtheorem{model}{Model}
+\tcolorboxenvironment{model}{blanker,before skip=10pt,after skip=10pt}
+\newtheoremstyle{case}{}{}{}{}{}{:}{ }{}
+\theoremstyle{case}
+\newtheorem{case}{Case}
 %maybe comment this out, it makes proofs non-breakable over pages
 \tcolorboxenvironment{proof}{blanker,before skip=10pt,after skip=10pt}
+
 \newenvironment{subtheorems}
  {\itemize[
    nosep,font=\normalfont\bfseries,
@@ -79,6 +86,9 @@ sorting=ynt
 
 \section{Semi-Online Model}
 \input{sections/classical.tex}
+
+\section{Random Arrival}
+\input{sections/random_arrivals.tex}
 
 \section{Delay Model}
 \input{sections/delay.tex}

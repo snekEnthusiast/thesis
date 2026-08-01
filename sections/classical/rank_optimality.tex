@@ -63,31 +63,6 @@ Now, all that is required to prove the following lemma
 \end{lemma}
 The rest of this section is the proof of this lemma.
 
-\iffalse
-%Pan Xu analysis, uncertain of claims of errors
-For each $t\in[n]$ $Y_t$ is the number of availible offline vertices nighboring the vertex arriving at time $t$ before matching by $\mathrm{RGA}$\\
-A Discrete-Time Death Process is a Markov Process on non-negative integers that, with each step, can either be reduced by 1 or remain unchanged
-\begin{definition}
-	Discrete-Time Death Process of $\{Y_t|t\in[n]\}$\\
-	is a Discrete-Time Death Process that starts at the state $Y_1=n$ and at any time $t\in[n]$ has the following transition probabilities:
-	\begin{flalign}
-	\Pr[\Delta Y_t=-2|Y_t\geq 1]&=\frac{Y_t-1}{n-t+1}&&\\
-	\Pr[\Delta Y_t=-1|Y_t\geq 1]&=1-\frac{Y_t-1}{n-t+1}&&\\
-	\Pr[\Delta Y_t= 0|Y_t=0]&=1&&
-	\end{flalign}
-\end{definition}
-$Y_t$ is the amount of availible offline vertices at time $t$.
-$\Delta Y_t$ is the change in number of availible offline vertices at time $t$\\
-Note that $\Delta Y_t$ is either $-1$ or $-2$ while vertices are arriving and it is only $-2$ when, for an arriving vertex $n_i$:
-\begin{enumerate}
-	\item it's corresponding offline vertex $f_i$ is availible, and
-	\item $\mathrm{RGA}$ randomly samples a different vertex $f_j,i\neq j$
-\end{enumerate}
-in this situation $f_i$ becomes unmatchable and therefore is no longer availible to be matched.\\
-$T:=\min \{t|Y_{t+1}=0\}$ is the death time, and also the time when there are no more matchable offline vertices. This in turn means that is is the amount of vertices that were matched meaning $T=|\mathrm{RGA}(M^\star)|$ \footnote{This is not true for all cases but is true in the case of this specific graph and arrival pattern}
-\fi
-
-\iftrue
 %Original Karp et al analysis
 \newcommand*\rem{\mathrm{rem}}
 \newcommand*\avl{\mathrm{avl}}
