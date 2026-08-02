@@ -1,4 +1,4 @@
-We will present a proof by \cite{fallback}
+We will present a proof by \cite{obmRaGreedy} which goes in three phases, first proving properties of RGA, then more 3 complex lammas and finally using those to prove the theorem with the help of linear programming
 
 \begin{theorem}
 	\label{thm:rga-ra-comp}
@@ -14,7 +14,7 @@ The proof is in three parts.
 We will begin by proving several properties of RGA.
 \begin{lemma}[Prefix]
 	\label{ra-greedy-prefix}
-	$\forall\sigma_1,\sigma_2\in\mathrm{Perm}([n]),t\in[n]|(\forall 0\leq k\leq t| \sigma_1(k)=\sigma_2(k))\implies\text{runs of RGA on }\sigma_1\ \text{and}\ \sigma_2\ \text{are identical}$
+	$\forall\sigma_1,\sigma_2\in\mathrm{Perm}([n]),t\in[n]|(\forall 0\leq k\leq t| \sigma_1(k)=\sigma_2(k))\\ \implies\text{runs of RGA on }\sigma_1\ \text{and}\ \sigma_2\ \text{are identical}$
 \end{lemma}
 \begin{proof}
 	This lemma is relatively trivial. RGA doesn't have access to $\sigma$ so, while both permutations are identical the runs will be identical as well.
@@ -164,11 +164,20 @@ with these inequalities we can rewrite the lower bound on expected matching size
 &                   &                 & \good(t),\bad(t),\miss(t)                                                    &\geq 0
 \end{align*}
 
-which can in turn be rewritten with $m_t=\good(t)+\bad(t),v_t=\frac{\bad(t)}{n-t}$ as the following primal and dual
+which can in turn be rewritten with $m_t=\good(t)+\bad(t),v_t=\frac{\bad(t)}{n-t}$ as the following
+
+\begin{align*}
+\text{minimize} & & \sum\limits_{t}m_t&\\
+\text{subject to}\ & \forall t<n & \sum\limits_{s\leq t+1}m_s -n\sum\limits_{s\leq t}v_s & \geq 0\\
+& \forall t\leq n & m_t+\sum\limits_{s<t}v_s&\geq 1\\
+& & m_t,v_t&\geq 0
+\end{align*}
+
+Dropping the $m_{t+1}$ from $\sum\limits_{s\leq t+1}m_s$ narrows down the solution space, so the optimum of a program with $\sum\limits_{s\leq t}m_s$ will give a lower bound on the expected competitiveness. The following is that program, alongside it's dual.
 
 \begin{align*}
 \text{minimize} & & \sum\limits_{t}m_t& && \text{maximize} & & \sum\limits_i\alpha_i\\
-\text{subject to}\ & \forall t<n & m_{t+1}\sum\limits_{s\leq t}m_s -n\sum\limits_{s\leq t}v_s & \geq 0 && \text{subject to} & \forall t<n & \alpha_t+\sum\limits_{s> t}\alpha_s -n\sum\limits_{s\geq t}\beta_s & \leq 0\\
+\text{subject to}\ & \forall t<n & \sum\limits_{s\leq t}m_s -n\sum\limits_{s\leq t}v_s & \geq 0 && \text{subject to} & \forall t<n & \sum\limits_{s> t}\alpha_s -n\sum\limits_{s\geq t}\beta_s & \leq 0\\
 & \forall t\leq n & m_t+\sum\limits_{s<t}v_s&\geq 1 && & \forall t\leq n\ & \alpha_t+\sum\limits_{s\geq t}\beta_s&\leq 1\\
 & & m_t,v_t&\geq 0 && & & \alpha_t,\beta_t&\geq 0
 \end{align*}
