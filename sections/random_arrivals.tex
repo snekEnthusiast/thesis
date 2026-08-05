@@ -7,8 +7,20 @@ As shown before, relatively simple algorithms achive the optimal competitiveness
 
 In this section we will prove that both Ranking and RGA perform strictly better in the Random Arrival model than in the Semi-Online model
 
+\begin{theorem}
+	\label{thm:rga-ra-comp}
+	In the random arrival model, RGA(\autoref{alg:RGA}) has a competitiveness of $1-\frac{1}{e}$
+\end{theorem}
+
+\begin{theorem}
+	\label{thm:rank-ra-comp}
+	In the random arrival model, Ranking has a competitiveness of at least $0.696$
+\end{theorem}
+
 \subsection{RGA}
 
 \input{sections/random_arrivals/greedy.tex}
 
 \subsection{Ranking}
+
+\input{sections/random_arrivals/ranking.tex}

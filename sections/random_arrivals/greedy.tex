@@ -1,9 +1,4 @@
-We will present a proof by \cite{obmRaGreedy} which goes in three phases, first proving properties of RGA, then more 3 complex lammas and finally using those to prove the theorem with the help of linear programming
-
-\begin{theorem}
-	\label{thm:rga-ra-comp}
-	In the random arrival model, RGA(\autoref{alg:RGA}) has a competitiveness of $1-\frac{1}{e}$
-\end{theorem}
+We will present a proof of \autoref{thm:rank-ra-comp} by \cite{obmRaGreedy} which goes in three phases, first proving properties of RGA, then more 3 complex lammas and finally using those to prove the theorem with the help of linear programming
 
 For ease of argumentation we will describe randomness of the algorithm not as an ability to make a truly random choice, but as seeded randomness, meaning that a deterministic algorithm is given an arbitrary number at initialization which can be used to make random decisions and is unknown to the adversary. The latter description of randomness is identical to the former in practice but it makes discussing runs on inputs easier easier. When runs are compared they can be assumed to have the same random seed.
 
@@ -37,10 +32,6 @@ Another way of phrasing this lemma is to say that, if a vertex is moved up in th
 	The first part is a direct consequence of \autoref{ra-greedy-prefix}. Proof of the second part will be by induction over time $t$, starting with $s-1$ which is directly implied by the first part.\\
 	Asumming the lemma holds at time $k$, $G_m(k)\subseteq G_s(k+1)$. Notice that $\sigma_m(k+1)=\sigma_s(k+2)$. Denote $v:=v_{\sigma_m(k+1)}$, matched to $u$ on RGA run on $\sigma_m$. Suppose $u\not\in G_s(k+2)$. Then $u$ was availible when RGA was matching $v$ on $\sigma_s$, but $v$ was instead matched to $u'\not\in G_s(k+1)$. By induction hypothesis $u'\not\in G_m(k)$ implying $u,u'$ availible at $t=k+1$ in run $\sigma_m$, RGA should have chosen $u'$ over $u$, contradiction implying $u\in G_s(k+2)$ implying step condition for $t=k+1$
 \end{proof}
-
-\newcommand*\good{\mathrm{good}}
-\newcommand*\bad{\mathrm{bad}}
-\newcommand*\miss{\mathrm{miss}}
 
 As context for the last lemma, we need to establish the following: what it means to miss a vertex, what is a good match and what is a bad match.
 

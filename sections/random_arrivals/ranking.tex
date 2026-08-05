@@ -1,0 +1,237 @@
+In this scetion we will prove \autoref{thm:rank-ra-comp} following an approach by \cite{obmRaRank}\\
+
+The approach is to
+\begin{enumerate}
+	\item prove two inequalities, which are properties of the Ranking algorithm in the Random Arrival model
+	\item use these to define a family of exponential size linear programs $\mathrm{expLP}(n,k)$
+	\item relax it to a family of polynomial size linear programs $\mathrm{PolyLP}(n)$
+	\item derive a family of Strongly Factor-Revealing linear program $\mathrm{PolyLP'}(n)$
+	\item use computing machines to solve some linear programs from $\mathrm{PolyLP'}(n)$ to obtain a lower bound
+\end{enumerate}
+Do note that the last step is computational and does not prove an exact competitiveness ratio. Indeed, this approach merely shows that the ratio is at least $0.696$, and other analysis show it can be no larger than $0.727$. The exact competitiveness ratio is currently unknown.
+
+\subsection{Ranking properties}
+
+For the purposes of this section we fix a graph $G=(V,U,E)$\\
+$x(\sigma,\pi,u,v)=1$ iff $(u,v)\in\mathrm{Ranking}(G,\sigma,\pi)$\\
+$m^\star(u,v)=1$ iff $M\star(u)=v$.\\
+We will slightly abuse notation and tread vertices as integers in $[n]$, this way for $u\in U$, $\sigma(u)$ is the vertex with rank $u$. The same occurs for $v\in V$ and arrival time.
+
+\begin{lemma}[Dominance]
+	$\forall \sigma\in\Perm{U},\pi\in\Perm{V},u\in U,v\in V$
+	\begin{equation}
+		\label{ra-rank-eq1}
+		\sum\limits_{1\leq u'\leq u} x(\sigma,\pi,u',v)+\sum\limits_{1\leq v'\leq v-1} x(\sigma,\pi,u,v')\geq m^\star(\sigma(u),\pi(v))
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	This is an observation made before in the proof of \autoref{rank-cmp-unmatched-simple}
+	$(\sigma(u),\pi(v))\in M^\star$. When $v$ arrives at time $\pi(v)=t$, if it is matched then it must be matched either to $u$ or to $u'$ with a lower rank. The equation follows directly from the observation 
+\end{proof}
+
+Let $\mathrm{geq}(u_i,u_j)=1$ iff $u_i\geq u_j$
+
+\begin{lemma}[Monotonicity]
+	$\forall \sigma\in\Perm{U},\pi\in\Perm{V},u_{\mathrm{new}},u_{\mathrm{old}},u\in U,v\in V$ such that $l_{\mathrm{new}}<l_{\mathrm{old}},l<l_{\mathrm{old}}$,
+	Let $\sigma'$ be $\sigma$ where $u_{\mathrm{new}}$ and $u_{\mathrm{old}}$ swap places.
+	\begin{equation}
+		\label{ra-rank-eq2}
+		\sum\limits_{1\leq u'\leq u + \mathrm{geq}(u,u_{\mathrm{new}})}(\sigma',\pi,u',v)\geq\sum\limits_{1\leq u'\leq u}x(\sigma,\pi,u',v)
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	Again, this is a claim that is similar to the one in \autoref{rank-cmp-unmatched-complicated}. The difference between $\mathrm{Ranking}(G,\sigma,\pi)$ and $\mathrm{Ranking}(G,\sigma',\pi)$ is a single alternating path starting from $\sigma(u_\mathrm{old})$, implying that if $v$ was matched to some offline vertex with rank at most $u$ in $\mathrm{Ranking}(G,\sigma,\pi)$ then in $\mathrm{Ranking}(G,\sigma',\pi)$ it is matched an offline vertex with rank at most $u+\mathrm{geq}(u,u_{\mathrm{new}})$, which directly implies the inequality
+\end{proof}
+
+We can also express a symmetrical equation for $\pi'$
+
+\begin{equation}
+	\label{ra-rank-eq3}
+	\sum\limits_{1\leq v'\leq v + \mathrm{geq}(v,v_{\mathrm{new}})}(\sigma,\pi',u',v)\geq\sum\limits_{1\leq v'\leq v}x(\sigma,\pi,u,v')
+\end{equation}
+
+the proof is symmetrical, so we will ommit it
+
+\subsection[formulating expLP(n,k)]{formulating $\mathrm{expLP}(n,k)$}
+
+for the purposes of creating $\mathrm{expLP}(n,k)$ for a graph $G$ with $n$ vertices on both sides and $k$ edges, for every $\sigma,\pi,u,v\in\Perm{U}\times\Perm{V}\times U\times V$, $x(\sigma,\pi,u,v)$ is a separate variable. We create a linear program that enforces the properties of $x$ as follows
+
+\begin{align*}
+	\text{minimize} & \frac{1}{(n!)^2k}\sum\limits_{\sigma,\pi,u,v}x(\sigma,\pi,u,v)\\
+	\text{subject to} & \autoref{ra-rank-eq1}\\
+	& \autoref{ra-rank-eq2}\\
+	& \autoref{ra-rank-eq3}\\
+	& x(\sigma,\pi,u,v)\geq 0\\
+	& x(\sigma,\pi,u,v)\leq 1
+\end{align*}
+
+
+\begin{lemma}
+	The competitiveness ratio of Ranking in the Random Arrival model is lower bounded by $\inf\limits_{n\in N}\inf\limits_{l}\mathrm{expLP}(n,k)$ for any infinite subset of natural numbers $N$
+\end{lemma}
+\begin{proof}
+	Let $n\in\mathbb{N},n'\in\{x\in N|x>n\}$.\\
+	Suppose we want to run Ranking on a $n\times n$ graph $G$. By adding isolated vertices we can change it into a $n'\times n'$ graph with the identical run to that on $G$ when ignoring the isolated vertices\\
+	As shown in the lammas in the previous section, a valuation of $x$ is a feasible solution to $\mathrm{expLP}(n,k)$. The value of the objective function is the average over all $\sigma$ and $\pi$ divided by $n$, making it the performance of Ranking on that graph.  Note that the linear program is a relaxation, and so provides a lower bound on the competitiveness ration
+\end{proof}
+
+\subsection[relaxation to PolyLP(n)]{relaxation to $\mathrm{PolyLP}(n)$}
+
+This method relies in the final step on using LP solvers to obtain a bound rather then proving it analytically. For this reason the exponential size of $\mathrm{expLP}(n,k)$ relative to $n$ is unfortunate as it will make it practically impossible to complete this omputation in a reasonable time. For this reason we will create a family of polynomial size linear programs which in turn provide a good lower bound on the optimal values of the objective function of $\mathrm{expLP}(n,k)$
+
+We assume WLOG that the optimal matching $M^\star=\{(i,i)|i\in[n]\}$
+
+Let $x_1(u,v,p)$ be the probability over random $\sigma,\pi\in\Perm{U}\times\Perm{V}$ that offline agent of rank $u$ is matched to an online agent at time $v$ by Ranking and the offline agent at rank $p$ is matched to the online agent arriving at time $v$ in $M^\star$
+
+Let $x_2(u,v,q)$ be the probability over random $\sigma,\pi\in\Perm{U}\times\Perm{V}$ that offline agent of rank $u$ is matched to an online agent at time $v$ by Ranking and that the online agent arriving at time $q$ will be matched to the offline agent at rank $l$ in $M^\star$
+
+using $\mathrm{eq}(x,y)=1$ iff $x=y\land x,y<k$ where $k$ is the amount of edges, we can define these variables
+
+\[
+x_1(u,v,p)=\underset{\sigma,\pi}{\E}[\mathrm{eq}(\sigma(p),\pi(v))x(\sigma,\pi,u,v)]\\
+x_2(u,v,p)=\underset{\sigma,\pi}{\E}[\mathrm{eq}(\sigma(u),\pi(q))x(\sigma,\pi,u,v)]
+\]
+
+We introduce partial sum variables
+
+\[\forall i\in\{1,2\}\\
+y_i(u,v,p)=\begin{cases}
+0 & \text{if }u=0\lor v=0\\
+\sum\limits_{1\leq u'\leq u}x_i(u',r,p) & \text{else}
+\end{cases}\]
+
+Now we derive the new inequalities for $\mathrm{PolyLP}(n)$
+multiplying both sides of \autoref{ra-rank-eq1} by $\mathrm{eq}(\sigma(u)m\pi(r))$ gives
+
+\[\sum\limits_{1\leq u'\leq u}\mathrm{eq}(\sigma(u),\pi(r))x(\sigma,\pi,u',v)+\sum\limits_{1\leq v'\leq v}\mathrm{eq}(\sigma(u),\pi(r))x(\sigma,\pi,u,v')\geq\mathrm{eq}(\sigma(u),\pi(v))\]
+
+and taking expectation over ranom $\sigma,\pi$ results in
+
+\begin{equation}
+	\label{ra-rank-eq4}
+	y_i(u,v,u)+y_2(v-1,u,v)\geq \frac{k}{n^2}
+\end{equation}
+
+We multiply \autoref{ra-rank-eq2} similarly, for a fixed $p$ let $u_{\mathrm{old}}=n$ and again take expectation over random $\sigma,\pi$. RHS is $y_1(u,v,p)$.
+
+Notice that $\sigma'$ is uniformly random, $\sigma(p)=\pi(v)$ iff $\sigma''(p')=\pi(r)$ where $\sigma''$ which $\sigma$ with $u_{\mathrm{new}},n$ swapped and
+
+\[p'=\begin{cases}
+	p                & p<u_{\mathrm{new}}\\
+	p+1              & u_{\mathrm{new}}\leq p < n\\
+	u_{\mathrm{new}} & p=n
+\end{cases}\]
+
+from which we get the following equation
+
+\begin{equation}
+	\label{ra-rank-eq5}
+	y_1(u+\mathrm{geq}(u,u_{\mathrm{new}}),v,p')\geq y_1(l,r,p)
+\end{equation}
+
+and symmetrically from $\autoref{ra-rank-eq3}$
+
+\begin{equation}
+	\label{ra-rank-eq6}
+	y_2(v+\mathrm{geq}(v,v_{\mathrm{new}}),u,q')\geq y_1(l,r,q)
+\end{equation}
+
+with $q'$ being defined symmetrically to $p'$. Finally we add
+
+\[\sum\limits_p x_1(u,v,p)=\sum\limits_q x_2(v,u,q)\]
+
+as both sides are equal to $\frac{n}{k}\underset{\sigma,\pi}{\E}[x(\sigma,\pi,u,v)]$. Together, these inequalities also imply non-negativity and with $y_i$ replaced with their definitions on $x_i$ these inequalities form the LP constraints.
+
+The objective function is defined as $\frac{1}{2k}\left(\sum\limits_{u,v,p}x_1(u,v,p)+\sum\limits_{u,v,q}x_2(v,u,q)\right)$, equivalent to the previous objective.
+
+Before continuing to the last step we will implement the following simplifications to $\mathrm{PolyLP}(n)$.
+\begin{itemize}
+	\item $x_1=x_2$ since for a feasible $x_1,x_2$ $x_1'=x_2'=\frac{x_1+x_2}{2}$ is also feasible and this reduces the amount of variables by 2
+	\item WLOG $k=n$ since the fact that a solution for $k$ can be rescaled to $k'$ makes $k$ inconsequential
+	\item and several other which are more technical
+\end{itemize}
+which finally results in
+\begin{align*}
+	\text{Minimize} & \frac{1}{n}\sum\limits_{u,v,p\in[n]}x(u,v,p)\\
+	\text{subject to} & y(u,v,u)+y(v-1u,v)\geq \frac{1}{n}\\
+	& y(u+1,v,p+1)\geq y(u,v,p) & \forall p\leq l <n\\
+	& y(u,v,p)=y(u,v,u+1) & \forall u<p\\
+	& y(u+1,r,p)\geq y(u,v,u+1) & \forall p\leq u < n\\
+	& \sum\limits_p x(u,v,p)= \sum\limits_p x(v,u,p)
+\end{align*}
+
+\subsection[deriving PolyLP'(n)]{deriving $\mathrm{PolyLP'}(n)$}
+
+For a maximization algorithm a family of Linear Programs is strongly factor-revealing iff the solution of any linear program in it is a lower bound on the approximation ratio of the algorithm. It is stronger than the more common factor revealing family for which the infimum of the optimum solutions is the lower bound.
+
+$\mathrm{PolyLP}(n)$ is factor-revealing, in this section we will transform it into a strongly factor-revealing family $\mathrm{PolyLP'}(n)$. To do this, we will replace the first constraint with
+
+\begin{equation}
+	\label{ra-rank-eq-strong-factor}
+	y(u,v,u)+y(v,u,p)\geq \frac{1}{n}
+\end{equation}
+
+\begin{lemma}
+	\label{ra-rank-strong-rev}
+	the family of linear programs $\mathrm{PolyLP'}(n)$ is strongly factor-revealing for Ranking with random arrivals
+\end{lemma}
+\begin{proof}
+Take eny integer $m>0$. For any instance of size $n=km,k\in\mathbb{Z}$. We will prove that the competitiveness ratio of Ranking is lower-bounded by $\mathrm{PolyLP'}(m)$. We know that $\inf\limits_d\mathrm{PolyLP}(md)$ is greater or equal to the desired competitiveness ratio. We will take an optimal solution $(x,y)$ of $\mathrm{PolyLP}(md)$ and project it to a feasible solution of $\mathrm{PolyLP'}(m)$ as follows
+	\begin{definition}
+		For any $i,j,k\in[m]$ define $f(i)=\{d(i-1)+1,\dots,d * i\}, f(i,j)=f(i)\times f(j), f(i,j,k)=f(i)\times f(j)\times f(k)$ ($\times$ denotes Cartesian product)\\
+		For any $u',v',p'\in[m]$ define $x'(u',v',p')=\frac{1}{d}\sum\limits_{(u,v,p)\in f(u',v',p')}x(u,v,p)$,$y'(u',v',p')=\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd,v,p)$
+	\end{definition}
+	We will show what $x',y'$ for $\mathrm{PolyLP'}(m)$ has the same objective value as $x,y$ for $\mathrm{PolyLP}(m)$
+	\begin{align*}
+		 &\frac{1}{m}\sum\limits_{u',v',p'\in[m]}x'(u',v',p')\\
+		=&\frac{1}{m}\sum\limits_{u',v',p'\in[m]}\frac{1}{d}\sum\limits_{(u,v,p)\in f(u',v',p')}x(u,v,p)\\
+		=&\frac{1}{n}\sum\limits_{u,v,p\in[n]}x(u,v,p)\\
+		=&\mathrm{PolyLP}(n)
+	\end{align*}
+	Next, we show that $x',y'$ is feasible in $\mathrm{PolyLP}(n)$\\
+	The fifth constraint of $\mathrm{PolyLP'}(n)$ can be obtained by summing the fifth constraint of $\mathrm{PolyLP}(n)$ over $(u,v)\in f(u',v')$\\
+	The sixth constraint of $\mathrm{PolyLP'}(n)$ can be obtained by summing the sixth constraint of $\mathrm{PolyLP}(n)$ over $(v,p)\in f(v',p'),u=u'd$\\
+	The second constraint of $\mathrm{PolyLP'}(n)$ can be obtained as follows: for $p'\leq u' < m$
+	\begin{align*}
+		y'(u'+1,v',p'+1) &=\frac{1}{d}\sum\limits_{(r,p)\in f(v',p')}y(u'd+d,v,p+d)\\ 
+		                 &\geq \frac{1}{d}\sum\limits_{(r,p)\in f(v',p')} y(u'd,v,p)\\
+						 &=y'(u',v',p')
+	\end{align*}
+	where the inequality is the sesult of chaining multiple $y(u'd+j+1,r,p+j+1)\geq y(u'd+j,v,p+j)$ inequalities\\
+	The third constraint of $\mathrm{PolyLP'}(n)$ can be obtained as follows: for $u'<p'\leq n$, $r'\leq n$
+	\begin{align*}
+		y'(u',v',p')&=\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd,v,p)\\
+		            &=\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd,r,u'd+1)\\
+					&=\frac{1}{d}\sum\limits_{(v,p)\in f(v',u'+1)}y(u'd,v,p)\\
+					&=y'(u',v',u'+1)
+	\end{align*}
+	The fourth constraint of $\mathrm{PolyLP'}(n)$ can be obtained as follows: for $p'\leq u'< n, v'\leq n$
+	\begin{align*}
+		y'(u'+1,v',p')&=\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd+d,v,p)\\
+		              &\geq\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd+1,v,p)\\
+					  &\geq\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd,v,u'd+1)\\
+					  &=\geq\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd,v,p)\\
+					  &=y'(u',v',u'+1)
+	\end{align*}
+	where the first inequality is the consequence of the definition of $y$ and $x$'s non-negatibity and the second inequality follows from the fourth constraint of $\mathrm{PolyLP}(n)$\\
+	The first constraint of $\mathrm{PolyLP'}(n)$, which is \autoref{ra-rank-eq-strong-factor}, can be obtained as follows
+	\begin{align*}
+		y'(v',u',p')&=\frac{1}{d}\sum\limits_{(u,p)\in f(u',p')}y(v'd,u,p)\\
+		            &\geq \frac{1}{d}\sum\limits_{(u,p)\in f(u',p')}y(v'd-1,u,v'd)\\
+					&\geq \frac{1}{d}\sum\limits_{(u,p)\in f(u',p')}y(v-1,u,v'd)\\
+					&=\frac{1}{d}\sum\limits_{(u,p)\in f(u',p')}y(v-1,u,v)
+	\end{align*}
+	where the first inequality is the consequence of the fact that $p\geq v'd\implies y(v'd,u,p)\geq y(v'd-1,u,p)=y(v,d-1,u,v'd)$ and $p<v'd\implies y(v'd,u,p)\geq y(v'd-1,u,v'd)$. The second inequality is the consequence of the third constraint of $\mathrm{PolyLP}(n)$
+	Concluding
+	\begin{align*}
+		     &y'(u',v',u')+y'(v',u',p')\\
+		\geq & \frac{1}{d} \sum\limits_{(v,u)\in f(v',u')}y(u'd,v,u) + \frac{1}{d} \sum\limits_{(u,v)\in f(u',v')}y(v-1,u,v)\\
+		\geq & \frac{1}{d} \sum\limits_{(v,u)\in f(v',u')}y(u,v,u) + \frac{1}{d} \sum\limits_{(u,v)\in f(u',v')}y(v-1,u,v)\\
+		\geq \frac{1}{d}d^2\frac{1}{n}=\frac{1}{m}
+	\end{align*}
+	where the first inequality is a consequence of non-negativity of $x$ and the definition of $y$ and the second inequality is a result of the first constraint in $\mathrm{PolyLP}(n)$\\
+
+	With this we conclude - for all $\mathrm{PolyLP}(md)$, their optimal solutions are mapped to feasible solutions of $\mathrm{PolyLP'}(m)$, making the optimum of $\mathrm{PolyLP'}(m)$ a lower bound on $\inf\limits_d\mathrm{PolyLP}(md)$, a lower bound on competitiveness
+\end{proof}
+
+With \autoref{ra-rank-strong-rev} proven, the theoretical framework of this proof is complete and we cite the computational result. In \cite{obmRaRank}, appendix B state that the optimum solution for $\mathrm{PolyLP'}(50)$ is $0.696150$. We also note that these results were obtained using CPLEX software.

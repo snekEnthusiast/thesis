@@ -64,8 +64,7 @@ Now, all that is required to prove the following lemma
 The rest of this section is the proof of this lemma.
 
 %Original Karp et al analysis
-\newcommand*\rem{\mathrm{rem}}
-\newcommand*\avl{\mathrm{avl}}
+
 Let $\rem(t)$ be the random variable representing the number of remaining online vertices and $\avl(t)$ be the number of offline vertices availible for matching, at the time $t$. $\Delta f$ is used conventionally, as the change of $f(t)$ over $t$.\\
 $\Delta \rem$ is always $-1$ while $\Delta\avl$ is either $-1$ or $-2$. It is only $-2$ if $n_t$ is being matched and $f_t$ is availible (event $A_t^1$) and it isn't matched to $n_t$ (event $A_t^2$) since $f_t$ becomes unmatchable.\\
 Note that $\rem$ is essentially a clock ticking backwards since it has value $n-t$
