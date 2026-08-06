@@ -1,0 +1,25 @@
+\begin{definition}[iid Model]
+	In the iid model the algorithm always knows a set of offliene vertices $U$, but there is no determined set of online vertices $V$. Instead, there is a set $V'$ of vertex 'archetypes' consisting of a neighborhood $N\subseteq U$ and a probability $p$. When a new vertex $v$ arrives, for each $(N,p)\in V'$ $v$ has of $p$ to have neighborhood $N$. The archetype set $V'$ is known to the algorithm
+\end{definition}
+We note two things here:
+\begin{enumerate}
+	\item obviously, $\sum\limits_{(N,p)\in V'}p=1$
+	\item This model can no longer be described as a game against an adversary since the adversary has been stripped of all agency
+\end{enumerate}
+
+We will present the proof of two theorems in thi chapter:
+
+\begin{theorem}
+	No algorithm has a competitiveness of $1-\epsilon$ for an arbitrary $\epsilon$ in the iid model
+\end{theorem}
+meaning that there is no perfect algorithm, and
+\begin{theorem}
+	There is al algorithm with a competitiveness of at least $\approx 0.729$
+\end{theorem}
+which is substantially better than the $0.696$ guaranteed under random arrivals, though not exceeding it's upper bound of $0.727$
+
+\section{Competitiveness Limit}
+\input{sections/stochastic_arrivals/comp_limit.tex}
+
+\section{0.729 Algorithm}
+\input{sections/stochastic_arrivals/algorithm.tex}

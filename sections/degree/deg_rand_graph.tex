@@ -7,6 +7,15 @@ as shown before, despite it's potential the Final Degree model doesn't allow for
 	We denote the random graph of vectors $\vec{p},\vec{q}$ $I_{\vec{p},\vec{q}}$
 \end{definition}
 Do note that in this model the matching can no longer be expressed as a game since there are no choices for an adversary to make and $\vec{u},\vec{v}$ are merely descriptors of a class of random graphs\\
+Since the model is probabilistic and there is no final graph, the RED algorithm, when adapted to this setting, is as follows
+\begin{algorithm}
+	\caption{RED-CLV}
+	\label{alg:effective-deg-rand-clv}
+	\begin{algorithmic}
+		\item on Initialization: for each offline vertex $u_i$ let $d_{u_i}=\sum\limits_{v=\in\vec{v_i}}v\vec{u}_i$
+		\item on Arrival of vertex $v$: match to $\underset{u\in U,\text{unmatched}}{\mathrm{argmin}}d_u$
+	\end{algorithmic}
+\end{algorithm}
 \begin{theorem}
 	\autoref{alg:effective-deg-rand} (RED) is optimal in CLV-B model, meaning\\
 	for any algorithm $\mathrm{A}, t\in\mathbb{Z}_{+},\vec{p}\in[0,1]^n,\vec{q}\in[0,1]^m$ $\Pr[\mathrm{A}(I_{\vec{p},\vec{q}})>t]\leq \Pr[\mathrm{RED}(I_{\vec{p},\vec{q}})>t]$

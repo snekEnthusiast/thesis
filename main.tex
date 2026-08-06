@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass{report}
 %tikz library setup
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta}
@@ -74,29 +74,31 @@ sorting=ynt
 
 \begin{document}
 
-%commands
-\newcommand*\E{\mathbb{E}}
-
 \begin{abstract}
 	\input{sections/abstract.tex}
 \end{abstract}
 
-\section{Introduction}
+\chapter{Introduction}
 \input{sections/introduction.tex}
 
-\section{Preliminaries}
+\tableofcontents
+
+\chapter{Preliminaries}
 \input{sections/preliminaries.tex}
 
-\section{Semi-Online Model}
+\chapter{Semi-Online Model}
 \input{sections/classical.tex}
 
-\section{Random Arrival}
+\chapter{Random Arrival}
 \input{sections/random_arrivals.tex}
 
-\section{Delay Model}
+\chapter{Stochastic Arrivals}
+\input{sections/stochastic_arrival.tex}
+
+\chapter{Delay Model}
 \input{sections/delay.tex}
 
-\section{Final Degree Model}
+\chapter{Final Degree Model}
 \input{sections/degree.tex}
 
 \clearpage
