@@ -10,4 +10,8 @@ If $x$ arrives first, if it is matched to $1$ and then two $y$ vertices $y_1,y_2
 This argument is symmetric, for any first arrival $v$ matched to $u$ there is an archetype $v'$ that forces this scenario.\\
 The probability of this scenario is therefore the probability of $(v',v')$ arriving after $v$, which is $\frac{1}{9}$. Assuming that in all other scenarios the algorithm find the perfect matching, competitiveness is ar most $\frac{1}{9}\frac{2}{3}+\frac{8}{9}1=\frac{26}{27}$.
 
-Therefore, the theorem is proven and the competitiveness of any algorithm in the iid model is bounded by $\approx0.962$
+Therefore, the theorem is proven and the competitiveness of any algorithm in the iid model is bounded by $\approx0.962<1$
+
+\begin{remark}
+	We can extend this result asymototically (albeit not the exact upper bound) by duplicating the 6-Cycle $k$ times
+\end{remark}
