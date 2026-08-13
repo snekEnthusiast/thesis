@@ -1,0 +1,232 @@
+the algorithm presented, as well as the proof follow the ideas from \cite{obmRecourse}
+\begin{algorithm}
+	\caption{SAP}
+	\label{alg:sap}
+	\begin{algorithmic}
+		\item on Arrival of vertex $v$: Augment the matching with the shortest augmenting path from $v$ is exists
+	\end{algorithmic}
+\end{algorithm}
+
+The crucial part of this proof is the proof of the following
+\begin{lemma}[Augmentation Lemma]
+	\label{recourse-crucial}
+	$\forall h\in\mathbb{Z}$, SAP, over it's entire runtime, augments the matching with a total of no more then $\frac{4n\ln(n)}{h}$ augmenting paths longer than $h$
+\end{lemma}
+First, we will prove SAP's correctness
+
+\begin{lemma}
+	SAP maintains a maximum matching
+\end{lemma}
+\begin{proof}
+	We will conduct the proof by onduction over time $t$. Time at $t=0$ when no vertices have arrived forms a trivial base case with the maximal matching being $M=\emptyset$. For the induction step:
+	Knowing
+	\begin{enumerate}
+		\item At time $t$, the matching $M_t$ is maximal, and
+		\item A matching is maximal iff there are no augmenting paths
+	\end{enumerate}
+	we conclude that if $M_t$ isn't maximal at time $t+1$ then there must be an augmenting path that didn't exist at time $t$, meaning that the newly arriving $v$ must be it's starting point
+\end{proof}
+
+Then, we'll prove the Recourse bound using \autoref{recourse-crucial}
+\begin{proof}
+	We will sum all possible $h$ augmenting path lengths by grouping them into inervals $l_i=[2^i,2^{i+1})$\\
+	Paths in $l_i$ contain no more than $2^{i+1}$ edges and there are no more than $\frac{4n\log n}{2^i}$ in each group, giving $O(n\log n)$ edges per group.
+	Since there are $\log_2(n)+1$ groups, total Recourse, which is no greater than the sum of all edges in all paths in all groups is no greater than $O(n \log^2n)$
+\end{proof}
+
+and finally, we will present the proof of \autoref{recourse-crucial} in the following sections
+
+\subsection{Server Flow}
+In this subsection we will prove the Augmentation Lemma
+
+A server flow is a fractional assignment from $V$ to $U$, in which an online vertex sends flow, up to 1, to servers, every one of which has a unique capacity to receive flow.
+\begin{definition}[Server Flow]
+	A server flow is $\alpha$ is a map from $U$ to $\mathbb{R}_{\geq 0}$ such that there are non-negative reals $\{x_e|e\in E\}$ such that
+	\begin{align*}
+		\forall v\in V:\sum\limits_{u\in N(v)}x_{uv}=1 && \forall u\in U:\sum\limits_{v\in N(U)}x_{uv}=\alpha(u)
+	\end{align*}
+\end{definition}
+we refer to these $x$-values as realizing the flow. Note that if $\forall u:\alpha(u)=1$ then this is a fractional matching.\\
+Going forward we assume $\forall v\in V:\sum\limits_{u\in N(v)}x_{uv}\geq 1$ as otherwise no server flow is possible
+
+Informally, a Balanced Server Flow is one where 
+\begin{definition}[Balanced Server Flow]
+	A Server Flow is Balanced if
+	\begin{align*}
+		A(v)= \underset{u\in N(v)}{\mathrm{argmin}}\alpha(u)\\
+		\forall v\in V\forall u\in N(v)\backslash A(v):x_{uv}=0
+	\end{align*}
+\end{definition}
+
+where $A(v)$ are called active neighbors of $v$
+
+\begin{lemma}
+	\label{balanced-sf-iff}
+	A balanced server flow exists iff $\forall v\in V: |N(v)|\geq 1$
+\end{lemma}
+\begin{proof}
+	Proving requirement (if) simple, if an online vertex doesn't have a neighbor, it's resource cannot be received, and there is no server flow.\\
+	We will prove uniqueness by using convex programming. The program
+	\begin{align*}
+		\text{minimize} & \sum\limits_{u\in U}\alpha(u)^2\\
+		\text{subject to} & \sum\limits_{u\in N(v)}x_{uv}=1 & \forall v\in V\\
+		& \sum\limits_{v\in N(u)}x_{uv}=\alpha(u) & \forall u\in U
+	\end{align*}
+	is convex, and moreover, the objective function is strictly convex (due to being a $n$-dimensional paraboloid) meaning that the program has a unique (with regard to $\alpha$-values) optimum\\
+	Observe that the optimum is a balanced server flow: constraint ensure that it is a server flow and if it wasn't balanced there would be an online vertex $v$ that sends non-zero flow to $u,u'$ and $\alpha(u)<\alpha(u')$. Notice that the objective function can be decreased by increasing $\alpha(u)$ and reducing $\alpha(u')$ until they are identical, therefore the flow must be balanced.
+\end{proof}
+
+We will now prove that the balanced server flow is unique (regarding $x$-values) using an auxillary lemma
+
+%insert above, unify proofs
+\begin{lemma}
+	\label{balanced-sf-aux}
+	For a balanced server flow $x_{uv}$
+	Let $\alpha_u=\sum\limits_{v\in V}x_{uv}$ be server flow of $u$\\
+	Let $x'_{uv}$ be feasible server flow\\
+	Let $\alpha'_u=\sum\limits_{v\in V}x'_{uv}$ be resulting server load\\
+	\begin{align*}
+		\sum\limits_{u\in U}\alpha_u^2\leq\sum\limits_{u\in U}\alpha_u\alpha'_u
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	for $v\in V$ let $\mu(v)=\underset{u\in N(v)}{\min}\alpha_u$ be the minimum server load of $u\in N(v)$
+	\begin{align*}
+		 &\sum\limits_{u\in U}\alpha_u^2\\
+		=&\sum\limits_{u\in U}\sum\limits_{v\in V}x_{uv}\alpha_u\\
+		=&\sum\limits_{v\in V}\sum\limits_{u\in U}x_{uv}\alpha_u\\
+		=&\sum\limits_{v\in V}\sum\limits_{u\in U}x_{uv}\mu(v)\\
+		=&\sum\limits_{u\in U}x_{uv}\mu(v)\\
+		=&\sum\limits_{v\in V}\sum\limits_{u\in U}x'_{uv}\mu(v)\\
+		\leq&\sum\limits_{v\in V}\sum\limits_{u\in U}x'_{uv}\alpha_u\\
+		=&\sum\limits_{u\in U}\sum\limits_{v\in V}x'_{uv}\alpha_u\\
+		=&\sum\limits_{u\in U}\alpha'_u\alpha_u
+	\end{align*}
+	with the inequality being caused by the fact that the flow $x_{uv}$ is balanced, so $\alpha_u\geq\mu(v)$ for any edge $(u,v)\in E$
+\end{proof}
+
+\begin{lemma}
+	\label{balanced-sf-unique}
+	The server flow in \autoref{balanced-sf-iff} is unique if it exists
+\end{lemma}
+\begin{proof}
+	Using \autoref{balanced-sf-aux} we can argue that the balanced server flow is the optimum of the linear program in the proof of \autoref{balanced-sf-iff}.\\
+	We can treat a feasible solution $\alpha'$ as a vector, with \autoref{balanced-sf-aux} showing that $||\alpha||\leq \alpha\alpha'$ which with non-negativity implies $||\alpha||\leq||\alpha'||$\\
+	Therefore, any balanced server flow is the optimum of the convex program, which in turn implies that it must be unique sinct the optimum is unique.
+\end{proof}
+
+Let $\alpha$ be the balanced server flow at time $t$ and $\alpha'$ be the balanced server flow at time $t+1$, after a new online vertex arrives.\\
+$\Delta\alpha(u)=\alpha(u)-\alpha'(u)$
+\begin{lemma}
+	\label{balanced-sf-insert}
+	$\forall u\in U:\Delta\alpha(s)\geq 0$
+\end{lemma}
+\begin{proof}
+	Let $U'=\set{u|\Delta\alpha(u)<0}$\\
+	We will prove by contradiction that $U'=\emptyset$\\
+	Assume $U'\neq\emptyset$, let $\alpha^\star=\underset{u\in U'}{\alpha'(u)}$.\\
+	Let $U^-=\set{u\in U|\alpha(u)\leq\alpha^\star}$\\
+	Let $U^\Delta=\set{u\in U|\alpha(u)>\alpha'\land\alpha'(u)=\alpha^\star}$\\
+	Let $U^+=\set{u\in U|\alpha(u)>\alpha'\land\alpha'(u)>\alpha^\star}$\\
+	These three partition $U$, $\emptyset\neq U^\Delta\subseteq U'$\\
+	Let $V^\Delta$ be the set of all $v\in V$ with an active neighbor at time $t$. Since each sends one unit of flow, $\sum\limits_{u\in U}\alpha(u)\leq|V^\Delta|$\\
+	The server flow being balanced at $t$ implies there is no edges from $V^\Delta$ to $S^-$ at time $t$.\\
+	Further, there are no active edges from $V^\Delta$ to $S^+$ at time $t+1$\\
+	Therefore, all active edges incident to $V^\Delta$ must connect to $U^\Delta$ implying $\sum\limits_{u\in U}\alpha'(u)\geq|V^\Delta|$.
+	This in turn, when combined with the previous inequality implies $\sum\limits_{u\in U}\alpha'(u)\geq \sum\limits_{u\in U}\alpha(u)$\\
+	This is a contradiction as, by definition of $U^\Delta$, $\sum\limits_{u\in U}\alpha'(u)< \sum\limits_{u\in U}\alpha(u)$ 
+\end{proof}
+
+\begin{lemma}
+	\label{balanced-sf-affects}
+	when $v$ arrives, $\forall u\in U:\alpha(u)<\underset{u'\in N(v)}{\min}\alpha(u')\implies\Delta\alpha(u)=0$
+\end{lemma}
+Or, more informally ans simplistically, arrival of $v$ only connected to $s$ cannot affect the flow of offline vertices whose flow is less than the flow among neighbors of $s$
+\begin{proof}
+	consider the balanced server flow at time $t$ (before inserting $v$)\\
+	Let $U^+=\set{u\in U|\alpha(u)\geq\underset{u'\in N(v)}{\min}\alpha(u')}$\\
+	Ler $U^-=U\backslash U^+$ be complement of $U^+$\\
+	Let $V^+=\set{v\in V|N(v)\subseteq U^+}$. Note that, before the insertion of $v$, there are no edges between $V^+$ and $U^-$, together with the fact that there are no active edges from $V^-$ to $U^+$ because the flow is balanced implying $\sum\limits_{u\in U}\alpha(u)=|V^-|$\\
+	After the insertion of $v$, by definition of $U^-$ $v$ has no neighbors in $U^-$, maintaining previous property, implying the new balanced flow $\alpha'$ has the property $\sum\limits_{u\in U}\alpha'(u)\leq |V^-|$, meaning that $\sum\limits_{u\in U}\Delta\alpha(u)\leq 0$\\
+	If, for some $u_1$, $\Delta\alpha(u_1)>0$ then $\Delta\alpha(u_2)<0$ for some other $u_2$, contradicting \autoref{balanced-sf-insert}
+\end{proof}
+
+\begin{lemma}
+	\begin{align*}
+		\forall T\subseteq U: |\set{v\in V|A(v)\subseteq T}|\leq \sum\limits_{u\in T}\alpha(u)\leq |\set{v\in V|A(c)\cap T\neq\emptyset}|
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	The first inequality is a direct result of the fact that every online vertex in the first set contributes exactly $1$ to the sum\\
+	The second inequality is a direct result of the fact that every online vertex contributes exactly $1$ to $\sum\limits_{u\in U}\alpha(u)$, and in the inequality every online vertex contributing anything to $\sum\limits_{u\in T}\alpha(u)$ is counted as if contributing $1$
+\end{proof}
+
+\begin{lemma}
+	Let $\overline{\alpha}=\underset{u\in U}{\min}\alpha(u)$ be maximal necessity, $\overline{U}=\set{u\in U|\alpha(u)=\overline{\alpha}}$ maximally necessary servers, $K'=\set{v\in V|A(v)\cap\overline{S}\neq\emptyset}$ active neighbors, then $N(K')=\overline{U}$, $|K'|=\overline{\alpha}|\overline{U}|$
+\end{lemma}
+\begin{proof}
+	Let $K=\set{v\in V|A(v)\subseteq\overline{U}}$\\
+	Note that $K\subseteq K'$\\
+	Note that, by definition of $\overline{U}$, $K'\neq\emptyset$ and $v\in K'\implies N(v)=A(v)\subseteq\overline{U}$\\
+	Therefore $K=K'$, $N(K')=\overline{U}$.\\
+	By the previous lemma $|K'|=|K|\leq\overline{\alpha}|\overline{U}|\leq|K'|$ implying equality
+\end{proof}
+
+\begin{lemma}
+	\label{balanced-sf-max}
+	\begin{align*}
+		\overline{\alpha}=\underset{\emptyset\subset K\subseteq V}{\max}\frac{|K|}{|N(K)|}
+	\end{align*}
+	and $\forall K\subseteq V:|K|=\overline{\alpha}|N(K)|\implies\forall u\in N(K)\alpha(u)=\overline{\alpha}$
+\end{lemma}
+\begin{proof}
+	Definition of server flow implies, for $K\subseteq V$ $|K|\leq\sum\limits_{u\in N(K)}\alpha(s)\leq\overline{\alpha}|N(K)|$ implying $|K|\leq\overline{\alpha}|N(K)|$.\\
+	Let $K'$ be defined as in above lemma. Then $\overline{\alpha}=\frac{|K'|}{N(K')}\leq\underset{\emptyset\subset K\subseteq V}{\min}\frac{|K|}{|N(K)|}\leq\overline{\alpha}$\\
+	If $|K|=\sum\limits_{u\in N(K)}\alpha(u)=\overline{\alpha}|N(K)|$ then $\forall u\in U:\alpha(u)\leq\overline{\alpha}$ implies $\forall u\in N(K):\alpha(u)=\overline{\alpha}$
+\end{proof}
+
+subsection{Replacement Analysis}
+We will now draw a connection between Server Flow and Matching and use the previous lemmas to prove \autoref{recourse-crucial}
+
+\begin{lemma}
+	$G=(U,V,E)$ constins a matching of size $|V|$ iff $\forall u\in U\alpha(u)\leq 1$
+\end{lemma}
+\begin{proof}
+	The lemma follows directly from \autoref{balanced-sf-max}: $\forall K\subseteq V:|K|\leq |N(K)|$ iff $\overline{\alpha}\leq 1$.
+\end{proof}
+
+Define $V_M\subseteq V$ as follows: when $v$ arrives, $V'$ are the vertices that arrived previously. $v\in V_M$ iff the maximum matching after $v$ arrived is greater than the one before.\\
+$G_M=(U,V_M,E)$ as opposed to the final graph $G=(U,V,E)$\\
+$\alpha_M$ is the balanced server flow in $G_M$. By \autoref{balanced-sf-unique} it is unique
+An augmenting tail from vertex $v\in U\cup V$ is an alternating path starting at $v$ and ending at an unmatched $u\in U$. Tail is active if all edges that aren't in the matching are active
+
+\begin{lemma}[Expansion]
+	\label{recourse-expansion}
+	Assume $\alpha_M(u)=1-\epsilon$ for some $u\in U,\epsilon>0$. There is an active augmenting tail for $u$ of length at most $\frac{2}{e}\ln(|V_M|)$
+\end{lemma}
+\begin{proof}
+	Notice that any offline vertex $u'$ reachable from $u$ by an active augmenting tail has $\alpha_M(u')\leq 1-\epsilon$\\
+	Let $K_i$ be online vertices $v$ such that there is an augmenting tail $u_0,v_0,\dots,v_{k-1},u_k$ where $u=u_0,v=v_j$ for some $j<i$. Do note that $v\in K_i\implies v\in K_{i+1}$.
+	\begin{align*}
+		|K_i|\leq\sum\limits_{u'\in A(K_i)}\alpha_M(u')\leq\sum\limits_{u'\in A(K_i)}(1-\epsilon)=|A(K_i)|(1-\epsilon)
+	\end{align*}
+	Implying $|A(K_i)|\geq\frac{|K_i|}{1-\epsilon}$.
+	Assuming no active augmenting tails from $u$ of length at least $2(i-1)$, every offline vertex in $A(K_i)$ is matched and the set of offline vertices they are matched to is $K_{i+1}$\\
+	Bijection $A(K_i)\leftrightarrow K_{i+1}$ is implied by the perfect matching, so $|K_{i+1}|=|A(K_i)|$ therefore $|V_M|\geq|K_{i+1}|\geq\left(\frac{1}{1-\epsilon}\right)^i|K_{1}|=\left(\frac{1}{1-\epsilon}\right)^i$. This, alongside $1-e\leq e^{-epsilon}$ imply that $i\leq\frac{\ln|V_M|}{\ln\frac{1}{1-\epsilon}}\leq\frac{1}{\epsilon}\ln|V_M|$.
+	Therefore, for any $i>\frac{1}{\epsilon}\ln|V_M|$ there is an active augmenting tail of length at most $2(i-1)$ implying the lemma
+\end{proof}
+
+We can now proceed to the proof of \autoref{recourse-crucial}. Recall the lemma statement: By, on vertex arrival, adding augmenting paths from the arriving vertex if possible, no more than $\frac{4n\ln n}{h}$ augmenting paths of length greater than $h$ are added in total
+
+\begin{proof}
+	$n=|V|\geq|V_M|$. For $h\leq 4\ln n$ this lemma holds trivially since there are at most $n$ augmenting paths in total. We therefore assume $h>4\ln n$ for the remainder of the proof.\\
+	Note that any augmenting path must be in $G_M$\\
+	Let $V'\subseteq V_M$ be the online vertices whose shortest augmenting paths are longer than $h+1$ when they are added, the lemma is equivalent to the statement $|V'|\leq \frac{4n\ln n}{h}$\\
+	For $v\in V'$ the shortest augmenting tail from each $u\in N(v)$ has length at least $h$, so by \autoref{recourse-expansion} each has $\alpha_M(u)\geq 1-\frac{2\ln n}{h}$.\\
+	Let $U'$ be all online vertices $u$ that some point have $\alpha_M(u)\geq1-\frac{2\ln n}{h}$. By \autoref{balanced-sf-insert} $U'$ is also the set of offline vertices $u$ that $\alpha_M(u)\geq1-\frac{2\ln n}{h}$ in the final graph\\
+	By \autoref{balanced-sf-affects} $v\in V'$ implies arrival of $v$ only increases the flow of offline vertices in $U'$ that had a flow not below $1-\frac{2\ln n}{h}$ before arrival.\\
+	Since $G_M$ has a perfect matching, $\forall u\in U:\alpha_M(u)\leq\alpha(u)\leq 1$, implying the flow can only increase by no more than $2n\ln n$\\
+	Since each $v\in V$ contributes exactly $1$ flow, the total number of these online vertices is $|V'|<|U'|\frac{2\ln n}{h}$\\
+	Again, each $v\in V_M$ sends $1$ flow implying $n\geq|V_M|\geq(1-\frac{2\ln n}{h})|U'|>\frac{|U'|}{2}$ since $h>4\ln n$.
+	This results in $|V'|<|U'|\frac{2\ln n}{h}<\frac{4n\ln n}{h}$ proving the lemma
+\end{proof}

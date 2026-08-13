@@ -1,0 +1,9 @@
+We have shown that deterministic algorithm don't have a good comptitiveness in the online bipartite matching problem, even if half the graph is visible or the final degrees are known.\\
+As discussed earlier, competitiveness is a very pessimistic metric, which focuses exclusively on a worst-case scenario. When trying to find a model with good deterministic competitiveness it is reasonable then to increase the worst possible performance at the cost of reducing the best possible performance, or informally to allow an algorithm to 'hedge bets'\\
+This is the focus of the fractional approach. A fractional matching is an assignment of numbers $w_e\in[0,1]$ to edges $e\in E$ of a graph constrained by the condition that $\forall_v\in V(G):\sum\limits_{e\text{ connecting }v}w_e\leq 1$. The size of a fractional matchign is $\sum\limits_{e\in E}w_e$
+It is a generalization of a matching since a fractional matching with $w_e\in\set{0,1}$ is a matching\\
+\begin{definition}
+	In the Fractional model, an algorithm finds a fractional matchign in an online fashion. All other details are identical to the Semi-Online model
+\end{definition}
+In the Fractional model a deterministic algorithm can hedge it's bets to reduce worst case scenarios. When a online vertex $v$ arrives in the Semi-Online model it has to be matched to one of it's neighbors $N(v)$ with some of these choices ultimately reducing the size of the matching found and some preserving it. The obvious difficulty is that even an oblivious adversary can force a deterministic algorithm to make the wrong choice every time.\\
+The strength of the Fractional model is the fact that
