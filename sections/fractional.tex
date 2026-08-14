@@ -6,4 +6,78 @@ It is a generalization of a matching since a fractional matching with $w_e\in\se
 	In the Fractional model, an algorithm finds a fractional matchign in an online fashion. All other details are identical to the Semi-Online model
 \end{definition}
 In the Fractional model a deterministic algorithm can hedge it's bets to reduce worst case scenarios. When a online vertex $v$ arrives in the Semi-Online model it has to be matched to one of it's neighbors $N(v)$ with some of these choices ultimately reducing the size of the matching found and some preserving it. The obvious difficulty is that even an oblivious adversary can force a deterministic algorithm to make the wrong choice every time.\\
-The strength of the Fractional model is the fact that
+The strength of the Fractional model is the fact that an algorithm can instead make a compromise between good and bad choices, reducing the worst outcomes in the process.\\
+Note that in an offline setting the sizes of a graph's matching and fractional matching are identical. This is due to the fact that a matrix describing a fractional matching (shown later) is totally unimodular and polyhedrons $Ax\leq b$ for which $A$ is totally unimodular and $b$ is integer (as is the case here) are integer, meaning that their vertices are integers, implying that for any optimization direction an integer vector is an optimum
+\begin{algorithm}
+	\caption{Waterlevel}
+	\label{alg:waterlevel}
+	\begin{algorithmic}
+		\item on Initialization: create water level of all offline vertices $\forall u\in U:d(u)=\sum\limits_{v\in V,\text{visible}}w_{u,v}$
+		\item on Arrival of vertex $v$: Increase $w$ of edges towards neighbors with the lowest water level, to maximize $\underset{u\in N(v)}{\min}d(u)$ until $1$ unit has been alloted or all neighbors have a water level of $1$
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{theorem}
+	\label{thm:waterlevel-comp}
+	The Waterlevel \autoref{alg:waterlevel} has a competitiveness of $1-\frac{1}{e}$
+\end{theorem}
+
+We note that this both the algorithm and it's cometitiveness are well-known. Our analysis will follow the Cornell lecture CS-6820 on Online bipartite matching algorithms
+
+\begin{proof}
+	The basis of this proof is the primal-dual method. A bipartite fractional matching is represented by the following primal-dual program. $l(v)$ denotes the new water level among neighbors of $v$ after it arrives and is matched
+	\begin{align*}
+		\text{maximize} & \sum\limits_{(u,v)\in E}x_{uv}&&
+		\text{minimize} & \sum\limits_{u\in U}\alpha_u+\sum\limits_{v\in V}\beta_v\\
+		\text{under} & \forall v\in V: \sum\limits_{u\in N(v)}x_{uv}\leq 1&&
+		\text{under} & \forall u,v\in E: \alpha_u+\beta_v\geq 1\\
+		& \forall u\in U: \sum\limits_{v\in N(u)}x_{uv}\leq 1&&
+		& \forall (u,v)\in E: x_{uv}\geq 0\\
+		& \forall (u,v)\in E: x_{uv}\geq 0\\
+	\end{align*}
+	We define a dual solution as follows
+	\begin{align*}
+		\alpha_u&=g(d(u))\\
+		\beta_v &=1-g(l(v))\\
+		g(y)=\frac{e^y-1}{e-1}
+	\end{align*}
+	$g$ has several properties
+	\begin{enumerate}
+		\item it is increasing
+		\item $g(0)=0$
+		\item $g(1)=1$
+		\item $1-g(y)+g'(y)=\frac{e}{e-1}$
+	\end{enumerate}
+	Observe that the defined dual solution is feasible since after the arrival of $v$. $u,v\in E\implies d(u)\geq l(v)$. By property 1
+	\begin{align*}
+		\alpha_u+\beta_v=g(d(u))+1-g(l(v))\geq 1
+	\end{align*}
+	verifying dual feasibility\\
+	\begin{lemma}
+		\label{waterlevel-pd}
+		\begin{align*}
+			\frac{e}{e-1}\sum\limits_{(u,v)\in E}x_{uv} \geq $\sum\limits_{u\in U}\alpha_u+\sum\limits_{v\in V}\beta_v$
+		\end{align*}
+	\end{lemma}
+	\begin{proof}
+		Define $\beta'$ as follows: $n_v(t)$ is the amount of $u\in N(v)$ such that the inequality $d(u\leq t)$ holds when $v$ arrives.
+		$\int\limits_0^{l(v)}n_v(t) dt=1$ if $l(v)<1$\\
+		$\beta_j'=\int\limits_0^{l(v)}(1-g(t))n_v(t) dt$\\
+		Note that $\beta'_j\geq\beta_j$ because, $l(v)=1$ is implied by $\beta_v=0$ and $l(v)<1$ is implied by $1-g(t)$ being a decreasing function and therefore\\
+		\begin{align*}
+			\beta'_v=\int\limits_0^{l(v)}(1-g(t))n_v(t) dt > (1-g(l(v)))\int\limits_0^{l(v)}n_v(t) dt= 1-g(l(v))=\beta_v
+		\end{align*}
+		proves the claim.\\
+		We now analyze the amount by which the dual objective function changes by the arrival of vertex $v$. In this situation $\deg$ will denote the degree before the arrival of $v$. This amount is
+		\begin{align*}
+			&\beta_v+\sum\limits_{u\in N(v)}g(l(v))-g(\deg(u))\\
+			=&1-g(l(v))+\sum\limits_{u\in N(v)}\int\limits_{\deg(u)}^{l(v)}g'(t)dt\\
+			=&1-g(l(v))+\int\limits_{\deg(u)}^{l(v)}n_v(t)g'(t)dt\\
+			&\leq\int\limits_{0}^{l(v)}\left(1-g(t)+g'(t)\right)n_v(t)dt\\
+			=&\frac{e}{e-1}\int\limits_0^{l(v)}n_v(t)dt\\
+			=&\frac{e}{e-1}\sum\limits_{u\in N(v)}x_{uv}
+		\end{align*}
+		which is no more than $\frac{e}{e-1}$ times the increase in the primal objective, proving the inequality
+	\end{proof}
+	With \autoref{waterlevel-pd} proven the proof is trivial. By weak duality the dual objective is an upper bound on the size of the fractional matching, implying \autoref{thm:waterlevel-comp}
+\end{proof}
