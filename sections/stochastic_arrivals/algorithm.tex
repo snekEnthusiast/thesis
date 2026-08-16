@@ -1,1 +1,123 @@
-In this section we present the $0.729$-competitive algorithm and proof of it's competitiveness from \cite{obmSAlg}
+We present the algorithm from \cite{obmStochastic}.\\
+For the purposes of simplicity we assume that all $p_{v_i}\approx\frac{1}{n}$. Any case where this is not the case can be reduced by duplicating an archetype and dividing both probabilities as appropriate
+
+\begin{algorithm}
+	\caption{TSM}
+\begin{algorithmic}
+	\item on Initialization:\\
+	construct realization graph $G$, build boosted flow graph $G_f$ as follows: create source $s$ connected to all offline vertices, sink $t$ connected to all online vertices, set capacity of edges as follows
+	\begin{enumerate}
+		\item edges $(s,v)$ from source have capacity 2
+		\item edges $(t,u)$ from sink have capacity 2
+		\item regular edges $(u,v)$ have capacity 1
+	\end{enumerate}
+	Find maximum flow of this graph. Let $E_f$ be the regular edges with non-zero flow. Assign colors, blue or red, to $E_f$ as follows
+	\begin{itemize}
+		\item cycles are colored alternating
+		\item paths of odd length are colored alternating, starting with blue
+		\item paths of even length starting (and ending) in $U$ are colored alternating
+		\item paths of even length starting in $V$ have the first two edges colored blue, then alternating
+	\end{itemize}
+	\item on Arrival of $v$ of archetype $V'_i$:\\
+	try matching along blue or red edges if this is the first/second time a vertex from $V_i'$ has arrived. Otherwise ignore this vertex
+\end{algorithmic}
+\end{algorithm}
+We note that any $v\in V$ is adjacent to either: no colored edges, a blue edge or a blue and red edge.
+To analyze the performance of this algorithm we will first bound the performance of the algorithm, then the size of the maximal matching.
+In the analysis we will be using two facts
+\begin{fact}
+	\label{ball-bin-simple}
+	If $n$ balls are thrown in $n$ bins i.i.d with random uniform probability over bins, $B$ is subset of bins, $S$ random variable is the number of bins with at least one ball, then, for any $\epsilon>0$, with probability no smaller than $1-2e^{-\epsilon n/2}$ $|B|(1-\frac{1}{e})-\epsilon\leq S\leq |B|(1-\frac{1}{e}+\frac{1}{en})+\epsilon n$
+\end{fact}
+\begin{fact}\label{ball-bin-complex}
+	If $n$ balls are thrown in $n$ bins i.i.d with random uniform probability over bins, $B_i\dots,B_l$ are ordered sequences of bins of size $c$ such that no bin is in more than $d$ sequences, for arbitrary subset $R\subseteq\set{1,\dots,c}$, we say bin sequence $B_a=(b_1,\dots,b_c)$ is satisfied if
+	\begin{enumerate}
+		\item at least one bin with index not in $R$ has at least one ball, or
+		\item at least one bin with index in $R$ has at least two balls
+	\end{enumerate}
+	Let $S$ be random variable that equals to the number of satisfied bin sequences. With probability no less than $1-2e^{-\epsilon^2n/2}$ $S\geq l(1-\frac{2^{|R|}}{e^c})-\epsilon dn-\frac{2^{|R|c^2}}{e^c}\frac{l}{n-c^2}$
+\end{fact}
+
+\paragraph{Algorithm performance bound}
+Let $U_{BR}$ be the offline vertices incident to a blue and red edge, $U_{BB}$ those incident to two blue edges and symmetrically for $U_B,U_R$\\
+\begin{equation}
+	\label{st-eq1}
+	|E_f|=2|U_{BR}|+2|U_{BB}|+|U_B|+|U_R|
+\end{equation}
+
+
+Consider $u\in U_B$ with blue edge to archetype $(u,v')$. $u$ is matched iff $v$ from $V'$ is ever drawn, and since the expected amount of arrivals from any archetype os $1$ this is also the probability that a particular bin is non-empty in a balls-in-bins problem with $n$ balls and bins. Applying \autoref{ball-bin-simple} we conclude that, with a high probability that the number of offline vertices from $U_B$ that are matched is at least $|U_B|(1-\frac{1}{e})\epsilon n$\\
+
+We conduct a similar reasoning for $U_{BR}$. with blue edge to archetype $v'_1$ and red towards archetype $v'_2$: if $1$ vertex from $v'_2$ of $2$ from $v'_1$ have arrived then $u$ is matched. We apply \autoref{ball-bin-complex} with bin sequences being the neighborhood sets of $U_{BR}$ along, in order, blue and red edges $c=2$, $d=2$ since each online vertex is an endpoint of at most $2$ colored edges and $R$ being the second (red) bin of the sequence. We conclude that, with high probability, the number of of offline vertices from $U_{BR}$ that are matched is at least $|U_{BR}|(1-\frac{2}{e^2})-\epsilon n$.
+
+Symmetric arguments give the high probability bounds for $U_R$: $|U_R|(1-\frac{2}{e})\epsilon n$ and $U_{BB}:$ $|U_{BB}|(1-\frac{1}{e^2})-\epsilon n$ implying the bound
+\begin{equation}
+	\label{st-eq2}
+	\mathrm{ALG}\geq (1-\frac{1}{e^2})|U_{BB}|+(1-\frac{2}{e^2})|U_{BR}|+(1-\frac{3}{2e})(|U_b|+|U_R|)-4\epsilon n
+\end{equation}
+given that $|U_B|\geq |U_R|$ as creation of blue edges is prioritized
+
+\paragraph{Optimal solution bound}
+We define $(S,T)$, a min $s-t$ cut of $G_f$. We start with a canonical 'reachablility' min $s-t$ cut of $G_f$ where $S$ is the set of nodes reachable in residual graph $G_f$ after finding $E_f$. We then modify this cut by, for all $v\in V\cap T$, if $v$ is connected to more than one offline vertex in $U\cap S$ we move it over to $S$. We note that the value of the cut remains constant\\
+We define $U_S:=U\cap S$ and $U_T,V_S,V_T$ symmetrically, $E_\delta$ as the set of edges between $U_S,V_T$.
+We note that
+\begin{itemize}
+	\item $E_\delta\subseteq E_f$ since if $E_\delta\ni(u,v)$ has no flow then $v$ would be reachable from $s$, and therefore not in $T$
+	\item $v\in V_T$ implies $v$ has no more than one edge in $E_\delta$ as a direct consequence of the modifications
+	\item $u\in U_S$ implies $u$ has no more than one incident edge in $E_\delta$ as if it had two edges then, since $u$ is reachable from $S$ it must have residual capacity from $s$ directly or from $I_S$, both are imposssible since $(s,u)$ is saturated and both flow edges connect $u$ to $I_T$
+\end{itemize}
+Let $U_\delta,V_\delta$ be vertices from $U,V$ that are endpoints of some $e\in E_\delta$. From observations we conclude that $E_\delta$ is a matching since the min-cut of $G_f$ is composed of $E_\delta$, edges from $s$ to $U_T$ and edges from $t$ to $V_S$ which, by max-flow-min-cut, results in\\
+\begin{equation}
+	\label{st-eq3}
+	|E_f|=2(|U_T|+|V_S|)+|E_\delta|
+\end{equation}
+
+
+We will bound the size of the maximal matching in the realization graph $G=(U,V',E')$ by using $(S,T)$, the min-cut of $G_f$ to find a cut. Let $G'_f$ be a directed version of $G_f$ but with all edges having a capacity of $1$ any $s-t$ cut in this graph is an upper bound on $\mathrm{OPT}$. Let $D(V'_i)$ be a set of offline vertices of archetype $V'_i$  A cut $(S',T')$ is constructed as folows: $\overline{V_S}=\bigcup\limits_{V'\in V_S}D(i),\overline{V_T}=\bigcup\limits_{V'\in V_T}D(i)$. We remind here that the right side of $G$ are archetypes of online vertices. For Offline vertices we modify the partitioning $(U_S,U_T)$ as follows: for $U'_\delta\subseteq U_\delta$, set of offline vertices $u$ that are incident to some $v\in D(v)$ we set $S'=V_S\cup(U_S\backslash U'_\delta)$ and $T'=V'_T\cup U_T\cup U'_\delta$
+
+To measure the size of $(S',T')$ in $G_f$ we 'pay' $1$ for each $u\in V'_S,v\in U_T, v\in U'_\delta$ and note that all edges from $U\cap S'$ to $V'_T$ have been removed resulting in $\mathrm{OPT}\leq|V'_S|+|U_T|+|U'_\delta|$\\
+Using Chernoff bound, with probability $1-e^{-\Omega(n)}$ $|V'_S|\leq |V_S|+\epsilon n$ occurs, giving a good probability bound on $|V'_S|$\\
+Consider $u\in U_\delta$ and $v\in V_\delta$ matched to it in $E_\delta$. $u$ appears in $U'_\delta$ iff $v$ arrives during the runtime, producing a balls-in-bins problem and enabling the use of \autoref{ball-bin-simple} to conclude that, with a high probability, $U'_\delta\leq(1-\frac{1}{e})|E_\delta|+\epsilon n+O(1)$, giving a good probability bound on $U'_\delta$
+
+By using the two $E_f$ size inequalities we conclude the following
+\begin{equation}
+	\label{st-eq4}
+	\mathrm{OPT}\leq \frac{1}{2}|E_f|+(\frac{1}{2}-\frac{1}{e})|E_\delta|+\epsilon n\\
+	=|U_{BR}|+|U_{BB}|+\frac{1}{2}(|U_B|+|U_R|)+(\frac{1}{2}-\frac{1}{e})|E_\delta|+\epsilon n
+\end{equation}
+\paragraph{Bounding $|E_\delta|$}
+For this inequality to be useful we must prove a correlation between the sizes of $E_\delta$ and the various $U_x$, by proving the following
+\begin{lemma}
+	\label{sa-lm}
+	$|E_\delta|\leq\frac{2}{e}|U_{BR}|+\frac{4}{3}|U_{BB}|+|U_B|+\frac{1}{3}|U_R|$
+\end{lemma}
+\begin{proof}
+	It is sufficient to prove that this inequality holds for all connected components of the graph induced by $E_f$. We assume that this graph is a single such component, which is a cycle or a path\\
+	Let $(u_1,v_1),(u_2,v_2)\in E_\delta\subseteq E_f$ be arbitrary edges. Edges in $E_\delta$ are independent, implying that they won't occur consecutively in this path/cycle.\\
+	We will prove that there must be at least two edges between them, by contradiction. WLOG $(u_2,v_1)$ is in the component, but $u_2\in U_S,i_1\in V_T$, implying that $(u_w,v_1)\in E\delta$, contradicting edge independance\\
+	\begin{description}
+		\item[Case 1] The component is a cycle, let $k$ be it's length. Using the reasoning above we conclude that there are no more than $\frac{k}{3}$ edges in $E_\delta$ in that cycle. Offline vertices are all in $U_{BR}$ and are exactly half of the vertices in the cycle, therefore $|E_\delta|\leq\frac{2}{3}|A_{BR}|$ and the lemma is true
+		\item[Case 2] The component is a path, let $k$ be it's length. Symmetrically to above, $E_\delta\leq\ceil{\frac{k}{3}}$. We further divide this scenario into cases
+		\begin{description}
+			\item[Case 2.1] $k$ is odd. Due to edge coloring rule there is $1$ offline vertex in $U_B$ and $\frac{k-1}{2}$ in $U_{BR}$ implying $|E_\delta|\leq\ceil{\frac{k}{3}}=\ceil{\frac{2|U_{BR}|}{3}}\leq\frac{2}{3}|U_{BR}|+1=\frac{2}{3}|U_{BR}|+|U_B|$
+			\item[Case 2.2] $k$ is even, path starts with an offline vertex. $|U_B|=|U_R|=1$,$|U_{BR}|=\frac{k}{2}-1$, therefore $|E_\delta|\leq\ceil{\frac{k}{3}}=\ceil{\frac{2|U_{BR}|}{3}+\frac{2}{3}}$ which can in turn be bounded by analyzing $|U_{BR}|$ modulo $3$. $|U_{BR}|\equiv_30$ implies $|E_\delta|\leq\frac{2}{3}|U_{BR}|+1$. $|U_{BR}|\equiv_31$ implies $|E_\delta|\leq\frac{2}{3}|U_{BR}|+\frac{4}{3}$. $|U_{BR}|\equiv_32$ implies $|E_\delta|\leq \frac{2}{3}|U_{BR}|+\frac{2}{3}$, no greater than $\frac{2}{3}|U_{BR}|+\frac{4}{3}=\frac{2}{3}|U_{BR}|+|U_B|+\frac{1}{3}|U_R|$
+			\item[Case 2.3] $k$ is even, path starts with an online vertex. $|U_{BB}|=1$, $|U_{BR}|=\frac{k}{2}-1$. As above $|E_\delta|\leq\ceil{\frac{k}{3}}=\ceil{\frac{2|U_{BR}|}{3}+\frac{2}{e}}$ and, following a symmetric to above modulo $3$ case analysis proves that $|E_\delta|\leq\frac{2}{3}|U_{BR}|+\frac{4}{3}=\frac{2}{3}|U_{BR}|+\frac{4}{3}|U_{BB}|$
+		\end{description}  
+	\end{description}
+\end{proof}
+
+With that  relatio proven we can procees to the proof of the \autoref{thm:sa-alg}
+
+\begin{proof}
+	Bounds in \autoref{st-eq2},\autoref{st-eq4} hold with probability $1-e^{\Omega(n)}$, by union bound both hold with probability $1-e^{\Omega(n)}$\\
+	From \autoref{sa-lm}, \autoref{st-eq4} we get
+	\begin{align*}
+		\mathrm{OPT}\leq\left(\frac{4}{3}-\frac{2}{3e}\right)U_{BR}+\left(\frac{5}{3}-\frac{4}{3e}\right)U_{BB}+\left(1-\frac{1}{e}\right)(U_B,U_R)+\epsilon n
+	\end{align*}
+	By choosing a small enough $\epsilon$ and Applying \autoref{st-eq2} results in
+	\begin{align*}
+		\frac{\mathrm{ALG}}{\mathrm{OPT}}+\epsilon\geq\min\left\{\frac{1-\frac{1}{e^2}}{\frac{5}{3}-\frac{4}{3e}},\frac{1-\frac{2}{e^2}}{\frac{4}{3}-\frac{2}{3e}},\frac{1-\frac{3}{2e}}{1-\frac{1}{e}}\right\}=\frac{1-\frac{2}{e^2}}{\frac{4}{3}-\frac{2}{3e}}\approx0.670
+	\end{align*}
+\end{proof}
+
+concluding the proof

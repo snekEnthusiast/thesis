@@ -29,7 +29,7 @@ sorting=ynt
 \newcommand{\algorithmautorefname}{Algorithm}
 \newcommand{\lemmaautorefname}{Lemma}
 \newcommand{\claimautorefname}{Claim}
-\newcommand{\modelautorefname}{Model}
+\newcommand{\factautorefname}{Fact}
 
 \usepackage[skins]{tcolorbox}
 \usepackage[bottom]{footmisc}
@@ -51,8 +51,9 @@ sorting=ynt
 \newtheorem{claim}{Claim}
 \numberwithin{claim}{section}
 \tcolorboxenvironment{claim}{blanker,before skip=10pt,after skip=10pt}
-\newtheorem{model}{Model}
-\tcolorboxenvironment{model}{blanker,before skip=10pt,after skip=10pt}
+\newtheorem{fact}{Fact}
+\numberwithin{fact}{section}
+\tcolorboxenvironment{fact}{blanker,before skip=10pt,after skip=10pt}
 \newtheoremstyle{case}{}{}{}{}{}{:}{ }{}
 \theoremstyle{case}
 \newtheorem{case}{Case}
@@ -105,6 +106,9 @@ sorting=ynt
 
 \chapter{Final Degree Model}
 \input{sections/degree.tex}
+
+\chapter{Fractional Matching}
+\input{sections/fractional.tex}
 
 \clearpage
 \printbibliography[]

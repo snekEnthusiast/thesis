@@ -68,4 +68,11 @@ graph which is actually a subgraph of the degree countergraph edgewise, meaning 
 
 Note here that we have conducted Monte Carlo experiments  with this exact algorithm and graph for $k$ up to $50$ and in over 1 million simulations the algorithm found a matching of average size $n-2$ suggesting that the actual performance is much higher here
 
-<If it is possible to prove that different degrees always result in the algorithm kaing better decisions, then \autoref{alg:effective-deg-rand} has a competitiveness of $0.75$ since minimizing it's ability to make correct decisions, the final graph must be a series of disconnected $G_{\deg}$ of various sizes>
+Despite these seeming advantages, this algorithm doesn't have a competitiveness above $0.5$
+\begin{theorem}
+	Any algorithm that prioritizes vertices based on degree has an asymptotic competitiveness of no more than $0.5$
+\end{theorem}
+\begin{proof}
+	The case in which higher degree vertices are prioritized for matching is trivial as the counterexample is the same one from [ref-Z] and is added here for completion. In the case that the algorithm prioritized lower degree vertices like RED we construct the graph as follows: $k$ upper offline vertices $u_1,dots,u_k$ with degree $k$ and $k$ lower offline vertices $u_{k+1},dots,u_{2k}$ with degree $2$. Online vertices arrive in two stages: first, $k$ vertices $v_1,\dots,v_k$ connected to the upper half, where $v_i$ is also connected to $u_k+i$. These will all, except possibly the last two, be matched to $u_k+i$ as only then the effective degrees between upper and lower half equalize. This in tuen makes the next $k$ online vertices unmatchable as $v_{k+i}$ is only connected to $u_{k+i}$
+\end{proof}
+[figure]
