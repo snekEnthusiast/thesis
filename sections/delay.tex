@@ -6,7 +6,7 @@ In the Delay model the Algorithm ca wait a certain amount of time before matchin
 \end{theorem}
 
 \begin{proof}
-	Consider the following graph $G$ (figure above): There are $k=n/2$ groups $\{Z_i|i\in[k]\}$. of two offline vertices\\
+	Consider the following graph $G$: There are $k=n/2$ groups $\{Z_i|i\in[k]\}$. of two offline vertices\\
 	First, $k$ vertices $z_i^D$ arrive, each connected to both vertices of $Z_i$.\\
 	As $z_k^D$ arrives the cache is full, and $z_1^D$ has to be matched. Let the offline vertex it was matched to be $z_1^B$. Next, $z_1^C$ arrives, only connected to $z_1^B$, which is unmatchable. Let $z_1^A$ be the unmatched offline vertex.\\
 	After $z_1^A$ has arrived $z_2^D$ has to be matched. The procedure above is repeated until $z_k^C$ has arrived.\\
@@ -19,3 +19,10 @@ In the Delay model the Algorithm ca wait a certain amount of time before matchin
 	\label{fig:det-delay-figure}
 	\caption{Worst case scenario for a deterministic cache algorithm}
 \end{figure}
+
+\begin{theorem}
+	For any $f(n)=o(n)$ delay, no algorithm has asymptotic competitiveness better than $1-\frac{1}{e}$
+\end{theorem}
+\begin{proof}
+	For $\mathrm{ALG}$ construct the adversary graph in a manner similar to the one above, with $f(n)$ copies of $G_A$, a graph on which $\mathrm{ALG}$ has a performance of $1-\frac{1}{e}$. Notice that the size of individual $G_A$ is $\frac{n}{f(n)}$ and since $\lim_{n\to\infty}\frac{n}{f(n)}\to\infty$, the size of individual $G_A$ instances is growing with $n$, leading to $\mathrm{ALG}$ being forced to solve isolated instances of size growing to infinity, yielding the stated competitiveness.
+\end{proof}

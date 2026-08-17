@@ -6,7 +6,7 @@ as shown before, despite it's potential the Final Degree model doesn't allow for
 	We assume WLOG that elements of $p$ are in non-increasing order.\\
 	We denote the random graph of vectors $p,q$ $I_{p,q}$
 \end{definition}
-Do note that in this model the matching can no longer be expressed as a game since there are no choices for an adversary to make and $\vec{u},\vec{v}$ are merely descriptors of a class of random graphs\\
+Do note that in this model, much like in the i.i.d model, the adversary is severely resticted and this model resembles a performance on a random graph.
 Adapting the RED algorithm to the CLV-B model, with consideration to the fact that there is only the expected value of any final degree and no definitive final degree, results in the following algorithm, desctibed in \cite{obmDegree}
 \begin{algorithm}
 	\caption{RED-CLV - MinPredictedDegree}

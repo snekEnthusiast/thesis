@@ -1,5 +1,5 @@
 \label{section:rank-opt}
-In this section we present a proof for Ranking Optimality (\autoref{thm:rank-optimal}) by \cite{karp}. The main vehicle for this is Yao's lemma with a construction of a class of matching instances
+In this section we present a proof for Ranking Optimality (\autoref{thm:rank-optimal}) by \cite{karp}. The main vehicle for this is Yao's lemma with a construction of a class of matching instances. Using the lemma, performance of any algorithm is bounded by the performance of a deterministic greedy algorithm on a randomized instance, which we will prove is equivalent to the performance of RGA on a specific instance, which we will approximate using differential equations
 
 \begin{algorithm}
 	\caption{RGA}
@@ -18,7 +18,9 @@ In this section we present a proof for Ranking Optimality (\autoref{thm:rank-opt
 	\end{itemize}
 \end{definition}
 The collection of all $n!$ $(n,\sigma)$ instances is $M$. $U(M)$ is the uniform distribution over $M$. $M^\star$ is $(n,(1,\dots,n))$, the original instance without permutation
-[figure]
+\begin{figure}[H]
+	\centering
+\end{figure}
 notice that perfect matching is achived only if $f_i$ is matched with $n_{\sigma(i)}$ for all $i\in[n]$\\
 
 \begin{lemma}
@@ -29,12 +31,14 @@ notice that perfect matching is achived only if $f_i$ is matched with $n_{\sigma
 \end{lemma}
 \begin{proof} To prove the lemma we first need to prove two claims:\\
 % -- ??? -- ??? -- ???
-	\begin{subtheorems}
-	\item[Claim 1] for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $M^\star$ if at time $t$ there are $k$ eligable offline vertices then they are equally likely to be any set of $k$ vertices among the last $n-t+1$ denominated $F(t)$
+	\begin{claim}[1]
+		for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $M^\star$ if at time $t$ there are $k$ eligable offline vertices then they are equally likely to be any set of $k$ vertices among the last $n-t+1$
+	\end{claim}
+	\begin{claim}[2]
+		for each $k$ the probability that there are $k$ eligible offline vertices at time $t$ is the same for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $M^\star$
+	\end{claim}
 	% -- ??? -- ??? -- ??? Think this is supposed to be 'all rows are equally likely to be eligible' since the n-t+1 applies only to RGA
-	\item[Claim 2]  for each $k$ the probability that there are $k$ eligible offline vertices at time $t$, denominated $p_t$, is the same for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $M^\star$
-	\end{subtheorems}
-	Both claims are proven with induction on the 'step' of the algorithm - tha amount of online vertices that have already arrived. Note that induction base at step 0 is trivial since all offline vertices are eligible.\\
+	Claim 1 is proven with induction over time - tha amount of online vertices that have already arrived. Note that induction base at step 0 is trivial since all offline vertices are eligible.\\
 	Note that a vertex is availible if it can still be matched ie isn't matched and isn't unmatchable
 	\begin{proof} of Claim 1\\
 		for $\mathrm{RGA}$.
@@ -43,7 +47,7 @@ notice that perfect matching is achived only if $f_i$ is matched with $n_{\sigma
 		for $\mathrm{DGA}$, since it is deterministic and the algorithm can't read labels, then the subsequent matching is determined by the current availible set, which is uniformly random, implying the next one is also uniformly random.
 	\end{proof}
 	\begin{proof} of Claim 2\\
-		From Claim 1 we know that, conditional on the amount of eligible vertices, their placement is universal
+		It is a direct consequence of Claim 1. If the offline vertices eligible for matchign are uniformly distributed in both cases, then the probability that a vertex becomes unmatchable is also equal for both algorithms, and that probability is the probability that the amount oa eligible vertices decreases by $2$ instead of $1$
 	\end{proof}
 	The lemma follows directly from Claim 2 since the size of the matching is equal to the amount of steps required for there to be no eligible vertices
 \end{proof}
@@ -63,7 +67,6 @@ Now, all that is required to prove the following lemma
 \end{lemma}
 The rest of this section is the proof of this lemma.
 
-%Original Karp et al analysis
 
 Let $\rem(t)$ be the random variable representing the number of remaining online vertices and $\avl(t)$ be the number of offline vertices availible for matching, at the time $t$. $\Delta f$ is used conventionally, as the change of $f(t)$ over $t$.\\
 $\Delta \rem$ is always $-1$ while $\Delta\avl$ is either $-1$ or $-2$. It is only $-2$ if $n_t$ is being matched and $f_t$ is availible (event $A_t^1$) and it isn't matched to $n_t$ (event $A_t^2$) since $f_t$ becomes unmatchable.\\
@@ -80,12 +83,12 @@ finally
 	\E[\Delta\avl]==-1-\frac{\avl(t)-1}{\rem(t)}
 \end{equation}
 implying $\frac{\mathrm{E}[\Delta\avl]}{\mathrm{E}[\mathrm{\Delta\rem}]}=1+\frac{\rem(t)-1}{\avl(t)}$ since $\Delta\rem$ is always $-1$\\
-Though this is a discrete Markov Chain, we can approximate it by treating it as a continious function, whose rate of growth is already known
+Though this is a discrete Markov Chain, we can approximate it by treating it as a continious function, whose rate of growth is already known. Moreover, this approximation's accuracy increases as $n$ increases
 \begin{equation}
 	\label{rank-opt-diff}
 	\frac{d\avl}{d\rem}=1+\frac{\avl-1}{\rem}
 \end{equation}
-We also havethe initial conditions, $\avl=\rem=n$, meaning we can find an approximating equation by solving $\autoref{rank-opt-diff}$
+We also have the initial conditions, $\avl=\rem=n$, meaning we can find an approximating equation by solving $\autoref{rank-opt-diff}$
 
 \begin{align*}
 	\frac{d\avl}{d\rem}=1+\frac{\avl-1}{\rem} & \text{ can be rewritten as}\\
@@ -94,7 +97,7 @@ We also havethe initial conditions, $\avl=\rem=n$, meaning we can find an approx
 	\frac{d}{d\rem}\left(\frac{\avl}{\rem}\right)=\frac{rem-1}{\rem^2} & \text{ integrate both sides}\\
 	\int\frac{d}{d\rem}\left(\frac{\avl}{\rem}\right)=\int\frac{\rem-1}{\rem^2}\\
 	\frac{\avl}{\rem}=\frac{1}{\rem} + \ln\rem + c & \text{ apply initial condition }\avl=\rem=n\\
-	1=\frac{1}{n}+\ln n + c\implies\\
+	1=\frac{1}{n}+\ln n + c\implies&\\
 	\avl=1+\rem\left(\ln\rem-\ln n+1-\frac{1}{n}\right)
 \end{align*}
 
