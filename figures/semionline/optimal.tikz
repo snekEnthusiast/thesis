@@ -1,0 +1,47 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=default] (0) at (-2, 7) {};
+		\node [style=default] (1) at (2, 7) {};
+		\node [style=default] (2) at (-2, 6) {};
+		\node [style=default] (3) at (2, 6) {};
+		\node [style=default] (4) at (-2, 5) {};
+		\node [style=default] (5) at (2, 5) {};
+		\node [style=default] (6) at (-2, 3) {};
+		\node [style=default] (7) at (2, 3) {};
+		\node [style=default] (8) at (-2, 2) {};
+		\node [style=default] (9) at (2, 2) {};
+		\node [style=nil] (10) at (-2, 4.25) {.};
+		\node [style=nil] (11) at (-2, 4) {.};
+		\node [style=nil] (12) at (-2, 3.75) {.};
+		\node [style=nil] (13) at (2, 4.25) {.};
+		\node [style=nil] (14) at (2, 4) {.};
+		\node [style=nil] (15) at (2, 3.75) {.};
+		\node [style=nil] (18) at (-2.5, 6) {$u_2$};
+		\node [style=nil] (19) at (-2.5, 5) {$u_3$};
+		\node [style=nil] (20) at (-2.5, 3) {$u_{n-1}$};
+		\node [style=nil] (21) at (-2.5, 2) {$u_n$};
+		\node [style=nil] (23) at (-2.5, 7) {$u_1$};
+		\node [style=nil] (24) at (2.5, 6) {$v_2$};
+		\node [style=nil] (25) at (2.5, 5) {$v_3$};
+		\node [style=nil] (26) at (2.5, 3) {$u_{v-1}$};
+		\node [style=nil] (27) at (2.5, 2) {$u_v$};
+		\node [style=nil] (28) at (2.5, 7) {$v_1$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (0) to (1);
+		\draw (2) to (3);
+		\draw (4) to (5);
+		\draw (6) to (7);
+		\draw (8) to (9);
+		\draw (2) to (1);
+		\draw (4) to (3);
+		\draw (4) to (1);
+		\draw (6) to (1);
+		\draw (6) to (5);
+		\draw (8) to (7);
+		\draw (8) to (5);
+		\draw (8) to (3);
+		\draw (1) to (8);
+		\draw (3) to (6);
+	\end{pgfonlayer}
+\end{tikzpicture}

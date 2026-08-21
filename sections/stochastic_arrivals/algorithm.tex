@@ -1,5 +1,5 @@
 We present the algorithm from \cite{obmStochastic}.\\
-For the purposes of simplicity we assume that all $p_{v_i}\approx\frac{1}{n}$. Any case where this is not the case can be reduced by duplicating an archetype and dividing both probabilities as appropriate.
+For the purposes of simplicity we assume that all $p_{v_i}\approx\frac{1}{n}$. Any case where this is not the case can be reduced by duplicating an archetype and dividing both probabilities as appropriate. We may assume that $p_{v_i}n\in\mathbb{Z}$ for all $i\in[n]$ for simplicity
 This algorithm works on the basis of creating a realization graph, where there is one vertex from each archetype and then building two different solutions that will be used to guide the algorithm as vertices arrive
 
 \begin{algorithm}
@@ -123,4 +123,4 @@ With that  relatio proven we can procees to the proof of the \autoref{thm:sa-alg
 
 concluding the proof
 
-We note here that this is not the most competitive i.i.d algorithm and that another, with a competitiveness of $0.729$
+We note here that this is not the most competitive i.i.d algorithm and that another, with a competitiveness of $0.729$. Though this isn't proven it's resonable to assume that this model is easier than random arrivals

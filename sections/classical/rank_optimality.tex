@@ -12,30 +12,33 @@ In this section we present a proof for Ranking Optimality (\autoref{thm:rank-opt
 \begin{definition}
 	bipartite online matching instance $(n,\sigma)$ where $\sigma$ is a permutation of $[n]$ is constructed as follows:
 	\begin{itemize}
-		\item offline vertices are $f_i$ for $i\in[n]$
-		\item online vertices are $n_j$ for $j\in[n]$
-		\item $f_i,n_j$ are connected iff $\sigma(i)\leq j$
+		\item offline vertices are $u_i$ for $i\in[n]$
+		\item online vertices are $v_j$ for $j\in[n]$
+		\item $u_i,v_j$ are connected iff $\sigma(i)\leq j$
 	\end{itemize}
 \end{definition}
-The collection of all $n!$ $(n,\sigma)$ instances is $M$. $U(M)$ is the uniform distribution over $M$. $M^\star$ is $(n,(1,\dots,n))$, the original instance without permutation
+The collection of all $n!$ $(n,\sigma)$ instances is $I$. $U(I)$ is the uniform distribution over $I$. $I^\star$ is $(n,(1,\dots,n))$, the original instance without permutation
 \begin{figure}[H]
 	\centering
+	\input{figures/semionline/optimal.tikz}
+	\caption{Instance $I^\star$}
 \end{figure}
-notice that perfect matching is achived only if $f_i$ is matched with $n_{\sigma(i)}$ for all $i\in[n]$\\
+Instance $I=(n,\sigma)$ is the instance $I^\star$ after offline agent order is reshuffled accordign to $\sigma$
+notice that perfect matching is achived only if $u_i$ is matched with $v_{\sigma(i)}$ for all $i\in[n]$\\
 
 \begin{lemma}
 	\label{dga-rga-equiv}
 	Let $\mathrm{DGA}$ be a greedy deterministic algorithm.\\
-	The expected performance of $\mathrm{DGA}$ on a random instance from $U(M)$ bounds the expected performance of $\mathrm{RGA}$ on $M^\star$\\
+	The expected performance of $\mathrm{DGA}$ on a random instance from $U(M)$ bounds the expected performance of $\mathrm{RGA}$ on $I^\star$\\
 	\[\underset{m\sim U(M)}{\E}[|\mathrm{DGA}(m)|]=\E[\mathrm{RGA}(M^\star)]\]
 \end{lemma}
 \begin{proof} To prove the lemma we first need to prove two claims:\\
 % -- ??? -- ??? -- ???
 	\begin{claim}[1]
-		for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $M^\star$ if at time $t$ there are $k$ eligable offline vertices then they are equally likely to be any set of $k$ vertices among the last $n-t+1$
+		for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $I^\star$ if at time $t$ there are $k$ eligable offline vertices then they are equally likely to be any set of $k$ vertices among the last $n-t+1$
 	\end{claim}
 	\begin{claim}[2]
-		for each $k$ the probability that there are $k$ eligible offline vertices at time $t$ is the same for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $M^\star$
+		for each $k$ the probability that there are $k$ eligible offline vertices at time $t$ is the same for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $I^\star$
 	\end{claim}
 	% -- ??? -- ??? -- ??? Think this is supposed to be 'all rows are equally likely to be eligible' since the n-t+1 applies only to RGA
 	Claim 1 is proven with induction over time - tha amount of online vertices that have already arrived. Note that induction base at step 0 is trivial since all offline vertices are eligible.\\

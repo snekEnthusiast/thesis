@@ -20,7 +20,7 @@ Despite this algorithm seeming promising, it is only marginally more effective t
 \begin{figure}[H]
 	\label{fig:deg-det-comp}
 	\centering
-	\scalebox{.8}{\input{tikz/degree/deterministic3.tikz}}
+	\scalebox{.8}{\input{figures/degree/deterministic3.tikz}}
 \end{figure}
 We will remark here that this model is a relaxation of the Semi-Online model, so competitiveness here isn't lower\\
 
@@ -72,7 +72,11 @@ Despite these seeming advantages, this algorithm doesn't have a competitiveness 
 \begin{theorem}
 	Any algorithm that prioritizes vertices based on degree has an asymptotic competitiveness of no more than $0.5$
 \end{theorem}
+\begin{figure}[H]
+	\centering
+	\input{figures/degree/priority.tikz}
+\end{figure}
 \begin{proof}
-	The case in which higher degree vertices are prioritized for matching is trivial as the counterexample is the same one from [ref-Z] and is added here for completion. In the case that the algorithm prioritized lower degree vertices like RED we construct the graph as follows: $k$ upper offline vertices $u_1,dots,u_k$ with degree $k$ and $k$ lower offline vertices $u_{k+1},dots,u_{2k}$ with degree $2$. Online vertices arrive in two stages: first, $k$ vertices $v_1,\dots,v_k$ connected to the upper half, where $v_i$ is also connected to $u_k+i$. These will all, except possibly the last two, be matched to $u_k+i$ as only then the effective degrees between upper and lower half equalize. This in tuen makes the next $k$ online vertices unmatchable as $v_{k+i}$ is only connected to $u_{k+i}$
+	The case in which higher degree vertices are prioritized for matching is trivial as the counterexample is the same one from [ref-Z] and is added here for completion. In the case that the algorithm prioritized lower degree vertices like RED we construct the graph as follows: $k$ upper offline vertices $u_1,dots,u_k$ with degree $k$ and $k$ lower offline vertices $u_{k+1},dots,u_{2k}$ with degree $2$. Online vertices arrive in two stages: first, $k$ vertices $v_1,\dots,v_k$ connected to the upper half, where $v_i$ is also connected to $u_k+i$. These will all, except possibly the last two, be matched to $u_k+i$ as only then the effective degrees between upper and lower half equalize. This in tuen makes the next $k$ online vertices unmatchable as $u_{k+i}$ is only connected to $v_{k+i}$
 \end{proof}
-[figure]
+We note that the graph for low-priority algorithms was devised by \cite{obmRaRank} to fool their MPD algorithm

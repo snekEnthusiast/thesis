@@ -1,11 +1,11 @@
-In this section we present a simple proof for Ranking competitiveness (\autoref{thm:rank-competitiveness}) by \cite{obmSimple}
+In this section we present a simple proof for \autoref{thm:rank-competitiveness} by \cite{obmSimple}. Many proofs of this theorem use linear programming, but this one uses no special tools
 
 \begin{lemma}
 	\label{rank-cmp-compete-perfect}
 	Competitiveness is determined by graphs with a perfect matching
 \end{lemma}
 \begin{proof}
-	Let $G$ be a bipartite graph without a perfect matching, with orderings of offline agents $\sigma$ and of online agents $\pi$. Consider $G'$ which is a copy of $G$ without a vertex $x$ and orderings $pi',\pi'$ induced by $V\backslash\{x\}$.
+	Let $G$ be a bipartite graph without a perfect matching, with orderings of offline agents $\sigma$ and of online agents $\pi$. Consider $G'$ which is a copy of $G$ without a vertex $x$ and orderings $\pi'$ induced by $V\backslash\{x\}$.
 
 	Observe that $m=\mathrm{Ranking}(G,\pi,\sigma)$ being the matching found by the Ranking algorithm on $G$ with ranking $\pi$ and arrival order $\sigma$ is either identical to $m'=\mathrm{Ranking}(G',\pi',\sigma')$ or has one more vertex pair. This is apparent since either:
 	\begin{enumerate}
@@ -25,8 +25,8 @@ In the following section graphs are assumed to have perfect matchings. Let $M^\s
 
 \begin{lemma}
 	\label{rank-cmp-unmatched-simple}
-	Let $u$ online vertex,$v=m^\star(u)$, $\sigma$ permutation.\\
-	If $v$ isn't matched by $\mathrm{Ranking}(\sigma)$ then $u$ is matched by $\mathrm{Ranking}(\sigma)$ to $v'$ with a lower rank
+	Let $v$ online vertex,$u=m^\star(v)$, $\sigma$ permutation.\\
+	If $u$ isn't matched by $\mathrm{Ranking}(\sigma)$ then $v$ is matched by $\mathrm{Ranking}(\sigma)$ to $u'$ with a lower rank
 \end{lemma}
 
 \begin{proof}
@@ -35,12 +35,12 @@ In the following section graphs are assumed to have perfect matchings. Let $M^\s
 
 \begin{lemma}
 	\label{rank-cmp-unmatched-complicated}
-	Let $u$ online vertex,$v=m^\star(u)$, $\sigma$ permutation, $\sigma_i$ permutation obtained by removing $v$ and inserting it into $sigma$ at the $i$-th place.\\
-	If $v$ isn't matched by $\mathrm{Ranking}(\sigma)$ then for every $i$ $\mathrm{Ranking}(\sigma_i)$ matches $u$ with a vertex $v_i$ such that $\sigma_i(v_i)\leq\sigma(v)=t$
+	Let $v$ online vertex,$u=m^\star(v)$, $\sigma$ permutation, $\sigma_i$ permutation obtained by removing $v$ and inserting it into $sigma$ at the $i$-th place.\\
+	If $u$ isn't matched by $\mathrm{Ranking}(\sigma)$ then for every $i$ $\mathrm{Ranking}(\sigma_i)$ matches $v$ with a vertex $u_i$ such that $\sigma_i(v_i)\leq\sigma(v)=t$
 \end{lemma}
 
 \begin{proof}
-	$m=\mathrm{Ranking}(\sigma),m_i=\mathrm{Ranking}(\sigma_i)$.\\ Symmetrically to \autoref{rank-cmp-compete-perfect} $m,m_i$ are either identical or differ by a single alternating path. It is easy to see that offline vertices in that path are of increasing rank in $\sigma_i$. Therefore $v_i=m_i(u),v'=m(u),\sigma_i(v_i)\leq\sigma_i(v')$\\
+	$m=\mathrm{Ranking}(\sigma),m_i=\mathrm{Ranking}(\sigma_i)$.\\ Symmetrically to \autoref{rank-cmp-compete-perfect} $m,m_i$ are either identical or differ by a single alternating path. By repeatedly applying the logic from the proof of \autoref{rank-cmp-unmatched-simple} see that offline vertices in that path are of increasing rank in $\sigma_i$. Therefore $v_i=m_i(u),v'=m(u),\sigma_i(v_i)\leq\sigma_i(v')$\\
 	Using \autoref{rank-cmp-unmatched-simple} we get $\sigma(v')<t$ and since $|\sigma_i(v')-\sigma(v')|\leq 1$ we receive $\sigma_i(v_i)<1+t$ equivalent to $\sigma_i(v_i)\leq t$ on integers
 \end{proof}
 
@@ -48,15 +48,15 @@ The final lemma required to complete the proof uses this result directly.
 
 \begin{lemma}
 	\label{rank-cmp-probability}
-	The probability over $\sigma$ that the offline vertex of rank $t$ is matched by $\mathrm{Ranking}(\sigma)$ denoted $x_t$ fulfills the following: $1-x_t\leq\frac{1}{n}\sum\limits_{1\leq s\leq t}x_s$
+	For random $\sigma$, the probability that the offline vertex of rank $t$ is matched by $\mathrm{Ranking}(\sigma)$ denoted $x_t$ fulfills the following: $1-x_t\leq\frac{1}{n}\sum\limits_{1\leq s\leq t}x_s$
 \end{lemma}
 
 \begin{proof}
-	Let $\sigma$ be a random permutation of offline vertices. Define $\sigma'$ with the following random process: choose an offline vertex randomly with equal probability, take it out of $\sigma$ and insert it into the $t$-th rank. Let $v$ be the vertex of rank $t,u=m^*(v),R_{t-1}$\\ online vertices matched by the algorithm to offline vertices of rank $\leq t-1$\\
+	Let $\sigma$ be a random permutation of offline vertices. Define $\sigma'$ with the following random process: choose an offline vertex randomly with equal probability, take it out of $\sigma$ and insert it into the $t$-th rank. Let $u$ be the vertex of rank $t,u=m^*(u),R_{t-1}$\\ online vertices matched by the algorithm to offline vertices of rank $\leq t-1$\\
 	probability that $v$ is not matched is $1-x_t$. Expcted cardinality of $R_{t-1}$ is $\sum\limits_{1\leq s\leq t-1}x_s$.\\
-	Applying \autoref{rank-cmp-unmatched-complicated} with $\sigma:=\sigma',i$ chosen such that $\sigma'_i=\sigma$\ : if $v$ isn't matched by $\mathrm{Ranking}(\sigma')$ then $u$ is matched by $\mathrm{Ranking}(\sigma)$ to a vertex $v'$ such that $\sigma(v)\leq t$ implying $u\in R_t$\\
-	Conditional on $\sigma$, $u\in R_t$ has a probability of $\frac{|R_t|}{n}$ since they are independent.\\
-	We now have two random events $E,F$ that fulfill the condition that $E\implies F$. It is obvious to see that $\mathbb{P}(E)\geq\mathbb{F}$\\
+	Applying \autoref{rank-cmp-unmatched-complicated} with $\sigma:=\sigma',i$ chosen such that $\sigma'_i=\sigma$\ : if $v$ isn't matched by $\mathrm{Ranking}(\sigma')$ then $v$ is matched by $\mathrm{Ranking}(\sigma)$ to a vertex $u'$ such that $\sigma(v)\leq t$ implying $v\in R_t$\\
+	Conditional on $\sigma$, $v\in R_t$ has a probability of $\frac{|R_t|}{n}$ since they are independent.\\
+	We now have two random events $E,F$ that fulfill the condition that $E\implies F$. It is obvious to see that $\Pr[E]\geq\Pr[F]$\\
 	The lemma follows
 	
 \end{proof}

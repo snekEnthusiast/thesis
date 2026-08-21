@@ -1,0 +1,41 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=default] (0) at (-2, 7) {};
+		\node [style=default] (1) at (2, 7) {};
+		\node [style=default] (2) at (-2, 6) {};
+		\node [style=default] (3) at (2, 6) {};
+		\node [style=default] (4) at (-2, 5) {};
+		\node [style=default] (5) at (2, 5) {};
+		\node [style=default] (6) at (-2, 3) {};
+		\node [style=default] (7) at (2, 3) {};
+		\node [style=default] (8) at (-2, 2) {};
+		\node [style=default] (9) at (2, 2) {};
+		\node [style=nil] (10) at (-2, 4.25) {.};
+		\node [style=nil] (11) at (-2, 4) {.};
+		\node [style=nil] (12) at (-2, 3.75) {.};
+		\node [style=nil] (13) at (2, 4.25) {.};
+		\node [style=nil] (14) at (2, 4) {.};
+		\node [style=nil] (15) at (2, 3.75) {.};
+		\node [style=nil] (16) at (-2.5, 7) {$u_1$};
+		\node [style=nil] (17) at (-2.5, 6) {$u_2$};
+		\node [style=nil] (18) at (-2.5, 5) {$u_3$};
+		\node [style=nil] (19) at (-2.5, 2) {$u_{2n}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (0) to (1);
+		\draw (2) to (3);
+		\draw (4) to (5);
+		\draw (6) to (7);
+		\draw (8) to (9);
+		\draw (2) to (1);
+		\draw (4) to (3);
+		\draw (4) to (1);
+		\draw (6) to (1);
+		\draw (6) to (5);
+		\draw (8) to (7);
+		\draw (8) to (5);
+		\draw (8) to (3);
+		\draw [style=greenl] (6) to (3);
+		\draw [style=greenl] (1) to (8);
+	\end{pgfonlayer}
+\end{tikzpicture}

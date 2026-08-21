@@ -14,22 +14,22 @@
 		\node [style=deleted] (11) at (2, 9) {};
 		\node [style=deleted] (12) at (2, 8) {};
 		\node [style=deleted] (13) at (2, 7) {};
-		\node [style=none] (14) at (-4, 13) {4};
-		\node [style=none] (15) at (-4, 12) {4};
-		\node [style=none] (16) at (-4, 11) {4};
-		\node [style=none] (17) at (-4, 10) {4};
-		\node [style=none] (18) at (-4, 9) {4};
-		\node [style=none] (19) at (-4, 8) {4};
-		\node [style=none] (20) at (-4, 7) {4};
-		\node [style=none] (21) at (2.75, 10) {1};
-		\node [style=none] (22) at (2.75, 9) {2};
-		\node [style=none] (23) at (2.75, 8) {3};
-		\node [style=none] (24) at (2.75, 7) {4};
-		\node [style=none] (25) at (2.75, 11) {5};
-		\node [style=none] (26) at (2.75, 12) {6};
-		\node [style=none] (27) at (2.75, 13) {7};
-		\node [style=none] (28) at (-3.25, 6) {final degree};
-		\node [style=none] (29) at (2, 6) {arrival order};
+		\node [style=nil] (14) at (-4, 13) {4};
+		\node [style=nil] (15) at (-4, 12) {4};
+		\node [style=nil] (16) at (-4, 11) {4};
+		\node [style=nil] (17) at (-4, 10) {4};
+		\node [style=nil] (18) at (-4, 9) {4};
+		\node [style=nil] (19) at (-4, 8) {4};
+		\node [style=nil] (20) at (-4, 7) {4};
+		\node [style=nil] (21) at (2.75, 10) {1};
+		\node [style=nil] (22) at (2.75, 9) {2};
+		\node [style=nil] (23) at (2.75, 8) {3};
+		\node [style=nil] (24) at (2.75, 7) {4};
+		\node [style=nil] (25) at (2.75, 11) {5};
+		\node [style=nil] (26) at (2.75, 12) {6};
+		\node [style=nil] (27) at (2.75, 13) {7};
+		\node [style=nil] (28) at (-3.25, 6) {final degree};
+		\node [style=nil] (29) at (2, 6) {arrival order};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw (6) to (13);

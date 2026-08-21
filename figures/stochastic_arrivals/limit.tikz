@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=default] (0) at (-4, 8) {};
+		\node [style=default] (1) at (-4, 6) {};
+		\node [style=default] (2) at (-4, 4) {};
+		\node [style=new] (3) at (0, 8) {};
+		\node [style=new] (4) at (0, 6.25) {};
+		\node [style=new] (5) at (0, 4) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (3) to (0);
+		\draw (3) to (1);
+		\draw (4) to (1);
+		\draw (4) to (2);
+		\draw (5) to (2);
+		\draw (0) to (5);
+	\end{pgfonlayer}
+\end{tikzpicture}

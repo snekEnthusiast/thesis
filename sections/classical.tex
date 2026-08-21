@@ -1,21 +1,29 @@
 \label{section:classical}
 In this section we will introduce the classical smi-online model introduced by Karp et al \cite{karp}
 
-In this model the two anticliques of the bipartite graph are divided into offline and online agents.
-Offline agents are vertices that belong to one anticlique and are always visible.
-Online agents are the vertices from the other anticlique and arrive in the online fashion.
-When an online agent arrives edges incident to it are revealed.
+\begin{definition}[Semi-Online Model]
+	In this model the two anticliques of the bipartite graph $G=(U,V,E)$ are divided into offline and online agents.
+	Offline agents $U$ are vertices that belong to one anticlique and are always visible.
+	Online agents $V$ are the vertices from the other anticlique and arrive in the online fashion.
+	When an online agent arrives edges incident to it are revealed. It has to be iether discarded or matched to an offline agent and that match cannot change later.
+	The adversary is oblivious
+\end{definition}
+This structure, where one anticlique is always known, will be retained by all models we will present. It is not a necessity, a Fully-Online model where both anticliques arrive in an online fashion exists, but it out of the scope of this work as it is known to be strictly harder than the Semi-Online model
 
 The adversary is oblivious as an adaptive adversary is trivial.
 \begin{remark}
 	No algorithm has a competitiveness asymptotically higher than $\frac{1}{2}$ against an adaptive adversary
 \end{remark}
+\begin{figure}[H]
+	\centering
+	\input{figures/semionline/adaptive.tikz}
+\end{figure}
 \begin{proof}
 Begin with $2n$ offline agents $V$ and $k=0,X_0=\emptyset$.\\
-Adversary repeats the following $n$ times: reveals an agent $u$ connected to $V\backslash X_k$. $k=k+1$, for some unmatched $v\in V; V_{k+1}=V_k\cup\{v\}$.\\
-Then adversary reveals $n$ agents $U'$ connected to already matched offline agents. The ultimate size of the matching is $n$.
+Adversary repeats the following $n$ times: reveals an agent $v$ connected to $U\backslash X_k$. $k=k+1$, for some unmatched $u+k\in U; U_{k+1}=U_k\cup\{u_k\}$.\\
+Then adversary reveals $n$ agents denoted $V'$ connected to already matched offline agents. The ultimate size of the matching is $n$.
 
-In the final graph (figure), all matched vertices $V'$ are connected to all online agents and all unmatched $v_i$ agents are connected to all $u_j$ such that $j\leq i$. Clearly, it is possible to match $v_i$ to $u_i$ and $V'$ to $U'$, forming a matching of size $2n$\\
+In the final graph, all matched vertices $V'$ are connected to all online agents and all unmatched $v_i$ agents are connected to all $u_j$ such that $j\geq i$. Clearly, it is possible to match $v_i$ to $u_i$ and $V'$ to $U'$, forming a matching of size $2n$\\
 \end{proof}
 \begin{remark}
 	In the semi-online model, any deterministic algorithm has a competivineness no greater than $\frac{1}{2}$, there is a deterministic algorithm with competitiveness of $\frac{1}{2}$

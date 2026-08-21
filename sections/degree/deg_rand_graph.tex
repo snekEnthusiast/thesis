@@ -9,7 +9,7 @@ as shown before, despite it's potential the Final Degree model doesn't allow for
 Do note that in this model, much like in the i.i.d model, the adversary is severely resticted and this model resembles a performance on a random graph.
 Adapting the RED algorithm to the CLV-B model, with consideration to the fact that there is only the expected value of any final degree and no definitive final degree, results in the following algorithm, desctibed in \cite{obmDegree}
 \begin{algorithm}
-	\caption{RED-CLV - MinPredictedDegree}
+	\caption{MinPredictedDegree - MPD}
 	\label{alg:effective-deg-rand-clv}
 	\begin{algorithmic}
 		\item on Initialization: for each offline vertex $u_i$ let $d_{u_i}=\sum\limits_{v=\in\vec{v_i}}v\vec{u}_i$
@@ -18,11 +18,11 @@ Adapting the RED algorithm to the CLV-B model, with consideration to the fact th
 \end{algorithm}
 \begin{theorem}
 	\label{thm:deg-opt}
-	\autoref{alg:effective-deg-rand-clv} (RED-CLV) is optimal in CLV-B model, meaning\\
-	for any algorithm $\mathrm{A}, t\in\mathbb{Z}_{+},p\in[0,1]^n,q\in[0,1]^m$ $\Pr[\mathrm{A}(I_{p,q})>t]\leq \Pr[\mathrm{RED}(I_{p,q})>t]$
+	MPD is optimal in CLV-B model, meaning\\
+	for any algorithm $\mathrm{A}, t\in\mathbb{Z}_{+},p\in[0,1]^n,q\in[0,1]^m$ $\Pr[\mathrm{A}(I_{p,q})>t]\leq \Pr[\MPD(I_{p,q})>t]$
 \end{theorem}
 
-the proof, as well as the algorithm itself if from \cite{obmDegree} whose work concerned a slightly different model, where the algorithm has imperfect (possibly imperfect) degree predictors, but the analysis assumed that predictors follow the expected degrees, so is applicable here
+the proof, as well as the algorithm itself if from \cite{obmDegree} whose work concerned a slightly different model, where the algorithm has (possibly imperfect) degree predictors, but the analysis assumed that predictors follow the expected degrees, so is applicable here. It iws conducted by proving, with induction, two relatively simple properties of MPD from which the theorem is proven by induction on the amount of online vertices.
 
 \begin{lemma}
 	\label{deg-lm1}
