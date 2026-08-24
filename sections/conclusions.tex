@@ -1,5 +1,23 @@
-Our first observation is that with more constraints added to the adversary, such as random arrivals, competitiveness increases. This is not surprising As these constraints limit the adversary's ability to construct worst case scenario inputs. What is surprising, however, is that in the i.i.d. model the best algorithm is deterministic despite the large advantage that randomized algorithms enjoy in simpler models\\
-What can be concluded is that, if the adversary is sufficiently constrained and enough information is given, randomness becomes less important as decisions can be guided\\
-The model changes that don't sufficiently constrain the adversary are also surprising, both final degrees, which should convey relatively large amounts of information about the final graph, and the largest delays that also don't trivialize this problem in terms of complexity classes, aren't enough for deterministic algorithms to break the $0.5$ bound and in fact using the degree information makes the performance worse\\
-We can however, speaking broadly, conclude that the Bipartite Matching adversary is resistant to changes in the capacity of algorithms and breaking randomized and deterministic competitiveness bounds is easier by restricting the adversary with random arrivals or i.i.d graphs then by increasing algorithm capabilities\\
-It is however notable, that in the case of Matching with Recourse, where the goal of the adversary is to 'fool' the algorithm repeatedly, an algorithm with recourse of $O(\log^2 n)$ is known, being close to the known lower bound of $O(\log n)$, despite the case for general vertex arrivals being hard
+Recall the results we have proven
+\begin{enumerate}
+	\item In the simplest Semi-Online model, Ranking has a competitiveness of $1-\frac{1}{e}=0.632$ and is optimal \label{RNK}
+	\item If vertices arrive in a random order, Ranking has a competitiveness above $0.696$ \label{RA}
+	\item If vertices arrive from a known distribution, a deterministic algorithm (TSM) has a competitiveness of $0.702$ \label{TSM}
+	\item Even a substantial delay in decision time doesn't increase competitiveness \label{delay}
+	\item Using the knowledge of final degrees reduces competitiveness \label{RED}
+	\item In a more random graph the usage of final degrees leads to an optimal algorithm (MPD) \label{MPD}
+	\item A high recourse cannot be forced \label{Recourse}
+	\item Waterlevel fractional matching has a competitiveness of $1-\frac{1}{e}=0.632$ \label{FRAC}
+	\item A deterministic algorithm, even allowed to make small corrections, has a good competitiveness. \label{COR}
+	\item none of the mentioned models allow for a perfect algorithm, which always finds a perfect matching
+\end{enumerate}
+
+In terms of the distinction between algorithm enchancement and adversary restriction, Random Arrival is a Restricted model, Final Degree, Fractional and Delay are Enchanced models and CLV-B and i.i.d are both. Recourse is fundamentally different as the change from Semi-Online is in the goal itself.
+
+An interesting trend is apparent in the best known algorithms, in that, speaking broadly, randomized algorithms are better in all models that aren't Enchanced and Restricted at the same time, with Fractional being the outlier. A broad observation can be made that randomness is used to guard against an oblivious adversary forcing a worst-case scenario and additional capabilities, like knowledge of final degrees, is not enough to prevent it. Meanwhile, when the adversary cannot set the edges, deterministic algorithms become viable, or rather randomization loses value.
+
+When it comes to algorithm enchancement, the difference between the non-effective (Final Degree, Delay) and the effective (Fractional, Corrections), ie the ones that are strictly easier than Semi-Online, is rather obvious - the former provides additional information while the latter changes the matching process. The conclusion is that, under the assumption of adversarial arrival, the setting is flexible enough that the additional information doesn't help the algorithm
+
+When it comes to post-factum corrections, we can see that, at least in the case of one sided vertex arrivals, this is a powerful capability that isn't easily overcome by the adversary, both in the cases of
+
+Lastly, we can generalize criteria for a 'perfect' algorithm. Known (offline) Bipartite Matching algorithms work by either flipping augmenting paths or using Flow-Based algorithms instead. Specifically, none use a greedy approach that is forced by the online nature of the algorithm, strongly suggesting that such an algorithm doesn't exist. Moreover, the complexity of these algorithms can suggest which in modified models a perfect algorithm could exist. The fastest offline algorithm has a complexity of $O(|E|\sqrt{|V|})$. Gathering the final degree information takes $O(|E|)$ time and the algorithms themselves run in $O(|V|^2)$ time, for a dense graph (where $|E|\approx|V|^2$) this is faster, making it unlikely that an algorithm in the Final Degree model can be perfect.

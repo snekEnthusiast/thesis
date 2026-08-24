@@ -5,10 +5,13 @@ In this section we will introduce the classical smi-online model introduced by K
 	In this model the two anticliques of the bipartite graph $G=(U,V,E)$ are divided into offline and online agents.
 	Offline agents $U$ are vertices that belong to one anticlique and are always visible.
 	Online agents $V$ are the vertices from the other anticlique and arrive in the online fashion.
-	When an online agent arrives edges incident to it are revealed. It has to be iether discarded or matched to an offline agent and that match cannot change later.
+	When an online agent arrives edges incident to it are revealed. It has to be either discarded or matched to an offline agent and that match cannot change later.
 	The adversary is oblivious
 \end{definition}
-This structure, where one anticlique is always known, will be retained by all models we will present. It is not a necessity, a Fully-Online model where both anticliques arrive in an online fashion exists, but it out of the scope of this work as it is known to be strictly harder than the Semi-Online model
+For the purposes of minimizing repetition we state that properties of this model, mainly: $U$ being always revealed, the matching being instant and irrevocable, the adversary being oblivious are present in all subsequent model unless specified otherwise
+
+This structure, where one anticlique is always known, will be retained by all models we will present. It is not a necessity, a Fully-Online model where both anticliques arrive in an online fashion exists, but it out of the scope of this work as it is known to be strictly harder than the Semi-Online model.
+
 
 The adversary is oblivious as an adaptive adversary is trivial.
 \begin{remark}

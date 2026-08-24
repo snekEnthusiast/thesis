@@ -1,3 +1,4 @@
+\section{delay}
 \begin{definition}[Delay model]
 	The delay model an enchanced version of the Semi-Online model, where on vertex arrival it doesn't have to be matched immediately, but only after a delay of $f(n)$ time - $f(n)$ arriving online vertices
 \end{definition}
@@ -29,3 +30,21 @@ This model isn't well-studied as despite the fact that delay (sometimes reffered
 \begin{proof}
 	For $\mathrm{ALG}$ construct the adversary graph in a manner similar to the one above, with $f(n)$ copies of $G_A$, a graph on which $\mathrm{ALG}$ has a performance of $1-\frac{1}{e}$. Notice that the size of individual $G_A$ is $\frac{n}{f(n)}$ and since $\lim_{n\to\infty}\frac{n}{f(n)}\to\infty$, the size of individual $G_A$ instances is growing with $n$, leading to $\mathrm{ALG}$ being forced to solve isolated instances of size growing to infinity, yielding the stated competitiveness.
 \end{proof}
+
+\section{Corrections}
+\begin{definition}[Correction Model]
+	In the correction model, every turn, the algorithm can remove up to a constant $d$ edges from the formed matching. There are no restrictions on adding edges
+\end{definition}
+An algorithm that improves the matching by changing some $d$ edges for each arrival, for some constant $d$, can be derived from a known lemma proven by Hopcroft and Karp in 1973
+\begin{lemma}
+	for a matching $M$, if all augmenting paths are of length no less than $2k-1$, then $\frac{|M|}{|M^\star|}\geq\frac{k-1}{k}$
+\end{lemma}
+we will follow the proof from \cite{correction}
+\begin{proof}
+	Consider that graph $G'=(U,V,E')$ where $E'$ is the symmetric difference between some matching $M$ and $M^\star$, which is $(M\backslash M^\star)\cup(M^\star\backslash M)$. Vertices in $G'$ have a degree of either $0,1$ or $2$. Vertices which are either isolated or in cycles (which must be of even length) in $G'$ have the same amount of edges adjacent from $M,M^\star$. Augmenting paths, of which there are no more than $|M^\star|-|M|$, accout for the difference in cardinality.
+
+	When the difference in cardinality is greatest, $G'$ contains only augmenting paths, of which each has at least $k-1$ edges in $M$ and $k$ edges in $M^\star$. Let $P$ be a path. Then $\frac{|M\cap P|}{|M^\star\cap P|}\geq\frac{k-1}{k}$ which can be generalized ove all paths to $\frac{|M|}{|M^\star|}\geq\frac{k-1}{k}$
+\end{proof}
+From here we can construct the algorithm. We will call an augmenting path short if it is of length no greater than $2d+1$, meaning it has $d$ edges in the matching. Notice that 'switching' an augmenting path of length $2k-1$ requires removing $k-1$ edges from the matching
+Arrival of a new vertex creates at most one short augmenting path on the assumption that no existed before, and removing it is possible.
+Therefore, an algorithm that greedily removes short augmenting paths as new vertices arrive has a competitiveness of $\frac{d}{d+1}$
