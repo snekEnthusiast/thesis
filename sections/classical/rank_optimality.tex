@@ -30,7 +30,7 @@ notice that perfect matching is achieved only if $u_i$ is matched with $v_{\sigm
 	\label{dga-rga-equiv}
 	Let $\mathrm{DGA}$ be a greedy deterministic algorithm.\\
 	The expected performance of $\mathrm{DGA}$ on a random instance from $U(M)$ bounds the expected performance of $\mathrm{RGA}$ on $I^\star$\\
-	\[\underset{m\sim U(M)}{\E}[|\mathrm{DGA}(m)|]=\E[\mathrm{RGA}(M^\star)]\]
+	\[\underset{i\sim U(I)}{\E}[|\mathrm{DGA}(i)|]=\E[\mathrm{RGA}(I^\star)]\]
 \end{lemma}
 \begin{proof} To prove the lemma we first need to prove two claims:\\
 % -- ??? -- ??? -- ???
@@ -57,16 +57,16 @@ notice that perfect matching is achieved only if $u_i$ is matched with $v_{\sigm
 
 By using Yao's lemma we receive the following: for any algorithm $\mathrm{ALG}$
 \begin{equation}
-	|\mathrm{ALG}(M)|:=\underset{m\in M}{\min}\E[|\mathrm{ALG,m}|]\leq \underset{\mathrm{DALG}}{\max}\underset{m\sim U(M)}{\E}[|\mathrm{DALG}(m)|]=\E[|\mathrm{RGA}(M^\star)|]
+	|\mathrm{ALG}(M)|:=\underset{i\in I}{\min}\E[|\mathrm{ALG(i)}|]\leq \underset{\mathrm{DALG}}{\max}\underset{i\sim U(I)}{\E}[|\mathrm{DALG}(i)|]=\E[|\mathrm{RGA}(I^\star)|]
 \end{equation}
 
-Since (as proven in the previous section) only instances with perfect matchings need be considered in competitiveness analysis, competitiveness of all algorithms is upper bounded by $\E[|\mathrm{RGA}(M^\star)|]/n$
+Since (as proven in the previous section) only instances with perfect matchings need be considered in competitiveness analysis, competitiveness of all algorithms is upper bounded by $\frac{\E[|\mathrm{RGA}(I^\star)|]}{n}$
 
 Now, all that is required to prove the following lemma 
 
 \begin{lemma}
 	\label{rga-performance}
-	$\E[|\mathrm{RGA}(M^\star)|]\leq n(1-\frac{1}{e})+o(1)$
+	$\E[|\mathrm{RGA}(I^\star)|]\leq n(1-\frac{1}{e})+o(1)$
 \end{lemma}
 The rest of this section is the proof of this lemma.
 
