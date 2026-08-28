@@ -1,4 +1,4 @@
-as shown before, despite it's potential the Final Degree model doesn't allow for a better competitiveness. However, unlike in the Semi-Online model, the class of graphs that can force a pessimistic matching of size $\frac{n}{2}$ is very limited. For this reason, it is alwo worth analyzing performance in a much more forgiving, and realistic, enviorenment.
+as shown before, despite it's potential the Final Degree model doesn't allow for a better competitiveness. However, unlike in the Semi-Online model, the class of graphs that can force a pessimistic matching of size $\frac{n}{2}$ is very limited. For this reason, it is also worth analyzing performance in a much more forgiving, and realistic, environment.
 
 \begin{definition}
 	\label{CLV-B Model}
@@ -6,8 +6,8 @@ as shown before, despite it's potential the Final Degree model doesn't allow for
 	We assume WLOG that elements of $p$ are in non-increasing order.\\
 	We denote the random graph of vectors $p,q$ $I_{p,q}$
 \end{definition}
-Do note that in this model, much like in the i.i.d model, the adversary is severely resticted and this model resembles a performance on a random graph.
-Adapting the RED algorithm to the CLV-B model, with consideration to the fact that there is only the expected value of any final degree and no definitive final degree, results in the following algorithm, desctibed in \cite{obmDegree}
+Do note that in this model, much like in the i.i.d model, the adversary is severely restricted and this model resembles a performance on a random graph.
+Adapting the RED algorithm to the CLV-B model, with consideration to the fact that there is only the expected value of any final degree and no definitive final degree, results in the following algorithm, described in \cite{obmDegree}
 \begin{algorithm}
 	\caption{MinPredictedDegree - MPD}
 	\label{alg:effective-deg-rand-clv}
@@ -26,7 +26,7 @@ the proof, as well as the algorithm itself if from \cite{obmDegree} whose work c
 
 \begin{lemma}
 	\label{deg-lm1}
-	$p\in[0,1]^n,q\in[0,1]^m$. For some $i\in[n]$, $p'\in[0,1]^{n-1}$ is obtained by removeing entry on index $i$\\
+	$p\in[0,1]^n,q\in[0,1]^m$. For some $i\in[n]$, $p'\in[0,1]^{n-1}$ is obtained by removing entry on index $i$\\
 	$\forall k:$\\
 	$\Pr[\MPD(I_{p,q})\geq t]\leq\Pr[\MPD(I_{p',q})\geq t-1]$
 \end{lemma}
@@ -34,7 +34,7 @@ the proof, as well as the algorithm itself if from \cite{obmDegree} whose work c
 	let $V=(v_1,\dots,v_m),U=(u_1,\dots,u_n),U'=U(u_1,\dots,u_{i-1},u_{i+1},\dots,u_n)$\\
 	For any bipartite graph $G$ on $(U,V)$ we will generate $G'$ on $(U',V)$ as follows\\
 	$\forall v\in V: N_{G'}(v):=N_{G}(v)\cap U'=N_{G}(v)\backslash\set{u_i}$\\
-	If $G$ is distributed as $I_{p,q}$ then $G'$ is distributed as $I_{p',q}$. Therefore, all that is necesarry to prove the lemma is to show that $\MPD(G')\geq \MPD(G)-1$, which we will to by induction on $m$\\
+	If $G$ is distributed as $I_{p,q}$ then $G'$ is distributed as $I_{p',q}$. Therefore, all that is necessary to prove the lemma is to show that $\MPD(G')\geq \MPD(G)-1$, which we will to by induction on $m$\\
 	base case: when $m=0$ is trivial. There are no edges so all matchings found on $G,G'$ are of size 0\\
 	induction step: will be analyzed in cases.\\
 	Let $M_j\subseteq U$ be set of $u\in U$ matched by $\MPD$ on $I$ after $v_1,\dots,v_j$ arrive, $M'_j$ defined symmetrically subset $U'$ on $I'$
@@ -61,7 +61,7 @@ the proof, as well as the algorithm itself if from \cite{obmDegree} whose work c
 	For $S\subseteq [n]$ set of indices of offline vertices, $\Pr_p[N_S]$ is the probability that, in $I_{p,q}$, the first online node's neighborhood is $S$, depending on $p$ and $q_1$\\
 	$\Pr_p(N_S)=\prod\limits_{i\in S}p_iq_1\prod\limits_{i\in [n]\backslash S}(1-p_iq_1)$\\
 	$p(A,S)$ is vector of ordered weights of the unmatched offline vertices after running algorithm $A$, after the arrival of the first online node\\
-	This proof will, once again, rely on indduction on $m$, and the case of $m=0$ is, again, trivial since $\MPD(I_{p,q})=\MPD(I_{p',q})=\emptyset$
+	This proof will, once again, rely on induction on $m$, and the case of $m=0$ is, again, trivial since $\MPD(I_{p,q})=\MPD(I_{p',q})=\emptyset$
 	for the induction step:\\
 	define $(m-1)$ dimensional vector $q'=(q_2,\dots,q_m)$
 	\begin{equation}\begin{aligned}[b]
@@ -117,7 +117,7 @@ the proof, as well as the algorithm itself if from \cite{obmDegree} whose work c
 
 with these lemmas we can prove \autoref{thm:deg-opt}
 \begin{proof}
-	We prove, once again, with induction over $m$, and once again the base case $m=0$ is trivial isnce all algorithms return an empty matching with probability of $1$\\
+	We prove, once again, with induction over $m$, and once again the base case $m=0$ is trivial since all algorithms return an empty matching with probability of $1$\\
 	for the induction step, when inequality holds for $m-1$ online nodes:\\
 	$q'=(q_2,\dots,q_m)$, $2^{[n]}\supseteq R_A=\set{S\subseteq[n]|p(A,S)=p}$
 	by induction hypothesis

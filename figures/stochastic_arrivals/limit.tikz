@@ -4,8 +4,14 @@
 		\node [style=default] (1) at (-4, 6) {};
 		\node [style=default] (2) at (-4, 4) {};
 		\node [style=new] (3) at (0, 8) {};
-		\node [style=new] (4) at (0, 6.25) {};
+		\node [style=new] (4) at (0, 6) {};
 		\node [style=new] (5) at (0, 4) {};
+		\node [style=nil] (6) at (-4.5, 8) {1};
+		\node [style=nil] (7) at (-4.5, 6) {2};
+		\node [style=nil] (8) at (-4.5, 4) {3};
+		\node [style=nil] (9) at (0.5, 8) {x};
+		\node [style=nil] (10) at (0.5, 6) {z};
+		\node [style=nil] (11) at (0.5, 4) {y};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw (3) to (0);

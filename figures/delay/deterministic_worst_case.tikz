@@ -31,16 +31,16 @@
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}
 		\draw (0) to (1);
-		\draw (2) to (1);
 		\draw (2) to (3);
 		\draw [bend right=90, looseness=0.75] (8.center) to (9.center);
 		\draw (11) to (12);
-		\draw (13) to (12);
 		\draw (13) to (14);
 		\draw [bend right=90, looseness=0.75] (15.center) to (16.center);
 		\draw (17) to (18);
-		\draw (19) to (18);
 		\draw (19) to (20);
 		\draw [bend right=90, looseness=0.75] (21.center) to (22.center);
+		\draw [style=greenl] (1) to (2);
+		\draw [style=greenl] (12) to (13);
+		\draw [style=greenl] (18) to (19);
 	\end{pgfonlayer}
 \end{tikzpicture}

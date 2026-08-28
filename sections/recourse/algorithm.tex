@@ -18,7 +18,7 @@ First, we will prove SAP's correctness
 	SAP maintains a maximum matching
 \end{lemma}
 \begin{proof}
-	We will conduct the proof by onduction over time $t$. Time at $t=0$ when no vertices have arrived forms a trivial base case with the maximal matching being $M=\emptyset$. For the induction step:
+	We will conduct the proof by induction over time $t$. Time at $t=0$ when no vertices have arrived forms a trivial base case with the maximal matching being $M=\emptyset$. For the induction step:
 	Knowing
 	\begin{enumerate}
 		\item At time $t$, the matching $M_t$ is maximal, and
@@ -29,7 +29,7 @@ First, we will prove SAP's correctness
 
 Then, we'll prove the Recourse bound using \autoref{recourse-crucial}
 \begin{proof}
-	We will sum all possible $h$ augmenting path lengths by grouping them into inervals $l_i=[2^i,2^{i+1})$\\
+	We will sum all possible $h$ augmenting path lengths by grouping them into intervals $l_i=[2^i,2^{i+1})$\\
 	Paths in $l_i$ contain no more than $2^{i+1}$ edges and there are no more than $\frac{4n\log n}{2^i}$ in each group, giving $O(n\log n)$ edges per group.
 	Since there are $\log_2(n)+1$ groups, total Recourse, which is no greater than the sum of all edges in all paths in all groups is no greater than $O(n \log^2n)$
 \end{proof}
@@ -76,7 +76,7 @@ where $A(v)$ are called active neighbors of $v$
 	Observe that the optimum is a balanced server flow: constraint ensure that it is a server flow and if it wasn't balanced there would be an online vertex $v$ that sends non-zero flow to $u,u'$ and $\alpha(u)<\alpha(u')$. Notice that the objective function can be decreased by increasing $\alpha(u)$ and reducing $\alpha(u')$ until they are identical, therefore the flow must be balanced.
 \end{proof}
 
-We will now prove that the balanced server flow is unique (regarding $x$-values) using an auxillary lemma
+We will now prove that the balanced server flow is unique (regarding $x$-values) using an auxiliary lemma
 
 %insert above, unify proofs
 \begin{lemma}
@@ -112,7 +112,7 @@ We will now prove that the balanced server flow is unique (regarding $x$-values)
 \begin{proof}
 	Using \autoref{balanced-sf-aux} we can argue that the balanced server flow is the optimum of the linear program in the proof of \autoref{balanced-sf-iff}.\\
 	We can treat a feasible solution $\alpha'$ as a vector, with \autoref{balanced-sf-aux} showing that $||\alpha||\leq \alpha\alpha'$ which with non-negativity implies $||\alpha||\leq||\alpha'||$\\
-	Therefore, any balanced server flow is the optimum of the convex program, which in turn implies that it must be unique sinct the optimum is unique.
+	Therefore, any balanced server flow is the optimum of the convex program, which in turn implies that it must be unique since the optimum is unique.
 \end{proof}
 
 Let $\alpha$ be the balanced server flow at time $t$ and $\alpha'$ be the balanced server flow at time $t+1$, after a new online vertex arrives.\\
@@ -189,7 +189,7 @@ subsection{Replacement Analysis}
 We will now draw a connection between Server Flow and Matching and use the previous lemmas to prove \autoref{recourse-crucial}
 
 \begin{lemma}
-	$G=(U,V,E)$ constins a matching of size $|V|$ iff $\forall u\in U\alpha(u)\leq 1$
+	$G=(U,V,E)$ contains a matching of size $|V|$ iff $\forall u\in U\alpha(u)\leq 1$
 \end{lemma}
 \begin{proof}
 	The lemma follows directly from \autoref{balanced-sf-max}: $\forall K\subseteq V:|K|\leq |N(K)|$ iff $\overline{\alpha}\leq 1$.

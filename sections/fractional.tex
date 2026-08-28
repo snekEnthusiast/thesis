@@ -1,9 +1,9 @@
-We have shown that deterministic algorithm don't have a good comptitiveness in the online bipartite matching problem, even if half the graph is visible or the final degrees are known.\\
+We have shown that deterministic algorithm don't have a good competitiveness in the online bipartite matching problem, even if half the graph is visible or the final degrees are known.\\
 As discussed earlier, competitiveness is a very pessimistic metric, which focuses exclusively on a worst-case scenario. When trying to find a model with good deterministic competitiveness it is reasonable then to increase the worst possible performance at the cost of reducing the best possible performance, or informally to allow an algorithm to 'hedge bets'\\
-This is the focus of the fractional approach. A fractional matching is an assignment of numbers $w_e\in[0,1]$ to edges $e\in E$ of a graph constrained by the condition that $\forall_v\in V(G):\sum\limits_{e\text{ connecting }v}w_e\leq 1$. The size of a fractional matchign is $\sum\limits_{e\in E}w_e$
+This is the focus of the fractional approach. A fractional matching is an assignment of numbers $w_e\in[0,1]$ to edges $e\in E$ of a graph constrained by the condition that $\forall_v\in V(G):\sum\limits_{e\text{ connecting }v}w_e\leq 1$. The size of a fractional matching is $\sum\limits_{e\in E}w_e$
 It is a generalization of a matching since a fractional matching with $w_e\in\set{0,1}$ is a matching\\
 \begin{definition}
-	In the Fractional model, an algorithm finds a fractional matchign in an online fashion. All other details are identical to the Semi-Online model
+	In the Fractional model, an algorithm finds a fractional matching in an online fashion. All other details are identical to the Semi-Online model
 \end{definition}
 In the Fractional model a deterministic algorithm can hedge it's bets to reduce worst case scenarios. When a online vertex $v$ arrives in the Semi-Online model it has to be matched to one of it's neighbors $N(v)$ with some of these choices ultimately reducing the size of the matching found and some preserving it. The obvious difficulty is that even an oblivious adversary can force a deterministic algorithm to make the wrong choice every time.\\
 The strength of the Fractional model is the fact that an algorithm can instead make a compromise between good and bad choices, reducing the worst outcomes in the process.\\
@@ -22,7 +22,7 @@ Note that in an offline setting the sizes of a graph's matching and fractional m
 	The Waterlevel \autoref{alg:waterlevel} has a competitiveness of $1-\frac{1}{e}$
 \end{theorem}
 
-We note that this both the algorithm and it's cometitiveness are well-known. Our analysis will follow the Cornell lecture CS-6820 on Online bipartite matching algorithms
+We note that this both the algorithm and it's competitiveness are well-known. Our analysis will follow the Cornell lecture CS-6820 on Online bipartite matching algorithms
 
 \begin{proof}
 	The basis of this proof is the primal-dual method. A bipartite fractional matching is represented by the following primal-dual program. $l(v)$ denotes the new water level among neighbors of $v$ after it arrives and is matched
@@ -39,7 +39,7 @@ We note that this both the algorithm and it's cometitiveness are well-known. Our
 	\begin{align*}
 		\alpha_u&=g(d(u))\\
 		\beta_v &=1-g(l(v))\\
-		g(y)=\frac{e^y-1}{e-1}
+		g(y)&=\frac{e^y-1}{e-1}
 	\end{align*}
 	$g$ has several properties
 	\begin{enumerate}
@@ -60,7 +60,7 @@ We note that this both the algorithm and it's cometitiveness are well-known. Our
 		\end{align*}
 	\end{lemma}
 	\begin{proof}
-		Define $\beta'$ as follows: $n_v(t)$ is the amount of $u\in N(v)$ such that the inequality $d(u\leq t)$ holds when $v$ arrives.
+		Define $\beta'$ as follows: $n_v(t)$ is the amount of $u\in N(v)$ such that the inequality $d(u)\leq t$ holds when $v$ arrives.\\
 		$\int\limits_0^{l(v)}n_v(t) dt=1$ if $l(v)<1$\\
 		$\beta_j'=\int\limits_0^{l(v)}(1-g(t))n_v(t) dt$\\
 		Note that $\beta'_j\geq\beta_j$ because, $l(v)=1$ is implied by $\beta_v=0$ and $l(v)<1$ is implied by $1-g(t)$ being a decreasing function and therefore\\

@@ -30,7 +30,7 @@ Another way of phrasing this lemma is to say that, if a vertex is moved up in th
 
 \begin{proof}
 	The first part is a direct consequence of \autoref{ra-greedy-prefix}. Proof of the second part will be by induction over time $t$, starting with $s-1$ which is directly implied by the first part.\\
-	Asumming the lemma holds at time $k$, $G_m(k)\subseteq G_s(k+1)$. Notice that $\sigma_m(k+1)=\sigma_s(k+2)$. Denote $v:=v_{\sigma_m(k+1)}$, matched to $u$ on RGA run on $\sigma_m$. Suppose $u\not\in G_s(k+2)$. Then $u$ was availible when RGA was matching $v$ on $\sigma_s$, but $v$ was instead matched to $u'\not\in G_s(k+1)$. By induction hypothesis $u'\not\in G_m(k)$ implying $u,u'$ availible at $t=k+1$ in run $\sigma_m$, RGA should have chosen $u'$ over $u$, contradiction implying $u\in G_s(k+2)$ implying step condition for $t=k+1$
+	Assuming the lemma holds at time $k$, $G_m(k)\subseteq G_s(k+1)$. Notice that $\sigma_m(k+1)=\sigma_s(k+2)$. Denote $v:=v_{\sigma_m(k+1)}$, matched to $u$ on RGA run on $\sigma_m$. Suppose $u\not\in G_s(k+2)$. Then $u$ was available when RGA was matching $v$ on $\sigma_s$, but $v$ was instead matched to $u'\not\in G_s(k+1)$. By induction hypothesis $u'\not\in G_m(k)$ implying $u,u'$ available at $t=k+1$ in run $\sigma_m$, RGA should have chosen $u'$ over $u$, contradiction implying $u\in G_s(k+2)$ implying step condition for $t=k+1$
 \end{proof}
 
 As context for the last lemma, we need to establish the following: what it means to miss a vertex, what is a good match and what is a bad match.
@@ -108,7 +108,7 @@ The second part is to prove three helper lemmas about $\miss,\bad,\good$ with th
 \begin{proof}
 	\begin{description}
 		\item[Case 1] $u_p$ remains unmatched on a run on $\sigma_n$\\
-		Let $\sigma_x\in \Omega_p$, if $u_p$ is matched in a run on $\sigma_x$ hten by \autoref{ra-greedy-prefix} it has to be matched to $v_{x'},x'\leq x$ implying $\forall t | \bad_{\sigma_x}(t,p)=0$ and the lemma proof becomes trivial by non-negativity
+		Let $\sigma_x\in \Omega_p$, if $u_p$ is matched in a run on $\sigma_x$ then by \autoref{ra-greedy-prefix} it has to be matched to $v_{x'},x'\leq x$ implying $\forall t | \bad_{\sigma_x}(t,p)=0$ and the lemma proof becomes trivial by non-negativity
 		\item[Case 2] $u_p$ is matched in a run on $\sigma_n$ to $v_{t'}$. We divide this case into two following cases
 		\begin{description}
 			\item[Case 2.1] $t<t'$\\
@@ -166,12 +166,19 @@ which can in turn be rewritten with $m_t=\good(t)+\bad(t),v_t=\frac{\bad(t)}{n-t
 
 Dropping the $m_{t+1}$ from $\sum\limits_{s\leq t+1}m_s$ narrows down the solution space, so the optimum of a program with $\sum\limits_{s\leq t}m_s$ will give a lower bound on the expected competitiveness. The following is that program, alongside it's dual.
 
-\begin{align*}
-\text{minimize} & & \sum\limits_{t}m_t& && \text{maximize} & & \sum\limits_i\alpha_i\\
-\text{subject to}\ & \forall t<n & \sum\limits_{s\leq t}m_s -n\sum\limits_{s\leq t}v_s & \geq 0 && \text{subject to} & \forall t<n & \sum\limits_{s> t}\alpha_s -n\sum\limits_{s\geq t}\beta_s & \leq 0\\
-& \forall t\leq n & m_t+\sum\limits_{s<t}v_s&\geq 1 && & \forall t\leq n\ & \alpha_t+\sum\limits_{s\geq t}\beta_s&\leq 1\\
-& & m_t,v_t&\geq 0 && & & \alpha_t,\beta_t&\geq 0
-\end{align*}
+\noindent\makebox[\textwidth][c]{%
+	\begin{minipage}{\dimexpr\textwidth+4cm\relax}
+    	\begin{align*}
+			\text{minimize} & & \sum\limits_{t}m_t& && \text{maximize} & & \sum\limits_i\alpha_i\\
+			\text{subject to}\ & \forall t<n & \sum\limits_{s\leq t}m_s -n\sum\limits_{s\leq t}v_s & \geq 0 && \text{subject to} & \forall t<n & \sum\limits_{s> t}\alpha_s -n\sum\limits_{s\geq t}\beta_s & \leq 0\\
+			& \forall t\leq n & m_t+\sum\limits_{s<t}v_s&\geq 1 && & \forall t\leq n\ & \alpha_t+\sum\limits_{s\geq t}\beta_s&\leq 1\\
+			& & m_t,v_t&\geq 0 && & & \alpha_t,\beta_t&\geq 0
+		\end{align*}
+	\end{minipage}
+}
+
+
+
 
 Notice that both primal and dual constraints are satisfied when all inequalities are tight, which in turn implies the optimality of that solution by weak duality.\\
 

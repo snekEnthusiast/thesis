@@ -56,9 +56,9 @@
 		\draw (6) to (12);
 		\draw (6) to (11);
 		\draw (6) to (10);
-		\draw (0) to (10);
-		\draw (1) to (11);
-		\draw (2) to (12);
-		\draw (3) to (13);
+		\draw [style=greenl] (0) to (10);
+		\draw [style=greenl] (1) to (11);
+		\draw [style=greenl] (2) to (12);
+		\draw [style=greenl] (3) to (13);
 	\end{pgfonlayer}
 \end{tikzpicture}

@@ -6,7 +6,7 @@
 		\item on Arrival of vertex $v$: $N$ are unmatched offline neighbors of $v$. If $N\neq\emptyset$, match $v$ to $\underset{u\in N}{\mathrm{argmin}}\ d_u$, $\underset{u\in N}{\forall}d_u-=1$
 	\end{algorithmic}
 \end{algorithm}
-Despite this algorithm seeming promising, it is only marginally more effective than a naive deterministic approach. We will show that in this model no deterministic algorithm has asymptocic competitiveness greater then $0.5$
+Despite this algorithm seeming promising, it is only marginally more effective than a naive deterministic approach. We will show that in this model no deterministic algorithm has asymptotic competitiveness greater then $0.5$
 \begin{theorem}
 	\label{thm:deg-det-comp}
 	In the Final Degree model no deterministic algorithm has a competitiveness higher than $0.5$
@@ -15,7 +15,7 @@ Despite this algorithm seeming promising, it is only marginally more effective t
 	Consider the graph $G_{\deg}$ which has $n=2k+1$ offline vertices with final degree $k+1$ and is formed as follows:\\
 	$k+1$ vertices arrive, all connected to all unmatched offline vertices.\\
 	Notice that at this point $k+1$ vertices are matched and the remaining $k$ have degree $k+1$ in the current graph, meaning that they cannot be matched. All that remains is to fulfill the degree promise. This is easy as the degrees of the matched vertices are $1,2,\dots,k,k+1$ meaning that all that is required is for $k$ vertices connected to all offline vertices with unfulfilled degree promise to arrive.\\
-	The size of the matching found is $k+1$ while the graph has a perfect matching of size $n=2k+1$ which is achived when the $k$ vertices matched by the graph are instead matched to the vertices which fulfilled their degree promise while the remaining $k+1$ vertices are matched among themselves since they form a biclique $K_{k+1,k+1}$
+	The size of the matching found is $k+1$ while the graph has a perfect matching of size $n=2k+1$ which is achieved when the $k$ vertices matched by the graph are instead matched to the vertices which fulfilled their degree promise while the remaining $k+1$ vertices are matched among themselves since they form a biclique $K_{k+1,k+1}$
 \end{proof}
 \begin{figure}[H]
 	\label{fig:deg-det-comp}
@@ -25,7 +25,7 @@ Despite this algorithm seeming promising, it is only marginally more effective t
 We will remark here that this model is a relaxation of the Semi-Online model, so competitiveness here isn't lower\\
 
 \section{Randomized Augmentation}
-As shown above, the information of a graph's final degree isn't helpful for deterministic algorithms. However, there is a good reason to believe that this might not be the case for rndomized algorithms\\
+As shown above, the information of a graph's final degree isn't helpful for deterministic algorithms. However, there is a good reason to believe that this might not be the case for randomized algorithms\\
 Here, the fact that the competitiveness is only $0.5$ asymptotically and in actuality is $\frac{k+1}{2k+1}$ is key.
 
 \begin{lemma}
@@ -35,7 +35,7 @@ If all vertices have different degrees then the algorithm finds a perfect matchi
 
 \begin{proof}
 	Let $G_n=(V,U,E)$ be a $n\times n$ bipartite graph with with all vertices in $U$ having different degrees. WLOG $G$ has a perfect matching, implying that the degrees of $u\in U$ are $1,\dots,n$. Let $u_k:=u\in U|deg(u)=k$\\
-	To force the algorithm to leave $n_k$ behind, $k$ online vertices need to arrive, each connected to a different $u'_i\in\{u_i|i<k\}$. The problem with this is that the size of $U'$ is $k-1$, maiing sich a thing impossible
+	To force the algorithm to leave $n_k$ behind, $k$ online vertices need to arrive, each connected to a different $u'_i\in\{u_i|i<k\}$. The problem with this is that the size of $U'$ is $k-1$, making such a thing impossible
 \end{proof}
 
 A much stronger realization can be gleamed from this reasoning to force a deterministic algorithm to leave a vertex $u$ behind, and for it to be possible for a randomized algorithm to leave that vertex behind, there must be $\deg(u)$ vertices $v$ such that $\deg(u)\geq\deg(v)$, which moreover won't be left behind.\\
@@ -43,7 +43,7 @@ A much stronger realization can be gleamed from this reasoning to force a determ
 This line of reasoning leads directly to the graph $G_{\deg}$ used in the proof of \autoref{thm:deg-det-comp}. However, this also leads to a problem for an adversary. That graph is rather dense, which isn't a situation where randomized graphs perform poorly. Indeed, despite
 RGA (\autoref{alg:RGA}) having an expected competitiveness of $\frac{n}{2}+O(\log n)$, it is expected to find a matching of size $n(1-\frac{1}{e})$ on a 
 %reference
-graph which is actually a subgraph of the degree countergraph edgewise, meaning it would work at least as well here
+graph which is actually a subgraph of the degree counter-graph edgewise, meaning it would work at least as well here
 
 \begin{algorithm}
 	\caption{Randomized Effective Degree}
@@ -61,7 +61,7 @@ graph which is actually a subgraph of the degree countergraph edgewise, meaning 
 	We can divide the arriving online vertices into two phases: first being when the first $k+1$ vertices that make the upper $k$ offline vertices unmatchable in the deterministic scenario, and the second phase when latter $k$ online vertices arrive and are unmatchable.\\
 	In the first phase the arriving vertices are always matchable since they are connected to all offline vertices\\
 	In the second phase arriving vertices are connected to incrementally smaller parts of the upper $k$ vertices\\
-	The lower $k+1$ offline and online vertices form a biclique, meaning that all matches made between the first $k+1$ online vertices and the lower $k+1$ offline vertices do not make any vertex unmatchable. Since matches are chosen randomly, we expect half of the online agends from the first phase to be matched there\\
+	The lower $k+1$ offline and online vertices form a biclique, meaning that all matches made between the first $k+1$ online vertices and the lower $k+1$ offline vertices do not make any vertex unmatchable. Since matches are chosen randomly, we expect half of the online agents from the first phase to be matched there\\
 	In the second phase $k$ vertices arrive connected to incrementally smaller parts of the upper $k$ offline vertices. Using an argument symmetrical to the one in \autoref{deg-diff-degree} we know that the matching here is perfect\\
 	In total - all online vertices in the first phase have been matched and an expected half of the vertices in the second phase has ben matched, resulting in an expected performance of $0.75$
 \end{proof}
@@ -77,6 +77,6 @@ Despite these seeming advantages, this algorithm doesn't have a competitiveness 
 	\input{figures/degree/priority.tikz}
 \end{figure}
 \begin{proof}
-	The case in which higher degree vertices are prioritized for matching is trivial as the counterexample is the same one from [ref-Z] and is added here for completion. In the case that the algorithm prioritized lower degree vertices like RED we construct the graph as follows: $k$ upper offline vertices $u_1,dots,u_k$ with degree $k$ and $k$ lower offline vertices $u_{k+1},dots,u_{2k}$ with degree $2$. Online vertices arrive in two stages: first, $k$ vertices $v_1,\dots,v_k$ connected to the upper half, where $v_i$ is also connected to $u_k+i$. These will all, except possibly the last two, be matched to $u_k+i$ as only then the effective degrees between upper and lower half equalize. This in tuen makes the next $k$ online vertices unmatchable as $u_{k+i}$ is only connected to $v_{k+i}$
+	The case in which higher degree vertices are prioritized for matching is trivial as the counterexample is the same one from [ref-Z] and is added here for completion. In the case that the algorithm prioritized lower degree vertices like RED we construct the graph as follows: $k$ upper offline vertices $u_1,dots,u_k$ with degree $k$ and $k$ lower offline vertices $u_{k+1},dots,u_{2k}$ with degree $2$. Online vertices arrive in two stages: first, $k$ vertices $v_1,\dots,v_k$ connected to the upper half, where $v_i$ is also connected to $u_k+i$. These will all, except possibly the last two, be matched to $u_k+i$ as only then the effective degrees between upper and lower half equalize. This in then makes the next $k$ online vertices unmatchable as $u_{k+i}$ is only connected to $v_{k+i}$
 \end{proof}
 We note that the graph for low-priority algorithms was devised by \cite{obmRaRank} to fool their MPD algorithm

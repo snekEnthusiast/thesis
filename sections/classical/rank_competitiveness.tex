@@ -53,7 +53,7 @@ The final lemma required to complete the proof uses this result directly.
 
 \begin{proof}
 	Let $\sigma$ be a random permutation of offline vertices. Define $\sigma'$ with the following random process: choose an offline vertex randomly with equal probability, take it out of $\sigma$ and insert it into the $t$-th rank. Let $u$ be the vertex of rank $t,u=m^*(u),R_{t-1}$\\ online vertices matched by the algorithm to offline vertices of rank $\leq t-1$\\
-	probability that $v$ is not matched is $1-x_t$. Expcted cardinality of $R_{t-1}$ is $\sum\limits_{1\leq s\leq t-1}x_s$.\\
+	probability that $v$ is not matched is $1-x_t$. Expected cardinality of $R_{t-1}$ is $\sum\limits_{1\leq s\leq t-1}x_s$.\\
 	Applying \autoref{rank-cmp-unmatched-complicated} with $\sigma:=\sigma',i$ chosen such that $\sigma'_i=\sigma$\ : if $v$ isn't matched by $\mathrm{Ranking}(\sigma')$ then $v$ is matched by $\mathrm{Ranking}(\sigma)$ to a vertex $u'$ such that $\sigma(v)\leq t$ implying $v\in R_t$\\
 	Conditional on $\sigma$, $v\in R_t$ has a probability of $\frac{|R_t|}{n}$ since they are independent.\\
 	We now have two random events $E,F$ that fulfill the condition that $E\implies F$. It is obvious to see that $\Pr[E]\geq\Pr[F]$\\
@@ -62,7 +62,7 @@ The final lemma required to complete the proof uses this result directly.
 \end{proof}
 
 With \autoref{rank-cmp-probability} the Theorem can be proved directly.\\
-$G$ has a perfect matching implies that copetitiveness is $\inf \frac{1}{n} \sum\limits_{1\leq s\leq n}x_s$.\\
+$G$ has a perfect matching implies that competitiveness is $\inf \frac{1}{n} \sum\limits_{1\leq s\leq n}x_s$.\\
 Let $S_t=\sum\limits_{1\leq s\leq t}x_s$. \autoref{rank-cmp-probability} can be rewritten as $S_t(1+\frac{1}{n})\geq 1 + S_{t-1}$ and the competitiveness ratio as $\frac{1}{n}S_n$.\\
 Infimum occurs therefore when all inequalities are tight, resulting in $S_t=\sum\limits_{1\leq s\leq t}(1-\frac{1}{n+1})^s$ for all $t$, implying that competitiveness is at least $\frac{1}{n}\sum\limits_{1\leq s\leq n}(1-\frac{1}{n+1})^s=1-(1-\frac{1}{n+1})^n\xrightarrow[n\to\infty]{}1-\frac{1}{e}$
 

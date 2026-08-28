@@ -4,7 +4,7 @@
 
 we will begin the introduction with a simple proof
 \begin{remark}
-	In the Online Edge Arrival Recourse model, where individual edges arriven in an online fashion and all vertices are visible, no algorithm has a recourse below $O\Omega(n^2)$
+	In the Online Edge Arrival Recourse model, where individual edges arrived in an online fashion and all vertices are visible, no algorithm has a recourse below $O\Omega(n^2)$
 \end{remark}
 \begin{proof}
 	The graph is a simple even path $(v_1,\dots,v_{2k})$. First edge $(v_k,v_k+1)$ arrives and are matched. Then, for $i\in(1,\dots,k-1)$, edges $(v_{k-i},v_{k-i+1}),(v_{k+i},v_{k+i+1})$ arrive sequentially, effectively extending the path from the front and back. Once every two edge arrivals the maximal matching changes and becomes the set of all edges except the previous matching, forcing the algorithm to change the entire matching. Thus, a total of $\Omega(n^2)$ changes is required

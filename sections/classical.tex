@@ -1,5 +1,5 @@
 \label{section:classical}
-In this section we will introduce the classical smi-online model introduced by Karp et al \cite{karp}
+In this section we will introduce the classical semi-online model introduced by \cite{karp}
 
 \begin{definition}[Semi-Online Model]
 	In this model the two anticliques of the bipartite graph $G=(U,V,E)$ are divided into offline and online agents.
@@ -29,7 +29,7 @@ Then adversary reveals $n$ agents denoted $V'$ connected to already matched offl
 In the final graph, all matched vertices $V'$ are connected to all online agents and all unmatched $v_i$ agents are connected to all $u_j$ such that $j\geq i$. Clearly, it is possible to match $v_i$ to $u_i$ and $V'$ to $U'$, forming a matching of size $2n$\\
 \end{proof}
 \begin{remark}
-	In the semi-online model, any deterministic algorithm has a competivineness no greater than $\frac{1}{2}$, there is a deterministic algorithm with competitiveness of $\frac{1}{2}$
+	In the semi-online model, any deterministic algorithm has a competitiveness no greater than $\frac{1}{2}$, there is a deterministic algorithm with competitiveness of $\frac{1}{2}$
 \end{remark}
 \begin{algorithm}
 	\caption{Naive}
@@ -42,17 +42,17 @@ In the final graph, all matched vertices $V'$ are connected to all online agents
 
 	To prove that there is a deterministic algorithm with competitiveness of $\frac{1}{2}$ consider the a naive algorithm.
 	
-	for every $(u,v)\in E(G)$ either $u$ or $v$ is matched. Therefore at least half of all vertices that could be matched are matched, therefore the comptititveness isn't lower than $\frac{1}{2}$
+	for every $(u,v)\in E(G)$ either $u$ or $v$ is matched. Therefore at least half of all vertices that could be matched are matched, therefore the competitiveness isn't lower than $\frac{1}{2}$
 \end{proof}
 
-The main discovery of the Karp paper is the following algorithm
+The main discovery of \cite{karp} is the following algorithm
 
 \begin{algorithm}
 	\caption{Ranking}
 	\label{alg:ranking}
 	\begin{algorithmic}
 		\item on Initialization: create a random permutation of the offline agents $\sigma$
-		\item on Arrival of vertex $v$: match it with the first availible offline neighbor according to $\sigma$
+		\item on Arrival of vertex $v$: match it with the first available offline neighbor according to $\sigma$
 	\end{algorithmic}
 \end{algorithm}
 

@@ -1,4 +1,4 @@
-In this scetion we will prove \autoref{thm:rank-ra-comp} following an approach by \cite{obmRaRank}\\
+In this section we will prove \autoref{thm:rank-ra-comp} following an approach by \cite{obmRaRank}\\
 
 The approach is to
 \begin{enumerate}
@@ -15,7 +15,7 @@ Do note that the last step is computational and does not prove an exact competit
 For the purposes of this section we fix a graph $G=(V,U,E)$\\
 $x(\sigma,\pi,u,v)=1$ iff $(u,v)\in\mathrm{Ranking}(G,\sigma,\pi)$\\
 $m^\star(u,v)=1$ iff $M\star(u)=v$.\\
-We will slightly abuse notation and tread vertices as integers in $[n]$, this way for $u\in U$, $\sigma(u)$ is the vertex with rank $u$. The same occurs for $v\in V$ and arrival time.
+We will abuse notation slightly and assume $U=[n],V=[m]$ for some $n,m\in\mathbb{N}$, in this way $u$ is both a vertex and it's index in an arbitrary ordering. We remind that this means that $\sigma(u)$ is the vertex at rank $u$
 
 \begin{lemma}[Dominance]
 	$\forall \sigma\in\Perm{U},\pi\in\Perm{V},u\in U,v\in V$
@@ -50,7 +50,7 @@ We can also express a symmetrical equation for $\pi'$
 	\sum\limits_{1\leq v'\leq v + \mathrm{geq}(v,v_{\mathrm{new}})}(\sigma,\pi',u',v)\geq\sum\limits_{1\leq v'\leq v}x(\sigma,\pi,u,v')
 \end{equation}
 
-the proof is symmetrical, so we will ommit it
+the proof is symmetrical, so we will omit it
 
 \subsection[formulating expLP(n,k)]{formulating $\mathrm{expLP}(n,k)$}
 
@@ -77,7 +77,7 @@ for the purposes of creating $\mathrm{expLP}(n,k)$ for a graph $G$ with $n$ vert
 
 \subsection[relaxation to PolyLP(n)]{relaxation to $\mathrm{PolyLP}(n)$}
 
-This method relies in the final step on using LP solvers to obtain a bound rather then proving it analytically. For this reason the exponential size of $\mathrm{expLP}(n,k)$ relative to $n$ is unfortunate as it will make it practically impossible to complete this omputation in a reasonable time. For this reason we will create a family of polynomial size linear programs which in turn provide a good lower bound on the optimal values of the objective function of $\mathrm{expLP}(n,k)$
+This method relies in the final step on using LP solvers to obtain a bound rather then proving it analytically. For this reason the exponential size of $\mathrm{expLP}(n,k)$ relative to $n$ is unfortunate as it will make it practically impossible to complete this computation in a reasonable time. For this reason we will create a family of polynomial size linear programs which in turn provide a good lower bound on the optimal values of the objective function of $\mathrm{expLP}(n,k)$
 
 We assume WLOG that the optimal matching $M^\star=\{(i,i)|i\in[n]\}$
 
@@ -105,7 +105,7 @@ multiplying both sides of \autoref{ra-rank-eq1} by $\mathrm{eq}(\sigma(u)m\pi(r)
 
 \[\sum\limits_{1\leq u'\leq u}\mathrm{eq}(\sigma(u),\pi(r))x(\sigma,\pi,u',v)+\sum\limits_{1\leq v'\leq v}\mathrm{eq}(\sigma(u),\pi(r))x(\sigma,\pi,u,v')\geq\mathrm{eq}(\sigma(u),\pi(v))\]
 
-and taking expectation over ranom $\sigma,\pi$ results in
+and taking expectation over random $\sigma,\pi$ results in
 
 \begin{equation}
 	\label{ra-rank-eq4}
@@ -176,10 +176,10 @@ $\mathrm{PolyLP}(n)$ is factor-revealing, in this section we will transform it i
 	the family of linear programs $\mathrm{PolyLP'}(n)$ is strongly factor-revealing for Ranking with random arrivals
 \end{lemma}
 \begin{proof}
-Take eny integer $m>0$. For any instance of size $n=km,k\in\mathbb{Z}$. We will prove that the competitiveness ratio of Ranking is lower-bounded by $\mathrm{PolyLP'}(m)$. We know that $\inf\limits_d\mathrm{PolyLP}(md)$ is greater or equal to the desired competitiveness ratio. We will take an optimal solution $(x,y)$ of $\mathrm{PolyLP}(md)$ and project it to a feasible solution of $\mathrm{PolyLP'}(m)$ as follows
+Take any integer $m>0$. For any instance of size $n=km,k\in\mathbb{Z}$. We will prove that the competitiveness ratio of Ranking is lower-bounded by $\mathrm{PolyLP'}(m)$. We know that $\inf\limits_d\mathrm{PolyLP}(md)$ is greater or equal to the desired competitiveness ratio. We will take an optimal solution $(x,y)$ of $\mathrm{PolyLP}(md)$ and project it to a feasible solution of $\mathrm{PolyLP'}(m)$ as follows
 	\begin{definition}
 		For any $i,j,k\in[m]$ define $f(i)=\{d(i-1)+1,\dots,d * i\}, f(i,j)=f(i)\times f(j), f(i,j,k)=f(i)\times f(j)\times f(k)$ ($\times$ denotes Cartesian product)\\
-		For any $u',v',p'\in[m]$ define $x'(u',v',p')=\frac{1}{d}\sum\limits_{(u,v,p)\in f(u',v',p')}x(u,v,p)$,$y'(u',v',p')=\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd,v,p)$
+		For any $u',v',p'\in[m]$ define $x'(u',v',p')=\frac{1}{d}\sum\limits_{(u,v,p)\in f(u',v',p')}x(u,v,p)$,$y'(u',v',p')\allowbreak=\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd,v,p)$
 	\end{definition}
 	We will show what $x',y'$ for $\mathrm{PolyLP'}(m)$ has the same objective value as $x,y$ for $\mathrm{PolyLP}(m)$
 	\begin{align*}
@@ -197,7 +197,7 @@ Take eny integer $m>0$. For any instance of size $n=km,k\in\mathbb{Z}$. We will 
 		                 &\geq \frac{1}{d}\sum\limits_{(r,p)\in f(v',p')} y(u'd,v,p)\\
 						 &=y'(u',v',p')
 	\end{align*}
-	where the inequality is the sesult of chaining multiple $y(u'd+j+1,r,p+j+1)\geq y(u'd+j,v,p+j)$ inequalities\\
+	where the inequality is the result of chaining multiple $y(u'd+j+1,r,p+j+1)\geq y(u'd+j,v,p+j)$ inequalities\\
 	The third constraint of $\mathrm{PolyLP'}(n)$ can be obtained as follows: for $u'<p'\leq n$, $r'\leq n$
 	\begin{align*}
 		y'(u',v',p')&=\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd,v,p)\\
@@ -213,7 +213,7 @@ Take eny integer $m>0$. For any instance of size $n=km,k\in\mathbb{Z}$. We will 
 					  &=\geq\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd,v,p)\\
 					  &=y'(u',v',u'+1)
 	\end{align*}
-	where the first inequality is the consequence of the definition of $y$ and $x$'s non-negatibity and the second inequality follows from the fourth constraint of $\mathrm{PolyLP}(n)$\\
+	where the first inequality is the consequence of the definition of $y$ and $x$'s non-negativity and the second inequality follows from the fourth constraint of $\mathrm{PolyLP}(n)$\\
 	The first constraint of $\mathrm{PolyLP'}(n)$, which is \autoref{ra-rank-eq-strong-factor}, can be obtained as follows
 	\begin{align*}
 		y'(v',u',p')&=\frac{1}{d}\sum\limits_{(u,p)\in f(u',p')}y(v'd,u,p)\\
@@ -221,13 +221,13 @@ Take eny integer $m>0$. For any instance of size $n=km,k\in\mathbb{Z}$. We will 
 					&\geq \frac{1}{d}\sum\limits_{(u,p)\in f(u',p')}y(v-1,u,v'd)\\
 					&=\frac{1}{d}\sum\limits_{(u,p)\in f(u',p')}y(v-1,u,v)
 	\end{align*}
-	where the first inequality is the consequence of the fact that $p\geq v'd\implies y(v'd,u,p)\geq y(v'd-1,u,p)=y(v,d-1,u,v'd)$ and $p<v'd\implies y(v'd,u,p)\geq y(v'd-1,u,v'd)$. The second inequality is the consequence of the third constraint of $\mathrm{PolyLP}(n)$
+	where the first inequality is the consequence of the fact that $p\geq v'd\implies y(v'd,u,p)\geq\allowbreak y(v'd-1,u,p)=y(v,d-1,u,v'd)$ and $p<v'd\implies y(v'd,u,p)\geq y(v'd-1,u,v'd)$. The second inequality is the consequence of the third constraint of $\mathrm{PolyLP}(n)$
 	Concluding
 	\begin{align*}
 		     &y'(u',v',u')+y'(v',u',p')\\
 		\geq & \frac{1}{d} \sum\limits_{(v,u)\in f(v',u')}y(u'd,v,u) + \frac{1}{d} \sum\limits_{(u,v)\in f(u',v')}y(v-1,u,v)\\
 		\geq & \frac{1}{d} \sum\limits_{(v,u)\in f(v',u')}y(u,v,u) + \frac{1}{d} \sum\limits_{(u,v)\in f(u',v')}y(v-1,u,v)\\
-		\geq \frac{1}{d}d^2\frac{1}{n}=\frac{1}{m}
+		\geq & \frac{1}{d}d^2\frac{1}{n}=\frac{1}{m}
 	\end{align*}
 	where the first inequality is a consequence of non-negativity of $x$ and the definition of $y$ and the second inequality is a result of the first constraint in $\mathrm{PolyLP}(n)$\\
 
