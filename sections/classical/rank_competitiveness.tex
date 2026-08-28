@@ -1,19 +1,21 @@
-In this section we present a simple proof for \autoref{thm:rank-competitiveness} by \cite{obmSimple}. Many proofs of this theorem use linear programming, but this one uses no special tools
+In this section we present a simple proof for \autoref{thm:rank-competitiveness} by \cite{obmSimple}. Many proofs of this theorem use linear programming, but this one uses no special tools.
+
+We treat $\sigma$, a permutation of $U$ representing a ranking, as an ordered list or a function $[|U|]\to U$ meaning $\sigma(i)$ is the vertex at rank $i$ in $\sigma$ and $\sigma^{-1}(u)$ is the rank of $v$ in $\sigma$
 
 \begin{lemma}
 	\label{rank-cmp-compete-perfect}
 	Competitiveness is determined by graphs with a perfect matching
 \end{lemma}
 \begin{proof}
-	Let $G$ be a bipartite graph without a perfect matching, with orderings of offline agents $\sigma$ and of online agents $\pi$. Consider $G'$ which is a copy of $G$ without a vertex $x$ and orderings $\pi'$ induced by $V\backslash\{x\}$.
+	Let $G$ be a bipartite graph without a perfect matching, with orderings of offline agents $\sigma$ and of online agents $\pi$. Consider $G'$ which is a copy of $G$ without a vertex $x$ and orderings $\pi'$ induced by $V\backslash\set{x}$.
 
-	Observe that $m=\mathrm{Ranking}(G,\pi,\sigma)$ being the matching found by the Ranking algorithm on $G$ with ranking $\pi$ and arrival order $\sigma$ is either identical to $m'=\mathrm{Ranking}(G',\pi',\sigma')$ or has one more vertex pair. This is apparent since either:
+	Observe that $M=\mathrm{Ranking}(G,\pi,\sigma)$ being the matching found by the Ranking algorithm on $G$ with ranking $\pi$ and arrival order $\sigma$ is either identical to $M'=\mathrm{Ranking}(G',\pi',\sigma')$ or has one more vertex pair. This is apparent since either:
 	\begin{enumerate}
-		\item $x$ isn't in $m$,
-		\item $x' = M(x)$ isn't matched in $m'$, or
-		\item $x'$ is matched to $y$ in $m'$
+		\item $x$ isn't in $M$,
+		\item $x' = M(x)$ isn't matched in $M'$, or
+		\item $x'$ is matched to $y$ in $M'$
 	\end{enumerate}
-	In the case of 3 there is an alternating path of edges in $m'$ and those that are in $m$ but not in $m'$. When this path ends in the same partition as $x$ then $m$ is larger than $m'$ by 1
+	In the case of 3 there is an alternating path of edges in $m'$ and those that are in $M$ but not in $M'$. When this path ends in the same partition as $x$ then $M$ is larger than $M'$ by 1
 
 	This also leads to the conclusion that if the respective matching sizes are different, they differ by  a single alternating path.
 
@@ -21,49 +23,49 @@ In this section we present a simple proof for \autoref{thm:rank-competitiveness}
 	The size of the maximal matching will (of course) not change, while the Ranking's solution decreases by at most 1 with each removal, implying that this process of reducing $G$ to $G_p$ with a perfect matching didn't increase the competitiveness, meaning that analysis of graphs without perfect matchings is redundant.
 \end{proof}
 
-In the following section graphs are assumed to have perfect matchings. Let $M^\star$ be that perfect matching.
+We will therefore perform analysis on graphs are assumed to have a perfect matchings.
 
 \begin{lemma}
 	\label{rank-cmp-unmatched-simple}
-	Let $v$ online vertex,$u=m^\star(v)$, $\sigma$ permutation.\\
+	Let $v$ online vertex,$u=M^\star(v)$, $\sigma$ permutation.\\
 	If $u$ isn't matched by $\mathrm{Ranking}(\sigma)$ then $v$ is matched by $\mathrm{Ranking}(\sigma)$ to $u'$ with a lower rank
 \end{lemma}
 
 \begin{proof}
-	Trivial since $u,v$ are connected, therefore for $v$ to remain unmatched $u$ must've been matched to another vertex, which must've in turn had a lower rank than $v$
+	Trivial since $u,v$ are connected, therefore for $u$ to remain unmatched $v$ must've been matched to another vertex, which must've in turn had a lower rank than $u$
 \end{proof}
 
 \begin{lemma}
 	\label{rank-cmp-unmatched-complicated}
-	Let $v$ online vertex,$u=m^\star(v)$, $\sigma$ permutation, $\sigma_i$ permutation obtained by removing $v$ and inserting it into $sigma$ at the $i$-th place.\\
+	Let $v$ online vertex,$u=M^\star(v)$, $\sigma$ permutation, $\sigma_i$ permutation obtained by removing $v$ and inserting it into $\sigma$ at the $i$-th place.\\
 	If $u$ isn't matched by $\mathrm{Ranking}(\sigma)$ then for every $i$ $\mathrm{Ranking}(\sigma_i)$ matches $v$ with a vertex $u_i$ such that $\sigma_i(v_i)\leq\sigma(v)=t$
 \end{lemma}
 
 \begin{proof}
-	$m=\mathrm{Ranking}(\sigma),m_i=\mathrm{Ranking}(\sigma_i)$.\\ Symmetrically to \autoref{rank-cmp-compete-perfect} $m,m_i$ are either identical or differ by a single alternating path. By repeatedly applying the logic from the proof of \autoref{rank-cmp-unmatched-simple} see that offline vertices in that path are of increasing rank in $\sigma_i$. Therefore $v_i=m_i(u),v'=m(u),\sigma_i(v_i)\leq\sigma_i(v')$\\
-	Using \autoref{rank-cmp-unmatched-simple} we get $\sigma(v')<t$ and since $|\sigma_i(v')-\sigma(v')|\leq 1$ we receive $\sigma_i(v_i)<1+t$ equivalent to $\sigma_i(v_i)\leq t$ on integers
+	$M=\mathrm{Ranking}(\sigma)$,$M_i=\mathrm{Ranking}(\sigma_i)$.\\ Symmetrically to \autoref{rank-cmp-compete-perfect} $M,M_i$ are either identical or differ by a single alternating path. By repeatedly applying the logic from the proof of \autoref{rank-cmp-unmatched-simple} see that offline vertices in that path are of increasing rank in $\sigma_i$. Therefore $u_i=M_i(v)$,$u'=M(v)$,$\sigma_i^{-1}(u_i)\leq\sigma_i^{-1}(u')$\\
+	Using \autoref{rank-cmp-unmatched-simple} we get $\sigma^{-1}(u')<t$ and since $|\sigma_i^{-1}(u')-\sigma^{-1}(u')|\leq 1$ we receive $\sigma_i(u_i)^{-1}<1+t$ equivalent to $\sigma_i(u_i)^{-1}\leq t$ on integers
 \end{proof}
 
 The final lemma required to complete the proof uses this result directly.
 
 \begin{lemma}
 	\label{rank-cmp-probability}
-	For random $\sigma$, the probability that the offline vertex of rank $t$ is matched by $\mathrm{Ranking}(\sigma)$ denoted $x_t$ fulfills the following: $1-x_t\leq\frac{1}{n}\sum\limits_{1\leq s\leq t}x_s$
+	For random $\sigma$, the probability that the offline vertex of rank $t$ is matched by $\mathrm{Ranking}(\sigma)$ denoted $p_t$ fulfills the following: $1-p_t\leq\frac{1}{n}\sum\limits_{1\leq s\leq t}p_s$
 \end{lemma}
 
 \begin{proof}
-	Let $\sigma$ be a random permutation of offline vertices. Define $\sigma'$ with the following random process: choose an offline vertex randomly with equal probability, take it out of $\sigma$ and insert it into the $t$-th rank. Let $u$ be the vertex of rank $t,u=m^*(u),R_{t-1}$\\ online vertices matched by the algorithm to offline vertices of rank $\leq t-1$\\
-	probability that $v$ is not matched is $1-x_t$. Expected cardinality of $R_{t-1}$ is $\sum\limits_{1\leq s\leq t-1}x_s$.\\
-	Applying \autoref{rank-cmp-unmatched-complicated} with $\sigma:=\sigma',i$ chosen such that $\sigma'_i=\sigma$\ : if $v$ isn't matched by $\mathrm{Ranking}(\sigma')$ then $v$ is matched by $\mathrm{Ranking}(\sigma)$ to a vertex $u'$ such that $\sigma(v)\leq t$ implying $v\in R_t$\\
-	Conditional on $\sigma$, $v\in R_t$ has a probability of $\frac{|R_t|}{n}$ since they are independent.\\
+	Let $\sigma$ be a random permutation of offline vertices. Define $\sigma'$ with the following random process: choose an offline vertex randomly with equal probability, take it out of $\sigma$ and insert it into the $t$-th rank. Let $u$ be the vertex of rank $t,v=M^*(u),R_{t-1}$ the online vertices matched by the algorithm to offline vertices of rank $\leq t-1$\\
+	probability that $u$ is not matched is $1-p_t$. Expected cardinality of $R_{t-1}$ is $\sum\limits_{1\leq s\leq t-1}p_s$.\\
+	Applying \autoref{rank-cmp-unmatched-complicated} with $\sigma:=\sigma',i$ chosen such that $\sigma'_i=\sigma$\ : if $u$ isn't matched by $\mathrm{Ranking}(\sigma')$ then $v$ is matched by $\mathrm{Ranking}(\sigma)$ to a vertex $u'$ such that $\sigma^{-1}(u)\leq t$ implying $u\in R_t$\\
+	Conditional on $\sigma$, $u\in R_t$ has a probability of $\frac{|R_t|}{n}$ since they are independent.\\
 	We now have two random events $E,F$ that fulfill the condition that $E\implies F$. It is obvious to see that $\Pr[E]\geq\Pr[F]$\\
 	The lemma follows
 	
 \end{proof}
 
 With \autoref{rank-cmp-probability} the Theorem can be proved directly.\\
-$G$ has a perfect matching implies that competitiveness is $\inf \frac{1}{n} \sum\limits_{1\leq s\leq n}x_s$.\\
-Let $S_t=\sum\limits_{1\leq s\leq t}x_s$. \autoref{rank-cmp-probability} can be rewritten as $S_t(1+\frac{1}{n})\geq 1 + S_{t-1}$ and the competitiveness ratio as $\frac{1}{n}S_n$.\\
+$G$ has a perfect matching implies that competitiveness is $\inf \frac{1}{n} \sum\limits_{1\leq s\leq n}p_s$.\\
+Let $S_t=\sum\limits_{1\leq s\leq t}p_s$. \autoref{rank-cmp-probability} can be rewritten as $S_t(1+\frac{1}{n})\geq 1 + S_{t-1}$ and the competitiveness ratio as $\frac{1}{n}S_n$.\\
 Infimum occurs therefore when all inequalities are tight, resulting in $S_t=\sum\limits_{1\leq s\leq t}(1-\frac{1}{n+1})^s$ for all $t$, implying that competitiveness is at least $\frac{1}{n}\sum\limits_{1\leq s\leq n}(1-\frac{1}{n+1})^s=1-(1-\frac{1}{n+1})^n\xrightarrow[n\to\infty]{}1-\frac{1}{e}$
 
 Thus the theorem is proven
