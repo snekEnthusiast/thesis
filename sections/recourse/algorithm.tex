@@ -92,15 +92,15 @@ We will now prove that the balanced server flow is unique (regarding $x$-values)
 \begin{proof}
 	for $v\in V$ let $\mu(v)=\underset{u\in N(v)}{\min}\alpha_u$ be the minimum server load of $u\in N(v)$
 	\begin{align*}
-		 &\sum\limits_{u\in U}\alpha_u^2\\
-		=&\sum\limits_{u\in U}\sum\limits_{v\in V}x_{uv}\alpha_u\\
-		=&\sum\limits_{v\in V}\sum\limits_{u\in U}x_{uv}\alpha_u\\
-		=&\sum\limits_{v\in V}\sum\limits_{u\in U}x_{uv}\mu(v)\\
-		=&\sum\limits_{u\in U}x_{uv}\mu(v)\\
-		=&\sum\limits_{v\in V}\sum\limits_{u\in U}x'_{uv}\mu(v)\\
-		\leq&\sum\limits_{v\in V}\sum\limits_{u\in U}x'_{uv}\alpha_u\\
-		=&\sum\limits_{u\in U}\sum\limits_{v\in V}x'_{uv}\alpha_u\\
-		=&\sum\limits_{u\in U}\alpha'_u\alpha_u
+		    &\sum\limits_{u\in U}\alpha_u^2
+		   =&\sum\limits_{u\in U}\sum\limits_{v\in V}x_{uv}\alpha_u
+		   =&\sum\limits_{v\in V}\sum\limits_{u\in U}x_{uv}\alpha_u
+		   =&\sum\limits_{v\in V}\sum\limits_{u\in U}x_{uv}\mu(v)\\
+		   =&\sum\limits_{u\in U}x_{uv}\mu(v)
+		   =&\sum\limits_{v\in V}\sum\limits_{u\in U}x'_{uv}\mu(v)
+		\leq&\sum\limits_{v\in V}\sum\limits_{u\in U}x'_{uv}\alpha_u
+		   =&\sum\limits_{u\in U}\sum\limits_{v\in V}x'_{uv}\alpha_u\\
+		   =&\sum\limits_{u\in U}\alpha'_u\alpha_u
 	\end{align*}
 	with the inequality being caused by the fact that the flow $x_{uv}$ is balanced, so $\alpha_u\geq\mu(v)$ for any edge $(u,v)\in E$
 \end{proof}

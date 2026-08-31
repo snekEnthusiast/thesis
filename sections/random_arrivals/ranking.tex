@@ -14,7 +14,7 @@ Do note that the last step is computational and does not prove an exact competit
 
 For the purposes of this section we fix a graph $G=(V,U,E)$\\
 $x(\sigma,\pi,u,v)=1$ iff $(u,v)\in\mathrm{Ranking}(G,\sigma,\pi)$\\
-$m^\star(u,v)=1$ iff $M\star(u)=v$.\\
+$m^\star(u,v)=1$ iff $M^\star(u)=v$.\\
 We will abuse notation slightly and assume $U=[n],V=[m]$ for some $n,m\in\mathbb{N}$, in this way $u$ is both a vertex and it's index in an arbitrary ordering. We remind that this means that $\sigma(u)$ is the vertex at rank $u$
 
 \begin{lemma}[Dominance]
@@ -36,7 +36,7 @@ Let $\mathrm{geq}(u_i,u_j)=1$ iff $u_i\geq u_j$
 	Let $\sigma'$ be $\sigma$ where $u_{\mathrm{new}}$ and $u_{\mathrm{old}}$ swap places.
 	\begin{equation}
 		\label{ra-rank-eq2}
-		\sum\limits_{1\leq u'\leq u + \mathrm{geq}(u,u_{\mathrm{new}})}(\sigma',\pi,u',v)\geq\sum\limits_{1\leq u'\leq u}x(\sigma,\pi,u',v)
+		\sum\limits_{1\leq u'\leq u + \mathrm{geq}(u,u_{\mathrm{new}})}x(\sigma',\pi,u',v)\geq\sum\limits_{1\leq u'\leq u}x(\sigma,\pi,u',v)
 	\end{equation}
 \end{lemma}
 \begin{proof}
@@ -47,7 +47,7 @@ We can also express a symmetrical equation for $\pi'$
 
 \begin{equation}
 	\label{ra-rank-eq3}
-	\sum\limits_{1\leq v'\leq v + \mathrm{geq}(v,v_{\mathrm{new}})}(\sigma,\pi',u',v)\geq\sum\limits_{1\leq v'\leq v}x(\sigma,\pi,u,v')
+	\sum\limits_{1\leq v'\leq v + \mathrm{geq}(v,v_{\mathrm{new}})}x(\sigma,\pi',u',v)\geq\sum\limits_{1\leq v'\leq v}x(\sigma,\pi,u,v')
 \end{equation}
 
 the proof is symmetrical, so we will omit it

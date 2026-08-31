@@ -164,7 +164,7 @@ which can in turn be rewritten with $m_t=\good(t)+\bad(t),v_t=\frac{\bad(t)}{n-t
 & & m_t,v_t&\geq 0
 \end{align*}
 
-Dropping the $m_{t+1}$ from $\sum\limits_{s\leq t+1}m_s$ narrows down the solution space, so the optimum of a program with $\sum\limits_{s\leq t}m_s$ will give a lower bound on the expected competitiveness. The following is that program, alongside it's dual.
+Dropping the $m_{t+1}$ from $\sum\limits_{s\leq t+1}m_s$ narrows down the solution space, so the optimum of a program with $\sum\limits_{s\leq t}m_s$ will give a lower bound on the expected competitiveness. The following is that program, alongside it's dual. In fact, \cite{karp} prove that this modification doesn't change the optimum in any significant way, but this isn't necessary for the purposes of this proof.
 
 \noindent\makebox[\textwidth][c]{%
 	\begin{minipage}{\dimexpr\textwidth+4cm\relax}
@@ -177,13 +177,10 @@ Dropping the $m_{t+1}$ from $\sum\limits_{s\leq t+1}m_s$ narrows down the soluti
 	\end{minipage}
 }
 
-
-
-
 Notice that both primal and dual constraints are satisfied when all inequalities are tight, which in turn implies the optimality of that solution by weak duality.\\
 
 \[m_t=\alpha_{n+1-t}=(1-\frac{1}{n})^{i-1}\\v_t=\beta_{n+1-t}=\frac{1}{n}(1-\frac{1}{n})^{i-1}\]
 
 with the objective being $\sum m_t\approx n(1-\frac{1}{e})$, concluding the proof.
 
-This result should not be surprising, as in the chapter about the optimality of the Ranking algorithm we showed that Ranking under Adversary Arrivals and RGA under random arrivals are dual to each other
+This result should not be surprising, as in \cite{karp} Greedy with random arrivals is used to lower bound Ranking via duality principles. However, this proof style of proving properties, creating a linear program based on those and then analyzing the program is still useful since duality principles can't be used to prove the competitiveness of Ranking in the Random Arrival model and this more direct method has to be used instead.

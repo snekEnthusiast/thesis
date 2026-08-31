@@ -22,7 +22,7 @@ Adapting the RED algorithm to the CLV-B model, with consideration to the fact th
 	for any algorithm $\mathrm{A}, t\in\mathbb{Z}_{+},p\in[0,1]^n,q\in[0,1]^m$ $\Pr[\mathrm{A}(I_{p,q})>t]\leq \Pr[\MPD(I_{p,q})>t]$
 \end{theorem}
 
-the proof, as well as the algorithm itself if from \cite{obmDegree} whose work concerned a slightly different model, where the algorithm has (possibly imperfect) degree predictors, but the analysis assumed that predictors follow the expected degrees, so is applicable here. It iws conducted by proving, with induction, two relatively simple properties of MPD from which the theorem is proven by induction on the amount of online vertices.
+the proof, as well as the algorithm itself if from \cite{obmDegree} whose work concerned a slightly different model, where the algorithm has (possibly imperfect) degree predictors, but the analysis assumed that predictors follow the expected degrees, so is applicable here. It is conducted by proving, with induction, two relatively simple properties of MPD from which the theorem is proven by induction on the amount of online vertices.
 
 \begin{lemma}
 	\label{deg-lm1}
@@ -57,6 +57,7 @@ the proof, as well as the algorithm itself if from \cite{obmDegree} whose work c
 	$p,p'\in[0,1]^n$ ordered, $q\in[0,1]^m$, $p\leq p'$. \\
 	$\forall t:\Pr[\MPD(I_{p,q})\geq t]\leq\Pr[\MPD(I_{p',q})\geq t]$
 \end{lemma}
+In other words, if the probabilities of edges increase, then the expected size of the matching also increases
 \begin{proof}
 	For $S\subseteq [n]$ set of indices of offline vertices, $\Pr_p[N_S]$ is the probability that, in $I_{p,q}$, the first online node's neighborhood is $S$, depending on $p$ and $q_1$\\
 	$\Pr_p(N_S)=\prod\limits_{i\in S}p_iq_1\prod\limits_{i\in [n]\backslash S}(1-p_iq_1)$\\
@@ -109,9 +110,9 @@ the proof, as well as the algorithm itself if from \cite{obmDegree} whose work c
 		\Pr[\MPD(I_{p',q})\geq t]\geq \Pr_p[N_\emptyset]\Delta(\emptyset,\emptyset)\Pr[\MPD(I_{p,q'})\geq t]+\\ \Pr_p(N_\emptyset)\sum\limits_{\emptyset\neq T\subseteq[n]}\Delta(\emptyset,T)\Pr(\MPD(I_{p,q'})\geq t)+\\ \sum\limits_{\emptyset\neq S\subseteq[n]}\Pr_p(N_S)\sum\limits_{T\supseteq S}\Delta(S,T)\Pr[\MPD(I_{p(\MPD,S),q'})\geq t-1]
 	\end{align*}
 	which, when combines with the fact that $\sum\limits_{T\supseteq S}\Delta(S,T)=1$ results in
-	\begin{align}
-		\Pr[\MPD(I_{p',q})\geq t]\geq\Pr_p[N_\emptyset]\Pr[\MPD(I_{p,q'})\geq t]+\sum\limits_{\emptyset\neq S\subseteq[n]}\Pr_p[N_S]\Pr[\MPD(I_{p(\MPD,S),q'})\geq t-1]=\Pr[\MPD(I_{p,q})\geq t]
-	\end{align}
+	\begin{align*}
+		\Pr[\MPD(I_{p',q})\geq t]\geq\Pr_p[N_\emptyset]\Pr[\MPD(I_{p,q'})\geq t]+\\\sum\limits_{\emptyset\neq S\subseteq[n]}\Pr_p[N_S]\Pr[\MPD(I_{p(\MPD,S),q'})\geq t-1]=\Pr[\MPD(I_{p,q})\geq t]
+	\end{align*}
 	with the final equality being, again, from \autoref{deg-eq2}
 \end{proof}
 
@@ -133,7 +134,8 @@ with these lemmas we can prove \autoref{thm:deg-opt}
 		&\sum\limits_{\emptyset\neq S\in R_A}\Pr_p[N_S]\Pr[\MPD(I_{p(\MPD,S),q'})\geq t-1]+\\
 		&\sum\limits_{S\subseteq[n]\backslash R_A}\Pr_p[N_S]\Pr[\MPD(I_{p(\MPD,S),q'})\geq t-1]\\
 		=&\Pr_p[N_\emptyset]\Pr[\MPD(I_{p,q'})\geq t]+\\
-		\sum\limits_{\emptyset\neq S\subseteq[n]}\Pr_p[N_S]\Pr[\MPD(I_{p(\MPD,S),q'})\geq t-1]\\
+		&\sum\limits_{\emptyset\neq S\subseteq[n]}\Pr_p[N_S]\Pr[\MPD(I_{p(\MPD,S),q'})\geq t-1]\\
 		=&\Pr(\MPD(I_{p,q'})\geq t)
 	\end{align*}
 \end{proof}
+concluding the proof

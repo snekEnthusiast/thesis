@@ -22,15 +22,15 @@ Note that in an offline setting the sizes of a graph's matching and fractional m
 	The Waterlevel \autoref{alg:waterlevel} has a competitiveness of $1-\frac{1}{e}$
 \end{theorem}
 
-We note that this both the algorithm and it's competitiveness are well-known. Our analysis will follow the Cornell lecture CS-6820 on Online bipartite matching algorithms
+We note that this both the algorithm and it's competitiveness are well-known. Our analysis will follow the Cornell lecture CS-6820 on Online bipartite matching algorithms.
 
 \begin{proof}
 	The basis of this proof is the primal-dual method. A bipartite fractional matching is represented by the following primal-dual program. $l(v)$ denotes the new water level among neighbors of $v$ after it arrives and is matched
 	\begin{align*}
 		\text{maximize} & \sum\limits_{(u,v)\in E}x_{uv}&&
 		\text{minimize} & \sum\limits_{u\in U}\alpha_u+\sum\limits_{v\in V}\beta_v\\
-		\text{under} & \forall v\in V: \sum\limits_{u\in N(v)}x_{uv}\leq 1&&
-		\text{under} & \forall u,v\in E: \alpha_u+\beta_v\geq 1\\
+		\text{subject to} & \forall v\in V: \sum\limits_{u\in N(v)}x_{uv}\leq 1&&
+		\text{subject to} & \forall u,v\in E: \alpha_u+\beta_v\geq 1\\
 		& \forall u\in U: \sum\limits_{v\in N(u)}x_{uv}\leq 1&&
 		& \forall (u,v)\in E: x_{uv}\geq 0\\
 		& \forall (u,v)\in E: x_{uv}\geq 0\\
@@ -41,6 +41,7 @@ We note that this both the algorithm and it's competitiveness are well-known. Ou
 		\beta_v &=1-g(l(v))\\
 		g(y)&=\frac{e^y-1}{e-1}
 	\end{align*}
+	which we will prove is feasible and decreases at a certain rate as the algorithm progresses. The fact that any dual solution is a bound on any primal solution will be the basis of this proof\\
 	$g$ has several properties
 	\begin{enumerate}
 		\item it is increasing
