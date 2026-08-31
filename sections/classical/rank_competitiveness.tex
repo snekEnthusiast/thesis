@@ -58,7 +58,7 @@ The final lemma required to complete the proof uses this result directly.
 	probability that $u$ is not matched is $1-p_t$. Expected cardinality of $R_{t-1}$ is $\sum\limits_{1\leq s\leq t-1}p_s$.\\
 	Applying \autoref{rank-cmp-unmatched-complicated} with $\sigma:=\sigma',i$ chosen such that $\sigma'_i=\sigma$\ : if $u$ isn't matched by $\mathrm{Ranking}(\sigma')$ then $v$ is matched by $\mathrm{Ranking}(\sigma)$ to a vertex $u'$ such that $\sigma^{-1}(u)\leq t$ implying $u\in R_t$\\
 	Conditional on $\sigma$, $u\in R_t$ has a probability of $\frac{|R_t|}{n}$ since they are independent.\\
-	We now have two random events $E,F$ that fulfill the condition that $E\implies F$. It is obvious to see that $\Pr[E]\geq\Pr[F]$\\
+	We now have two random events $E,F$ that fulfill the condition that $E\implies F$. It is obvious to see that $\Pr[E]\leq\Pr[F]$\\
 	The lemma follows
 	
 \end{proof}
