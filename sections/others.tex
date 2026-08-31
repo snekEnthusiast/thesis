@@ -32,16 +32,17 @@ This model isn't well-studied as despite the fact that delay (sometimes referred
 \end{proof}
 
 \section{Corrections}
+\autoref{thm:recourse} proves that there is an algorithm that maintains a maximal matching with amortized $O(\log^2n)$ corrections per arriving vertex. This produces a question: what would be the competitiveness of an algorithm that has a strict correction budget.
 \begin{definition}[Correction Model]
 	In the correction model, every turn, the algorithm can remove up to a constant $d$ edges from the formed matching. There are no restrictions on adding edges
 \end{definition}
-An algorithm that improves the matching by changing some $d$ edges for each arrival, for some constant $d$, can be derived from a known lemma proven by Hopcroft and Karp in 1973
+An algorithm that improves the matching by changing some $d$ edges for each arrival, for some constant $d$, can be derived from a known lemma proven by Hopcroft and Karp in 1973. We note that others may have described a very similar model earlier, but our analysis is independent.
 \begin{lemma}
 	for a matching $M$, if all augmenting paths are of length no less than $2k-1$, then $\frac{|M|}{|M^\star|}\geq\frac{k-1}{k}$
 \end{lemma}
 we will follow the proof from \cite{correction}
 \begin{proof}
-	Consider that graph $G'=(U,V,E')$ where $E'$ is the symmetric difference between some matching $M$ and $M^\star$, which is $(M\backslash M^\star)\cup(M^\star\backslash M)$, which in turn is the difference between $M$ and $M^\star$. Vertices in $G'$ have a degree of either $0,1$ or $2$. Vertices which are either isolated or in cycles (which must be of even length) in $G'$ have the same amount of edges adjacent from $M,M^\star$. Augmenting paths, of which there are no more than $|M^\star|-|M|$, account for the difference in cardinality.
+	Consider that graph $G'=(U,V,E')$ where $E'$ is the symmetric difference between some matching $M$ and $M^\star$, which is $(M\backslash M^\star)\cup(M^\star\backslash M)$, which in turn is the difference between $M$ and $M^\star$. Vertices in $G'$ have a degree of either $0,1$ or $2$. Vertices which are either isolated or in cycles (which must be of even length) in $G'$ have the same amount of edges adjacent from $M,M^\star$. Augmenting paths, of which there are no more than $|M^\star|-|M|$, must account for the difference in cardinality.
 
 	When the difference in cardinality is greatest, $G'$ contains only augmenting paths, of which each has at least $k-1$ edges in $M$ and $k$ edges in $M^\star$. Let $P$ be a path. Then $\frac{|M\cap P|}{|M^\star\cap P|}\geq\frac{k-1}{k}$ which can be generalized ove all paths to $\frac{|M|}{|M^\star|}\geq\frac{k-1}{k}$
 \end{proof}
@@ -53,5 +54,6 @@ From here we can construct the algorithm. We will call an augmenting path short 
 		\item on Arrival of vertex $v$: if a short augmenting path $P$ (starting at $v$) is created, $N=M\cap P$, $N'=P\backslash N$ for current matching $M$, $M:=N'\cup M\backslash N$. otherwise do nothing
 	\end{algorithmic}
 \end{algorithm}
-Arrival of a new vertex creates at most one short augmenting path on the assumption that no existed before, and removes it, maintaining the invariant that there are no short augmenting paths.
-Therefore, the algorithm that greedily removes short augmenting paths as new vertices arrive has a competitiveness of $\frac{d}{d+1}$
+We will prove the competitiveness with the above lemma, combined with a simple invariant: after an arriving vertex is handled, there are no short augmenting paths.\\
+To create a short augmenting path, a vertex needs to be added to the right endpoint of a non-augmenting alternating path or an augmenting path must be separated. The arrival of $v$ might fulfill the first conditions, but the algorithm subsequently switches one of these augmenting paths, matching $v$. The first condition never occurs since switching an augmenting path doesn't split it.
+Therefore, $d$-augmenting correction has a competitiveness of $\frac{d}{d+1}$
