@@ -32,7 +32,7 @@ We will abuse notation slightly and assume $U=[n],V=[m]$ for some $n,m\in\mathbb
 Let $\mathrm{geq}(u_i,u_j)=1$ iff $u_i\geq u_j$
 
 \begin{lemma}[Monotonicity]
-	$\forall \sigma\in\Perm{U},\pi\in\Perm{V},u_{\mathrm{new}},u_{\mathrm{old}},u\in U,v\in V$ such that $l_{\mathrm{new}}<l_{\mathrm{old}},l<l_{\mathrm{old}}$,
+	$\forall \sigma\in\Perm{U},\pi\in\Perm{V},u_{\mathrm{new}},u_{\mathrm{old}},u\in U,v\in V$ such that $u_{\mathrm{new}}<u_{\mathrm{old}},u<u_{\mathrm{old}}$,
 	Let $\sigma'$ be $\sigma$ where $u_{\mathrm{new}}$ and $u_{\mathrm{old}}$ swap places.
 	\begin{equation}
 		\label{ra-rank-eq2}
@@ -67,7 +67,7 @@ for the purposes of creating $\mathrm{expLP}(n,k)$ for a graph $G$ with $n$ vert
 
 
 \begin{lemma}
-	The competitiveness ratio of Ranking in the Random Arrival model is lower bounded by $\inf\limits_{n\in N}\inf\limits_{l}\mathrm{expLP}(n,k)$ for any infinite subset of natural numbers $N$
+	The competitiveness ratio of Ranking in the Random Arrival model is lower bounded by $\inf\limits_{n\in N}\inf\limits_{u}\mathrm{expLP}(n,k)$ for any infinite subset of natural numbers $N$
 \end{lemma}
 \begin{proof}
 	Let $n\in\mathbb{N},n'\in\{x\in N|x>n\}$.\\
@@ -83,7 +83,7 @@ We assume WLOG that the optimal matching $M^\star=\{(i,i)|i\in[n]\}$
 
 Let $x_1(u,v,p)$ be the probability over random $\sigma,\pi\in\Perm{U}\times\Perm{V}$ that offline agent of rank $u$ is matched to an online agent at time $v$ by Ranking and the offline agent at rank $p$ is matched to the online agent arriving at time $v$ in $M^\star$
 
-Let $x_2(u,v,q)$ be the probability over random $\sigma,\pi\in\Perm{U}\times\Perm{V}$ that offline agent of rank $u$ is matched to an online agent at time $v$ by Ranking and that the online agent arriving at time $q$ will be matched to the offline agent at rank $l$ in $M^\star$
+Let $x_2(u,v,q)$ be the probability over random $\sigma,\pi\in\Perm{U}\times\Perm{V}$ that offline agent of rank $u$ is matched to an online agent at time $v$ by Ranking and that the online agent arriving at time $q$ will be matched to the offline agent at rank $u$ in $M^\star$
 
 using $\mathrm{eq}(x,y)=1$ iff $x=y\land x,y<k$ where $k$ is the amount of edges, we can define these variables
 
@@ -97,13 +97,13 @@ We introduce partial sum variables
 \[\forall i\in\{1,2\}\\
 y_i(u,v,p)=\begin{cases}
 0 & \text{if }u=0\lor v=0\\
-\sum\limits_{1\leq u'\leq u}x_i(u',r,p) & \text{else}
+\sum\limits_{1\leq u'\leq u}x_i(u',v,p) & \text{else}
 \end{cases}\]
 
 Now we derive the new inequalities for $\mathrm{PolyLP}(n)$
-multiplying both sides of \autoref{ra-rank-eq1} by $\mathrm{eq}(\sigma(u)m\pi(r))$ gives
+multiplying both sides of \autoref{ra-rank-eq1} by $\mathrm{eq}(\sigma(u)m\pi(v))$ gives
 
-\[\sum\limits_{1\leq u'\leq u}\mathrm{eq}(\sigma(u),\pi(r))x(\sigma,\pi,u',v)+\sum\limits_{1\leq v'\leq v}\mathrm{eq}(\sigma(u),\pi(r))x(\sigma,\pi,u,v')\geq\mathrm{eq}(\sigma(u),\pi(v))\]
+\[\sum\limits_{1\leq u'\leq u}\mathrm{eq}(\sigma(u),\pi(v))x(\sigma,\pi,u',v)+\sum\limits_{1\leq v'\leq v}\mathrm{eq}(\sigma(u),\pi(v))x(\sigma,\pi,u,v')\geq\mathrm{eq}(\sigma(u),\pi(v))\]
 
 and taking expectation over random $\sigma,\pi$ results in
 
@@ -114,7 +114,7 @@ and taking expectation over random $\sigma,\pi$ results in
 
 We multiply \autoref{ra-rank-eq2} similarly, for a fixed $p$ let $u_{\mathrm{old}}=n$ and again take expectation over random $\sigma,\pi$. RHS is $y_1(u,v,p)$.
 
-Notice that $\sigma'$ is uniformly random, $\sigma(p)=\pi(v)$ iff $\sigma''(p')=\pi(r)$ where $\sigma''$ which $\sigma$ with $u_{\mathrm{new}},n$ swapped and
+Notice that $\sigma'$ is uniformly random, $\sigma(p)=\pi(v)$ iff $\sigma''(p')=\pi(v)$ where $\sigma''$ which $\sigma$ with $u_{\mathrm{new}},n$ swapped and
 
 \[p'=\begin{cases}
 	p                & p<u_{\mathrm{new}}\\
@@ -126,14 +126,14 @@ from which we get the following equation
 
 \begin{equation}
 	\label{ra-rank-eq5}
-	y_1(u+\mathrm{geq}(u,u_{\mathrm{new}}),v,p')\geq y_1(l,r,p)
+	y_1(u+\mathrm{geq}(u,u_{\mathrm{new}}),v,p')\geq y_1(u,v,p)
 \end{equation}
 
 and symmetrically from $\autoref{ra-rank-eq3}$
 
 \begin{equation}
 	\label{ra-rank-eq6}
-	y_2(v+\mathrm{geq}(v,v_{\mathrm{new}}),u,q')\geq y_1(l,r,q)
+	y_2(v+\mathrm{geq}(v,v_{\mathrm{new}}),u,q')\geq y_1(u,v,q)
 \end{equation}
 
 with $q'$ being defined symmetrically to $p'$. Finally we add
@@ -148,16 +148,17 @@ Before continuing to the last step we will implement the following simplificatio
 \begin{itemize}
 	\item $x_1=x_2$ since for a feasible $x_1,x_2$ $x_1'=x_2'=\frac{x_1+x_2}{2}$ is also feasible and this reduces the amount of variables by 2
 	\item WLOG $k=n$ since the fact that a solution for $k$ can be rescaled to $k'$ makes $k$ inconsequential
-	\item and several other which are more technical
+	\item and several other concerning certain constraints that become trivial for variables in certain ranges, which we will not recount
 \end{itemize}
 which finally results in
 \begin{align*}
 	\text{Minimize} & \frac{1}{n}\sum\limits_{u,v,p\in[n]}x(u,v,p)\\
 	\text{subject to} & y(u,v,u)+y(v-1u,v)\geq \frac{1}{n}\\
-	& y(u+1,v,p+1)\geq y(u,v,p) & \forall p\leq l <n\\
+	& y(u+1,v,p+1)\geq y(u,v,p) & \forall p\leq u <n\\
 	& y(u,v,p)=y(u,v,u+1) & \forall u<p\\
-	& y(u+1,r,p)\geq y(u,v,u+1) & \forall p\leq u < n\\
-	& \sum\limits_p x(u,v,p)= \sum\limits_p x(v,u,p)
+	& y(u+1,v,p)\geq y(u,v,u+1) & \forall p\leq u < n\\
+	& \sum\limits_p x(u,v,p)= \sum\limits_p x(v,u,p)\\
+	& y(u,v,p)=\sum\limits_{1\leq u'\leq u}x(u',v,p)
 \end{align*}
 
 \subsection[deriving PolyLP'(n)]{deriving $\mathrm{PolyLP'}(n)$}
@@ -170,6 +171,9 @@ $\mathrm{PolyLP}(n)$ is factor-revealing, in this section we will transform it i
 	\label{ra-rank-eq-strong-factor}
 	y(u,v,u)+y(v,u,p)\geq \frac{1}{n}
 \end{equation}
+
+resulting in
+
 
 \begin{lemma}
 	\label{ra-rank-strong-rev}
@@ -193,15 +197,15 @@ Take any integer $m>0$. For any instance of size $n=km,k\in\mathbb{Z}$. We will 
 	The sixth constraint of $\mathrm{PolyLP'}(n)$ can be obtained by summing the sixth constraint of $\mathrm{PolyLP}(n)$ over $(v,p)\in f(v',p'),u=u'd$\\
 	The second constraint of $\mathrm{PolyLP'}(n)$ can be obtained as follows: for $p'\leq u' < m$
 	\begin{align*}
-		y'(u'+1,v',p'+1) &=\frac{1}{d}\sum\limits_{(r,p)\in f(v',p')}y(u'd+d,v,p+d)\\ 
-		                 &\geq \frac{1}{d}\sum\limits_{(r,p)\in f(v',p')} y(u'd,v,p)\\
+		y'(u'+1,v',p'+1) &=\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd+d,v,p+d)\\ 
+		                 &\geq \frac{1}{d}\sum\limits_{(v,p)\in f(v',p')} y(u'd,v,p)\\
 						 &=y'(u',v',p')
 	\end{align*}
-	where the inequality is the result of chaining multiple $y(u'd+j+1,r,p+j+1)\geq y(u'd+j,v,p+j)$ inequalities\\
-	The third constraint of $\mathrm{PolyLP'}(n)$ can be obtained as follows: for $u'<p'\leq n$, $r'\leq n$
+	where the inequality is the result of chaining multiple $y(u'd+j+1,v,p+j+1)\geq y(u'd+j,v,p+j)$ inequalities\\
+	The third constraint of $\mathrm{PolyLP'}(n)$ can be obtained as follows: for $u'<p'\leq n$, $v'\leq n$
 	\begin{align*}
 		y'(u',v',p')&=\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd,v,p)\\
-		            &=\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd,r,u'd+1)\\
+		            &=\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd,v,u'd+1)\\
 					&=\frac{1}{d}\sum\limits_{(v,p)\in f(v',u'+1)}y(u'd,v,p)\\
 					&=y'(u',v',u'+1)
 	\end{align*}
