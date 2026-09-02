@@ -36,7 +36,7 @@ This model isn't well-studied as despite the fact that delay (sometimes referred
 \begin{definition}[Correction Model]
 	In the correction model, every turn, the algorithm can remove up to a constant $d$ edges from the formed matching. There are no restrictions on adding edges
 \end{definition}
-An algorithm that improves the matching by changing some $d$ edges for each arrival, for some constant $d$, can be derived from a known lemma proven by Hopcroft and Karp in 1973. We note that others may have described a very similar model earlier, but our analysis is independent.
+An algorithm that improves the matching by changing some $d$ edges for each arrival, for some constant $d$, can be derived from a known lemma proven by Hopcroft and Karp in 1973. We note that others may have described a very similar model earlier, but our analysis is independent. During the following analysis we will only consider augmenting paths that are maximal in terms of inclusion, ie that aren't part of longer augmenting paths.
 \begin{lemma}
 	for a matching $M$, if all augmenting paths are of length no less than $2k-1$, then $\frac{|M|}{|M^\star|}\geq\frac{k-1}{k}$
 \end{lemma}

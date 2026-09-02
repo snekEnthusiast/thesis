@@ -1,5 +1,5 @@
 \begin{definition}{Online Bipartite Matching with Recourse}
-	The Recourse model is similar to the Semi-Online model in structure, but different in function. One anticlique $U$ is still always known, and the other, $V$, still arrives in an online fashion, but the goal of the algorithm is to maintain a maximal matching with as few changes to $M$ as possible. The sum of these changes over all arriving vertices is the algorithm's Recourse, a way of measuring the algorithm like competitiveness. The goal when creating an algorithm is to minimize Recourse
+	The Recourse model is similar to the Semi-Online model in structure, but different in function. One anticlique $U$ is still always known, and the other, $V$, still arrives in an online fashion, but the goal of the algorithm is to maintain a maximum matching with as few changes to $M$ as possible. The sum of these changes over all arriving vertices is the algorithm's Recourse, a way of measuring the algorithm like competitiveness. The goal when creating an algorithm is to minimize Recourse
 \end{definition}
 
 we will begin the introduction with a simple proof
@@ -7,7 +7,7 @@ we will begin the introduction with a simple proof
 	In the Online Edge Arrival Recourse model, where individual edges arrived in an online fashion and all vertices are visible, no algorithm has a recourse below $O\Omega(n^2)$
 \end{remark}
 \begin{proof}
-	The graph is a simple even path $(v_1,\dots,v_{2k})$. First edge $(v_k,v_k+1)$ arrives and are matched. Then, for $i\in(1,\dots,k-1)$, edges $(v_{k-i},v_{k-i+1}),(v_{k+i},v_{k+i+1})$ arrive sequentially, effectively extending the path from the front and back. Once every two edge arrivals the maximal matching changes and becomes the set of all edges except the previous matching, forcing the algorithm to change the entire matching. Thus, a total of $\Omega(n^2)$ changes is required
+	The graph is a simple even path $(v_1,\dots,v_{2k})$. First edge $(v_k,v_k+1)$ arrives and are matched. Then, for $i\in(1,\dots,k-1)$, edges $(v_{k-i},v_{k-i+1}),(v_{k+i},v_{k+i+1})$ arrive sequentially, effectively extending the path from the front and back. Once every two edge arrivals the maximum matching changes and becomes the set of all edges except the previous matching, forcing the algorithm to change the entire matching. Thus, a total of $\Omega(n^2)$ changes is required
 \end{proof}
 \begin{remark}
 	The same logic can be used to prove that Matching with Recourse with general vertex arrival has a lower bound of $\Omega(n^2)$, by having vertices arrive on both sides of a odd length path.

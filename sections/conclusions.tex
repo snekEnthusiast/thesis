@@ -1,8 +1,9 @@
 Recall the results we have proven
 \begin{enumerate}
 	\item In the simplest Semi-Online model, Ranking has a competitiveness of $1-\frac{1}{e}=0.632$ and is optimal \label{RNK}
-	\item If vertices arrive in a random order, Ranking has a competitiveness above $0.696$ \label{RA}
-	\item If vertices arrive from a known distribution, a deterministic algorithm (TSM) has a competitiveness of $0.670$. The best algorithm is also deterministic \label{TSM}
+	\item If vertices arrive in a random order, Ranking has a competitiveness above $0.696$ \label{RA1}
+	\item If vertices arrive in a random order, any deterministic algorithm with  has a competitiveness above $0.696$ \label{RA2}
+	\item If vertices arrive from a known distribution, a deterministic algorithm with consistent tie-breaking has a competitiveness of $1-\frac{1}{e}$ \label{TSM}
 	\item Even a substantial delay in decision time doesn't increase competitiveness \label{delay}
 	\item Using the knowledge of final degrees reduces competitiveness \label{RED}
 	\item In a more random graph the usage of final degrees leads to an optimal algorithm (MPD) \label{MPD}
@@ -12,15 +13,15 @@ Recall the results we have proven
 	\item none of the mentioned models allow for a perfect algorithm, which always finds a perfect matching
 \end{enumerate}
 
-In terms of the distinction between algorithm enhancement and adversary restriction, Random Arrival is a Restricted model, Final Degree, Fractional and Delay are Enhanced models and CLV-B and i.i.d are both. Recourse is fundamentally different as the change from Semi-Online is in the goal itself.
+and our research questions
 
-An interesting trend is apparent in the best known algorithms, in that, speaking broadly, randomized algorithms are better in all models that aren't enhanced and Restricted at the same time, with Fractional being the outlier. A broad observation can be made that randomness is used to guard against an oblivious adversary forcing a worst-case scenario and additional capabilities, like knowledge of final degrees, is not enough to prevent it. Meanwhile, when the adversary cannot set the edges, deterministic algorithms become viable, or rather randomization loses value.
+\begin{enumerate}
+	\item what modifications are required for deterministic algorithms to break the $0.5$ competitiveness barrier
+	\item is there a model where a perfect algorithm which always finds a maximum matching is possible
+\end{enumerate}
 
-When it comes to algorithm enhancement, the difference between the non-effective (Final Degree, Delay) and the effective (Fractional, Corrections), ie the ones that are strictly easier than Semi-Online, is rather obvious - the former provides additional information while the latter changes the matching process. The conclusion is that, under the assumption of adversarial arrival, the setting is flexible enough that the additional information doesn't help the algorithm
+In terms of breaking the $0.5$ deterministic competitiveness barrier, we present a variety of ways of accomplishing this, changing the arrival to random or stochastic instead of adversarial, allowing for corrections (even as small as $2$ edges per arrival) and allowing for non-commitment by finding a fractional matching instead all allow deterministic algorithms to achive competitiveness above $0.5$. What is also interesting is that neither knowledge of final degrees nor knowing up to half of all online vertices in advance allow for this. The pattern seems to be that only providing information on the final graph, without constraining the adversary, is not sufficient for this task. It would seem that in this setting constraining the adversary is more important than providing information for better choices. Indeed, using this additional information might be detrimental, as in the case of the Final Degree model.
 
-When it comes to corrections, we can see that, at least in the case of one sided vertex arrivals, this is a powerful capability. Specifically, the combination of the visibility of one anticlique and vertex arrival make forcing many correction difficult.
+Another interesting pattern is in whether randomness is utilized in various models. In random arrivals, randomized Ranking performs better than deterministic algorithms while in stochastic matching, where more information is availible, are deterministic. It would appear that, when the adversary is constrained, the ability to make better choices makes randomness less valueable.
 
-Lastly, we can generalize criteria for a 'perfect' algorithm. We know that a matching is perfect iff no augmenting paths. As such we can confidently say that any model in which information on augmenting paths in the final graph isn't present doesn't allow for the existence of a perfect algorithm.
-A weaker argument regards time complexity. The fastest offline algorithm for bipartite matching has a time complexity of $O(|E|\sqrt{|V|})$ and we can expect that any model in which an online algorithm can run strictly faster (bearing in mind modifications such as final degree knowledge must be accounted for) doesn't allow for a perfect matching, the assumption being, of course, that the Hopcroft-Karp algorithm is optimal.
-A stronger version of this argument is to check whether the online algorithm can run in $o(|E|)$ time as an algorithm would not be able to take all edges into account if that was the case. However, this is an easy threshold to cross since even ranking runs in $O(|V|^2)$ time and $|E|\leq|V|^2$ by definition
-%Known (offline) Bipartite Matching algorithms work by either flipping augmenting paths or using Flow-Based algorithms instead. Specifically, none use a greedy approach that is forced by the online nature of the algorithm, strongly suggesting that such an algorithm doesn't exist. Moreover, the complexity of these algorithms can suggest which in modified models a perfect algorithm could exist. The fastest offline algorithm has a complexity of $O(|E|\sqrt{|V|})$. Gathering the final degree information takes $O(|E|)$ time and the algorithms themselves run in $O(|V|^2)$ time, for a dense graph (where $|E|\approx|V|^2$) this is faster, making it unlikely that an algorithm in the Final Degree model can be perfect
+Lastly, none of these models allows for a perfect algorithm. It is unsurprising as we know that a matching is maximum iff there are no augmenting paths and no models we showcased, and indeed no conventional modification to models of online problems, gives this information.

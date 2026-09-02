@@ -1,9 +1,5 @@
 We will present a proof of \autoref{thm:rga-ra-comp} by \cite{obmRaGreedy} which goes in three phases, first proving properties of RGA, then more 3 complex lammas and finally using those to prove the theorem with the help of linear programming
 
-For ease of argumentation we will describe randomness of the algorithm not as an ability to make a truly random choice, but as seeded randomness, meaning that a deterministic algorithm is given an arbitrary number at initialization which can be used to make random decisions and is unknown to the adversary. The latter description of randomness is identical to the former in practice but it makes discussing runs on inputs easier easier. When runs are compared they can be assumed to have the same random seed.
-
-The proof is in three parts.
-
 \subsection{basic properties}
 
 We will begin by proving several properties of RGA.
@@ -184,6 +180,4 @@ Notice that both primal and dual constraints are satisfied when all inequalities
 
 \[m_t=\alpha_{n+1-t}=(1-\frac{1}{n})^{i-1}\\v_t=\beta_{n+1-t}=\frac{1}{n}(1-\frac{1}{n})^{i-1}\]
 
-with the objective being $\sum m_t\approx n(1-\frac{1}{e})$, concluding the proof.
-
-This result should not be surprising, as in \cite{karp} Greedy with random arrivals is used to lower bound Ranking via duality principles. However, this proof style of proving properties, creating a linear program based on those and then analyzing the program is still useful since duality principles can't be used to prove the competitiveness of Ranking in the Random Arrival model and this more direct method has to be used instead.
+with the objective being $\sum m_t\approx n(1-\frac{1}{e})$, concluding the proof. This result is unsurprising as it is related to the basis of the competitiveness of Ranking in \cite{karp}

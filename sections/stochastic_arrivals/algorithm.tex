@@ -24,7 +24,7 @@ This algorithm works on the basis of creating a realization graph, where there i
 \end{algorithmic}
 \end{algorithm}
 We note that any $v\in V$ is adjacent to either: no colored edges, a blue edge or a blue and red edge.
-To analyze the performance of this algorithm we will first bound the performance of the algorithm, then the size of the maximal matching.
+To analyze the performance of this algorithm we will first bound the performance of the algorithm, then the size of the maximum matching.
 In the analysis we will be using two facts
 We cite the following facts from \cite{obmStochastic}
 \begin{fact}
@@ -75,7 +75,7 @@ Let $U_\delta,V_\delta$ be vertices from $U,V$ that are endpoints of some $e\in 
 \end{equation}
 
 
-We will bound the size of the maximal matching in the realization graph $G=(U,V',E')$ by using $(S,T)$, the min-cut of $G_f$ to find a cut. Let $G'_f$ be a directed version of $G_f$ but with all edges having a capacity of $1$ any $s-t$ cut in this graph is an upper bound on $\mathrm{OPT}$. Let $D(V'_i)$ be a set of offline vertices of archetype $V'_i$  A cut $(S',T')$ is constructed as follows: $\overline{V_S}=\bigcup\limits_{V'\in V_S}D(i),\overline{V_T}=\bigcup\limits_{V'\in V_T}D(i)$. We remind here that the right side of $G$ are archetypes of online vertices. For Offline vertices we modify the partitioning $(U_S,U_T)$ as follows: for $U'_\delta\subseteq U_\delta$, set of offline vertices $u$ that are incident to some $v\in D(v)$ we set $S'=V_S\cup(U_S\backslash U'_\delta)$ and $T'=V'_T\cup U_T\cup U'_\delta$
+We will bound the size of the maximum matching in the realization graph $G=(U,V',E')$ by using $(S,T)$, the min-cut of $G_f$ to find a cut. Let $G'_f$ be a directed version of $G_f$ but with all edges having a capacity of $1$ any $s-t$ cut in this graph is an upper bound on $\mathrm{OPT}$. Let $D(V'_i)$ be a set of offline vertices of archetype $V'_i$  A cut $(S',T')$ is constructed as follows: $\overline{V_S}=\bigcup\limits_{V'\in V_S}D(i),\overline{V_T}=\bigcup\limits_{V'\in V_T}D(i)$. We remind here that the right side of $G$ are archetypes of online vertices. For Offline vertices we modify the partitioning $(U_S,U_T)$ as follows: for $U'_\delta\subseteq U_\delta$, set of offline vertices $u$ that are incident to some $v\in D(v)$ we set $S'=V_S\cup(U_S\backslash U'_\delta)$ and $T'=V'_T\cup U_T\cup U'_\delta$
 
 To measure the size of $(S',T')$ in $G_f$ we 'pay' $1$ for each $u\in V'_S,v\in U_T, v\in U'_\delta$ and note that all edges from $U\cap S'$ to $V'_T$ have been removed resulting in $\mathrm{OPT}\leq|V'_S|+|U_T|+|U'_\delta|$\\
 Using Chernoff bound, with probability $1-e^{-\Omega(n)}$ $|V'_S|\leq |V_S|+n \epsilon$ occurs, giving a good probability bound on $|V'_S|$\\
