@@ -32,7 +32,9 @@ This model isn't well-studied as despite the fact that delay (sometimes referred
 \end{proof}
 
 \section{Corrections}
-\autoref{thm:recourse} proves that there is an algorithm that maintains a maximal matching with amortized $O(\log^2n)$ corrections per arriving vertex. This produces a question: what would be the competitiveness of an algorithm that has a strict correction budget.
+\autoref{thm:recourse} proves that there is an algorithm that maintains a maximal matching with amortized $O(\log^2n)$ corrections per arriving vertex. This produces a question: what would be the competitiveness of an algorithm that has a strict correction budget. The following model and proof are an extension of those ideas, producing an algorithm that doesn't guarantee a maximal matching but has a good competitiveness under more strict resource requirements.
+
+We acknowledge that \cite{obmCorrections} arrived at the same conclusions independently of us.
 \begin{definition}[Correction Model]
 	In the correction model, every turn, the algorithm can remove up to a constant $d$ edges from the formed matching. There are no restrictions on adding edges
 \end{definition}
