@@ -4,4 +4,9 @@ Moreover, algorithms for this problem can often be generalized to the AdWords pr
 As such, this problem has a known optimal algorithm, Ranking, with a competitiveness of $1-\frac{1}{e}$
 There is, however, an issue regarding using Online Bipartite Matching as a model for real problems as it is often too restrictive and algorithms based on it aren't as efficient as they could be. In some problems the algorithm may be able to wait, or make small corrections which could improve the size of the found matching but cannot be reflected in the Online Bipartite Matching problem.
 Many variations of this problem have therefore been analyzed, from restricting the adversary by imposing random vertex arrival or even arrival of vertices from a known distribution to enhancing the algorithm with 
-In this work we analyze these findings in terms of enhancing the algorithm or restricting the adversary, as well as introduce our own analysis, regarding matching with delay and an matching with corrections
+In this work we analyze these findings to answer three questions, ordered in terms of importance
+\begin{enumerate}
+	\item what modifications are required for deterministic algorithms to break the $0.5$ competitiveness barrier
+	\item is there a pattern between changes from the Karp model and the usefulness of randomness
+	\item is there a model where a perfect algorithm which always finds a maximum matching is possible
+\end{enumerate}
