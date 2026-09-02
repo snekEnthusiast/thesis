@@ -13,7 +13,7 @@ Adapting the RED algorithm to the CLV-B model, with consideration to the fact th
 	\label{alg:effective-deg-rand-clv}
 	\begin{algorithmic}
 		\item on Initialization: for each offline vertex $u_i$ let $d_{u_i}=\sum\limits_{v=\in\vec{v_i}}v\vec{u}_i$
-		\item on Arrival of vertex $v$: match to $\underset{u\in U,\text{unmatched}}{\mathrm{argmin}}d_u$
+		\item on Arrival of vertex $v$: match to $\underset{u\in N(v),\text{unmatched}}{\mathrm{argmin}}d_u$
 	\end{algorithmic}
 \end{algorithm}
 \begin{theorem}
@@ -27,7 +27,7 @@ the proof, as well as the algorithm itself if from \cite{obmDegree} whose work c
 \begin{lemma}
 	\label{deg-lm1}
 	$p\in[0,1]^n,q\in[0,1]^m$. For some $i\in[n]$, $p'\in[0,1]^{n-1}$ is obtained by removing entry on index $i$\\
-	$\forall k:$\\
+	$\forall t:$\\
 	$\Pr[\MPD(I_{p,q})\geq t]\leq\Pr[\MPD(I_{p',q})\geq t-1]$
 \end{lemma}
 \begin{proof}
@@ -46,7 +46,7 @@ the proof, as well as the algorithm itself if from \cite{obmDegree} whose work c
 		\begin{description}
 			\item[Case 2.1] If $v_j$ is unmatchable on $I'$ then \MPD on both $I,I'$ behave identically from this point onwards, $\MPD(I)=\MPD(I')\cup\set{(u_i,v_j)}$, implying $|\MPD(I)|=|\MPD(I')\cup\set{(u_i,v_j)|=|\MPD(I)|+1}$, condition holds
 			\item[Case 2.2] If $v_j$ is matched to $u_{i'}$ on $I'$\\
-			Then, $|M_j|=|M'_j|$ and, by the induction hypothesis $|M_m\backslash M_j|\leq|M'_m\backslash M'_j|+1$ {\color{red}(why?)}.\\
+			Then, $|M_j|=|M'_j|$ and, by the induction hypothesis $|M_m\backslash M_j|\leq|M'_m\backslash M'_j|+1$ as $M_m\backslash m_j$ and $M_m'\backslash M'_j$ correspond to another graph where only $v_j,\dots,v_m$ arrive, which has smaller $m$ and is therefore covered by induction.\\
 			Finally $\MPD(I)=|M_j|+|M_m\backslash M_j|\leq|M'_j|+|M'_m\backslash M'_j|+1=\MPD(I')+1$, condition holds
 		\end{description}
 	\end{description}
@@ -67,13 +67,14 @@ In other words, if the probabilities of edges increase, then the expected size o
 	define $(m-1)$ dimensional vector $q'=(q_2,\dots,q_m)$
 	\begin{equation}\begin{aligned}[b]
 		\label{deg-eq1}
-		\Pr[\MPD(I_{p,q})]\geq t=\Pr_p[N_{\emptyset}]\Pr[\MPD(_{p,q'})\geq t]+\\ \sum\limits_{\emptyset\neq S\subseteq[n]}\Pr_p[N_S]\Pr[\MPD(I_{\vec{p(\MPD,S)},q'})\geq t-1]
+		\Pr[\MPD(I_{p,q})\geq t]=\Pr_p[N_{\emptyset}]\Pr[\MPD(I_{p,q'})\geq t]+\\ \sum\limits_{\emptyset\neq S\subseteq[n]}\Pr_p[N_S]\Pr[\MPD(I_{p(\MPD,S),q'})\geq t-1]
 	\end{aligned}\end{equation}
+	since if $\MPD(I_{p,q})\geq t$ then either the first vertex is unmatched and there are at least $t$ matchings later or it is matched and there are at least $t-1$ matchings later
 	
 	let $\vec{r}=pq_1,\vec{r'}=p'q_1$, $\vec{r}_i,\vec{r'}_i$ are probabilities that $v_1$ is connected to $u_i,u'_i$ in $I_{p,q},I_{p',q}$ respectively. $p\leq p'\implies r\leq r'$. Particularly, $1-\vec{r'}_i=(1-s_i)(1-\vec{r}_i)$ for some $s_i$,\\ 
 	Let $X_i,Y_i$ independent Bernoulli variables $\Pr[X_i=1]=\vec{r}_i$,$\Pr[Y_i=1]=s_i$.\\
 	Let $Z_i=1$ iff $X_i=1\lor Y_i=1$ Bernoulli variable,then $\Pr[Z_i=1]=\vec{r'}_i$\\
-	Let $N=\set{i\in[n]|X_i=1}$,$N\supseteq N'=\set{i\in[n]|Z_i=1}$. For any $T\subseteq[n]$.
+	Let $N=\set{i\in[n]|X_i=1}$,$N\subseteq N'=\set{i\in[n]|Z_i=1}$. For any $T\subseteq[n]$.
 	$\Delta(S,T):=\Pr[N'=T|N=S]$
 	\begin{equation*}
 		\Pr_{p'}[N_T]=\Pr[N'=T]=\sum\limits_{S\subseteq T}\Pr[N=S]\Pr[N'=T|N=S]=\sum\limits_{S\subseteq T}\Pr_p(N_S)\Delta(S,T)
@@ -83,17 +84,17 @@ In other words, if the probabilities of edges increase, then the expected size o
 	\begin{equation}\begin{aligned}[b]
 		\label{deg-eq2}
 		\Pr[\MPD(I_{p',q})\geq t] &= \Pr_{p'}[N_{\emptyset}]\Pr[\MPD(I_{p',q'})\geq t]+\\&
-		\sum\limits_{\emptyset\neq T\subseteq[n]}\Pr_{p'}(N_T)\Pr[\MPD(I_{\vec{p'(\MPD,T),q'}})\geq t-1]\\
+		\sum\limits_{\emptyset\neq T\subseteq[n]}\Pr_{p'}(N_T)\Pr[\MPD(I_{p'(\MPD,T),q'})\geq t-1]\\
 		&= \Pr_{p'}(N_{\emptyset})\Pr[\MPD(I_{p',q'})\geq t]+ \\&
-		\sum\limits_{\emptyset\neq T\subseteq[n]}\sum\limits_{S\subseteq T}\Pr_p[N_s]\Delta(S,T)\Pr[\MPD(I_{\vec{p'(\MPD,T),q'}})\geq t-1]\\
+		\sum\limits_{\emptyset\neq T\subseteq[n]}\sum\limits_{S\subseteq T}\Pr_p[N_s]\Delta(S,T)\Pr[\MPD(I_{p'(\MPD,T),q'})\geq t-1]\\
 		&=\Pr_p[N_{\emptyset}]\Delta(\emptyset,\emptyset)\Pr[\MPD(I_{p',q'})\geq t]+\\&
-		\Pr_p[N_{\emptyset}]\sum\limits_{\emptyset\neq T\subseteq[n]}\Delta(\emptyset,T)\Pr[\MPD(I_{\vec{p'(\MPD,T),q'}})\geq t-1]+\\&
-		\sum\limits_{\emptyset\neq S\subseteq[n]}\Pr_p(N_S)\sum\limits_{T\supseteq S}\Delta(S,T)\Pr[\MPD(I_{\vec{p'(\MPD,T),q'}})\geq t-1]
+		\Pr_p[N_{\emptyset}]\sum\limits_{\emptyset\neq T\subseteq[n]}\Delta(\emptyset,T)\Pr[\MPD(I_{p'(\MPD,T),q'})\geq t-1]+\\&
+		\sum\limits_{\emptyset\neq S\subseteq[n]}\Pr_p(N_S)\sum\limits_{T\supseteq S}\Delta(S,T)\Pr[\MPD(I_{p'(\MPD,T),q'})\geq t-1]
 	\end{aligned}\end{equation}
 	Note that, for nonempty $S$, $S\subseteq\implies p'(\MPD,S)\leq p'(\MPD,T)$\\
 	Using induction hypothesis, for $S,T: T\supseteq S\neq\emptyset$
 	\begin{equation}\begin{aligned}[b]
-	\Pr[\MPD(I_{\vec{p'(\MPD,T),q'}})\geq t-1]\geq\Pr[\MPD(I_{\vec{p(\MPD,T),q'}})\geq t-1]		
+	\Pr[\MPD(I_{p'(\MPD,T),q'})\geq t-1]\geq\Pr[\MPD(I_{p(\MPD,T),q'})\geq t-1]		
 	\end{aligned}\end{equation}
 	and
 	\begin{equation}

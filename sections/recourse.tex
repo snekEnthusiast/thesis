@@ -10,7 +10,7 @@ we will begin the introduction with a simple proof
 	The graph is a simple even path $(v_1,\dots,v_{2k})$. First edge $(v_k,v_k+1)$ arrives and are matched. Then, for $i\in(1,\dots,k-1)$, edges $(v_{k-i},v_{k-i+1}),(v_{k+i},v_{k+i+1})$ arrive sequentially, effectively extending the path from the front and back. Once every two edge arrivals the maximal matching changes and becomes the set of all edges except the previous matching, forcing the algorithm to change the entire matching. Thus, a total of $\Omega(n^2)$ changes is required
 \end{proof}
 \begin{remark}
-	The same logic can be used to prove that Matching with Recourse with general vertex arrival has a lower bound of $O(n^2)$, by having vertices arrive on both sides of a odd length path.
+	The same logic can be used to prove that Matching with Recourse with general vertex arrival has a lower bound of $\Omega(n^2)$, by having vertices arrive on both sides of a odd length path.
 \end{remark}
 In contrast, in Online Bipartite Matching with Recourse all vertices of one anticlique are visible, so there is no way to extend a path by one indefinitely. This distinction is important, as
 \begin{theorem}

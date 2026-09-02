@@ -39,17 +39,17 @@ and finally, we will present the proof of \autoref{recourse-crucial} in the foll
 \subsection{Server Flow}
 In this subsection we will prove the Augmentation Lemma
 
-A server flow is a fractional assignment from $V$ to $U$, in which an online vertex sends flow, up to 1, to offline vertices (servers), every one of which has a unique capacity to receive flow.
+A server flow is a fractional assignment from $V$ (clients) to $U$ (servers), in which an online vertex sends flow, up to 1, to offline vertices (servers), every one of which has a unique capacity to receive flow.
 \begin{definition}[Server Flow]
 	A server flow is $\alpha$ is a map from $U$ to $\mathbb{R}_{\geq 0}$ such that there are non-negative reals $\{x_e|e\in E\}$ such that
 	\begin{align*}
-		\forall v\in V:\sum\limits_{u\in N(v)}x_{uv}=1 && \forall u\in U:\sum\limits_{v\in N(U)}x_{uv}=\alpha(u)
+		\forall v\in V:\sum\limits_{u\in N(v)}x_{uv}=1 && \forall u\in U:\sum\limits_{v\in N(u)}x_{uv}=\alpha(u)
 	\end{align*}
 \end{definition}
 we refer to these $x$-values as realizing the flow. Note that if $\forall u:\alpha(u)=1$ then this is a fractional matching.\\
 Going forward we assume $\forall v\in V:\sum\limits_{u\in N(v)}x_{uv}\geq 1$ as otherwise no server flow is possible
 
-Informally, a Balanced Server Flow is one where 
+Informally, a Balanced Server Flow is one where every client sends flow to the neighboring servers that receives the least flow
 \begin{definition}[Balanced Server Flow]
 	A Server Flow is Balanced if
 	\begin{align*}
@@ -107,8 +107,9 @@ We will now prove that the balanced server flow is unique (regarding $x$-values)
 
 \begin{lemma}
 	\label{balanced-sf-unique}
-	The server flow in \autoref{balanced-sf-iff} is unique if it exists
+	The server flow in \autoref{balanced-sf-iff} if it exists
 \end{lemma}
+Do note that we do not claim that the corresponding $x$-values are unique, only the corresponding $\alpha$
 \begin{proof}
 	Using \autoref{balanced-sf-aux} we can argue that the balanced server flow is the optimum of the linear program in the proof of \autoref{balanced-sf-iff}.\\
 	We can treat a feasible solution $\alpha'$ as a vector, with \autoref{balanced-sf-aux} showing that $||\alpha||\leq \alpha\alpha'$ which with non-negativity implies $||\alpha||\leq||\alpha'||$\\
@@ -116,7 +117,7 @@ We will now prove that the balanced server flow is unique (regarding $x$-values)
 \end{proof}
 
 Let $\alpha$ be the balanced server flow at time $t$ and $\alpha'$ be the balanced server flow at time $t+1$, after a new online vertex arrives.\\
-$\Delta\alpha(u)=\alpha(u)-\alpha'(u)$
+$\Delta\alpha(u)=\alpha(u)'-\alpha(u)$
 \begin{lemma}
 	\label{balanced-sf-insert}
 	$\forall u\in U:\Delta\alpha(s)\geq 0$
@@ -153,7 +154,7 @@ Or, more informally ans simplistically, arrival of $v$ only connected to $s$ can
 
 \begin{lemma}
 	\begin{align*}
-		\forall T\subseteq U: |\set{v\in V|A(v)\subseteq T}|\leq \sum\limits_{u\in T}\alpha(u)\leq |\set{v\in V|A(c)\cap T\neq\emptyset}|
+		\forall T\subseteq U: |\set{v\in V|A(v)\subseteq T}|\leq \sum\limits_{u\in T}\alpha(u)\leq |\set{v\in V|A(v)\cap T\neq\emptyset}|
 	\end{align*}
 \end{lemma}
 \begin{proof}
@@ -162,7 +163,7 @@ Or, more informally ans simplistically, arrival of $v$ only connected to $s$ can
 \end{proof}
 
 \begin{lemma}
-	Let $\overline{\alpha}=\underset{u\in U}{\min}\alpha(u)$ be maximal necessity, $\overline{U}=\set{u\in U|\alpha(u)=\overline{\alpha}}$ maximally necessary servers, $K'=\set{v\in V|A(v)\cap\overline{S}\neq\emptyset}$ active neighbors, then $N(K')=\overline{U}$, $|K'|=\overline{\alpha}|\overline{U}|$
+	Let $\overline{\alpha}=\underset{u\in U}{\max}\alpha(u)$ be maximal necessity, $\overline{U}=\set{u\in U|\alpha(u)=\overline{\alpha}}$ maximally necessary servers, $K'=\set{v\in V|A(v)\cap\overline{S}\neq\emptyset}$ active neighbors, then $N(K')=\overline{U}$, $|K'|=\overline{\alpha}|\overline{U}|$
 \end{lemma}
 \begin{proof}
 	Let $K=\set{v\in V|A(v)\subseteq\overline{U}}$\\
@@ -185,7 +186,7 @@ Or, more informally ans simplistically, arrival of $v$ only connected to $s$ can
 	If $|K|=\sum\limits_{u\in N(K)}\alpha(u)=\overline{\alpha}|N(K)|$ then $\forall u\in U:\alpha(u)\leq\overline{\alpha}$ implies $\forall u\in N(K):\alpha(u)=\overline{\alpha}$
 \end{proof}
 
-subsection{Replacement Analysis}
+\subsection{Replacement Analysis}
 We will now draw a connection between Server Flow and Matching and use the previous lemmas to prove \autoref{recourse-crucial}
 
 \begin{lemma}

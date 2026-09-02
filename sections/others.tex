@@ -55,5 +55,13 @@ From here we can construct the algorithm. We will call an augmenting path short 
 	\end{algorithmic}
 \end{algorithm}
 We will prove the competitiveness with the above lemma, combined with a simple invariant: after an arriving vertex is handled, there are no short augmenting paths.\\
-To create a short augmenting path, a vertex needs to be added to the right endpoint of a non-augmenting alternating path or an augmenting path must be separated. The arrival of $v$ might fulfill the first conditions, but the algorithm subsequently switches one of these augmenting paths, matching $v$. The first condition never occurs since switching an augmenting path doesn't split it.
+As $v$ arrives:
+\begin{itemize}
+	\item if no short augmenting path is created, then matching $M$ is unchanged and invariant is maintained
+	\item if a short augmenting path $P=(v,v_1,\dots,v_k)$ is created and swapped, then new augmenting paths may be created. However, they must be joined to the swapped path with an unmatched edge adjacent to $v_i$ and  another unmatched edge, WLOG from $v_0$ to some $u$. Assuming that this new augmenting path $R=(w,v_i,\dots,v_0,u)$ is short (and would break the invariant) notice that, before $P$ was swapped, $(w,\dots,v_k)$ was also augmenting paths and if $R$ is short then it has to be as well, breaking the assumption. Do note that $u$ may be connected like $w$ (denoted $u'$), but a simmetrical proof by contradiction but with two augmenting paths still applies.
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\input{figures/corrections/augpath.tikz}
+\end{figure}
 Therefore, $d$-augmenting correction has a competitiveness of $\frac{d}{d+1}$

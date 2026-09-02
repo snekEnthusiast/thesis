@@ -41,7 +41,7 @@ notice that perfect matching is achieved only if $u_i$ is matched with $v_{\sigm
 		for each $k$ the probability that there are $k$ eligible offline vertices at time $t$ is the same for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $I^\star$
 	\end{claim}
 	% -- ??? -- ??? -- ??? Think this is supposed to be 'all rows are equally likely to be eligible' since the n-t+1 applies only to RGA
-	Claim 1 is proven with induction over time - tha amount of online vertices that have already arrived. Note that induction base at step 0 is trivial since all offline vertices are eligible.\\
+	Claim 1 is proven with induction over time - the amount of online vertices that have already arrived. Note that induction base at step 0 is trivial since all offline vertices are eligible.\\
 	Note that a vertex is available if it can still be matched ie isn't matched and isn't unmatchable
 	\begin{proof} of Claim 1\\
 		for $\mathrm{RGA}$.
@@ -50,7 +50,7 @@ notice that perfect matching is achieved only if $u_i$ is matched with $v_{\sigm
 		for $\mathrm{DGA}$, since it is deterministic and the algorithm can't read labels, then the subsequent matching is determined by the current available set, which is uniformly random, implying the next one is also uniformly random.
 	\end{proof}
 	\begin{proof} of Claim 2\\
-		It is a direct consequence of Claim 1. If the offline vertices eligible for matching are uniformly distributed in both cases, then the probability that a vertex becomes unmatchable is also equal for both algorithms, and that probability is the probability that the amount oa eligible vertices decreases by $2$ instead of $1$
+		It is a direct consequence of Claim 1. If the offline vertices eligible for matching are uniformly distributed in both cases, then the probability that a vertex becomes unmatchable is also equal for both algorithms, and that probability is the probability that the amount of eligible vertices decreases by $2$ instead of $1$
 	\end{proof}
 	The lemma follows directly from Claim 2 since the size of the matching is equal to the amount of steps required for there to be no eligible vertices
 \end{proof}
@@ -86,7 +86,7 @@ finally
 	\E[\Delta\avl]==-1-\frac{\avl(t)-1}{\rem(t)}
 \end{equation}
 implying $\frac{\mathrm{E}[\Delta\avl]}{\mathrm{E}[\mathrm{\Delta\rem}]}=1+\frac{\rem(t)-1}{\avl(t)}$ since $\Delta\rem$ is always $-1$\\
-Though this is a discrete Markov Chain, we can approximate it by treating it as a continuous function, whose rate of growth is already known. Moreover, this approximation's accuracy increases as $n$ increases
+Though this is a discrete Markov Chain, we can approximate it by treating it as a continuous function, whose rate of growth is already known. Moreover, from Kurtz's theorem (\cite{kurtz}) this approximation's accuracy increases as $n$ increases
 \begin{equation}
 	\label{rank-opt-diff}
 	\frac{d\avl}{d\rem}=1+\frac{\avl-1}{\rem}
@@ -100,7 +100,7 @@ We also have the initial conditions, $\avl=\rem=n$, meaning we can find an appro
 	\frac{d}{d\rem}\left(\frac{\avl}{\rem}\right)=\frac{rem-1}{\rem^2} & \text{ integrate both sides}\\
 	\int\frac{d}{d\rem}\left(\frac{\avl}{\rem}\right)=\int\frac{\rem-1}{\rem^2}\\
 	\frac{\avl}{\rem}=\frac{1}{\rem} + \ln\rem + c & \text{ apply initial condition }\avl=\rem=n\\
-	1=\frac{1}{n}+\ln n + c\implies&\\
+	1=\frac{1}{n}+\ln n + c\implies c=1-\frac{1}{n}-\ln n\implies&\\
 	\avl=1+\rem\left(\ln\rem-\ln n+1-\frac{1}{n}\right)
 \end{align*}
 
