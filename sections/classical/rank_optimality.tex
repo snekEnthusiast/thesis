@@ -41,7 +41,7 @@ notice that perfect matching is achieved only if $u_i$ is matched with $v_{\sigm
 		for each $k$ the probability that there are $k$ eligible offline vertices at time $t$ is the same for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $I^\star$
 	\end{claim}
 	% -- ??? -- ??? -- ??? Think this is supposed to be 'all rows are equally likely to be eligible' since the n-t+1 applies only to RGA
-	Claim 1 is proven with induction over time - tha amount of online vertices that have already arrived. Note that induction base at step 0 is trivial since all offline vertices are eligible.\\
+	Claim 1 is proven with induction over time - the amount of online vertices that have already arrived. Note that induction base at step 0 is trivial since all offline vertices are eligible.\\
 	Note that a vertex is available if it can still be matched ie isn't matched and isn't unmatchable
 	\begin{proof} of Claim 1\\
 		for $\mathrm{RGA}$.
@@ -50,7 +50,7 @@ notice that perfect matching is achieved only if $u_i$ is matched with $v_{\sigm
 		for $\mathrm{DGA}$, since it is deterministic and the algorithm can't read labels, then the subsequent matching is determined by the current available set, which is uniformly random, implying the next one is also uniformly random.
 	\end{proof}
 	\begin{proof} of Claim 2\\
-		It is a direct consequence of Claim 1. If the offline vertices eligible for matching are uniformly distributed in both cases, then the probability that a vertex becomes unmatchable is also equal for both algorithms, and that probability is the probability that the amount oa eligible vertices decreases by $2$ instead of $1$
+		It is a direct consequence of Claim 1. If the offline vertices eligible for matching are uniformly distributed in both cases, then the probability that a vertex becomes unmatchable is also equal for both algorithms, and that probability is the probability that the amount of eligible vertices decreases by $2$ instead of $1$
 	\end{proof}
 	The lemma follows directly from Claim 2 since the size of the matching is equal to the amount of steps required for there to be no eligible vertices
 \end{proof}

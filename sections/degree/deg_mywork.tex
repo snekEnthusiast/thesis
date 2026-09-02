@@ -41,7 +41,7 @@ If all vertices have different degrees then the algorithm finds a perfect matchi
 A much stronger realization can be gleamed from this reasoning to force a deterministic algorithm to leave a vertex $u$ behind, and for it to be possible for a randomized algorithm to leave that vertex behind, there must be $\deg(u)$ vertices $v$ such that $\deg(u)\geq\deg(v)$, which moreover won't be left behind.\\
 
 This line of reasoning leads directly to the graph $G_{\deg}$ used in the proof of \autoref{thm:deg-det-comp}. However, this also leads to a problem for an adversary. That graph is rather dense, which isn't a situation where randomized graphs perform poorly. Indeed, despite
-RGA (\autoref{alg:RGA}) having an expected competitiveness of $\frac{n}{2}+O(\log n)$, it is expected to find a matching of size $n(1-\frac{1}{e})$ on a 
+RGA (\autoref{alg:RGA}) having an expected matching size of $\frac{n}{2}+O(\log n)$, it is expected to find a matching of size $n(1-\frac{1}{e})$ on a 
 %reference
 graph which is actually a subgraph of the degree counter-graph edgewise, meaning it would work at least as well here
 
@@ -66,17 +66,17 @@ graph which is actually a subgraph of the degree counter-graph edgewise, meaning
 	In total - all online vertices in the first phase have been matched and an expected half of the vertices in the second phase has ben matched, resulting in an expected performance of $0.75$
 \end{proof}
 
-Note here that we have conducted Monte Carlo experiments  with this exact algorithm and graph for $k$ up to $50$ and in over 1 million simulations the algorithm found a matching of average size $n-2$ suggesting that the actual performance is much higher here
+%Note here that we have conducted Monte Carlo experiments  with this exact algorithm and graph for $k$ up to $50$ and in over 1 million simulations the algorithm found a matching of average size $n-2$ suggesting that the actual performance is much higher here - create appendix if this is kept
 
 Despite these seeming advantages, this algorithm doesn't have a competitiveness above $0.5$
 \begin{theorem}
-	Any algorithm that prioritizes vertices based on degree has an asymptotic competitiveness of no more than $0.5$
+	Any algorithm that prioritizes vertices based on degree (meaning that they either match high or low degree vertices first) has an asymptotic competitiveness of no more than $0.5$
 \end{theorem}
 \begin{figure}[H]
 	\centering
 	\input{figures/degree/priority.tikz}
 \end{figure}
 \begin{proof}
-	The case in which higher degree vertices are prioritized for matching is trivial as the counterexample is the same one from [ref-Z] and is added here for completion. In the case that the algorithm prioritized lower degree vertices like RED we construct the graph as follows: $k$ upper offline vertices $u_1,dots,u_k$ with degree $k$ and $k$ lower offline vertices $u_{k+1},dots,u_{2k}$ with degree $2$. Online vertices arrive in two stages: first, $k$ vertices $v_1,\dots,v_k$ connected to the upper half, where $v_i$ is also connected to $u_k+i$. These will all, except possibly the last two, be matched to $u_k+i$ as only then the effective degrees between upper and lower half equalize. This in then makes the next $k$ online vertices unmatchable as $u_{k+i}$ is only connected to $v_{k+i}$
+	The case in which higher degree vertices are prioritized for matching is trivial as the counterexample is the same $I^\star$ from Section 3.2 (Ranking Optimality) and is added here for completion. In the case that the algorithm prioritized lower degree vertices like RED we construct the graph as follows: $k$ upper offline vertices $u_1,dots,u_k$ with degree $k$ and $k$ lower offline vertices $u_{k+1},dots,u_{2k}$ with degree $2$. Online vertices arrive in two stages: first, $k$ vertices $v_1,\dots,v_k$ connected to the upper half, where $v_i$ is also connected to $u_k+i$. These will all, except possibly the last two, be matched to $u_k+i$ as only then the effective degrees between upper and lower half equalize. This in then makes the next $k$ online vertices unmatchable as $u_{k+i}$ is only connected to $v_{k+i}$
 \end{proof}
 We note that the graph for low-priority algorithms was devised by \cite{obmRaRank} to fool their MPD algorithm
