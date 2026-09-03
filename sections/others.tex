@@ -1,7 +1,9 @@
 \section{Delay}
 \begin{definition}[Delay model]
-	The delay model an enhanced version of the Semi-Online model, where on vertex arrival it doesn't have to be matched immediately, but only after a delay of $f(n)$ time - $f(n)$ arriving online vertices
+	The delay model an enhanced version of the Semi-Online model, where on vertex arrival it doesn't have to be matched immediately, but only after a delay of $f(n)$ time - $f(n)-1$ arriving online vertices
 \end{definition}
+
+In this way there is a delay window of $f(n)$ unmatched vertices, one of which has to be matched immediately and a vertex has to be irrevocably matched after $f(n)$ time has passed.
 
 This model isn't well-studied as despite the fact that delay (sometimes referred to as buffer or lookahead) is often utilized, as it isn't useful in the case of Online Bipartite Matching
 
