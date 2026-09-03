@@ -3,7 +3,7 @@
 	The delay model an enhanced version of the Semi-Online model, where on vertex arrival it doesn't have to be matched immediately, but only after a delay of $f(n)$ time - $f(n)$ arriving online vertices
 \end{definition}
 
-This model isn't well-studied as despite the fact that delay (sometimes referred to as buffer or lookahead) is sometimes utilized, it isn't useful in the case of Online Bipartite Matching
+This model isn't well-studied as despite the fact that delay (sometimes referred to as buffer or lookahead) is often utilized, as it isn't useful in the case of Online Bipartite Matching
 
 \begin{theorem}
 	For delay no greater than $n/2$ any deterministic online algorithm has competitiveness of $0.5$
@@ -21,14 +21,13 @@ This model isn't well-studied as despite the fact that delay (sometimes referred
 \begin{figure}[H]
 	\centering
 	\scalebox{.8}{\input{figures/delay/deterministic_worst_case.tikz}}
-	\caption{Worst case scenario for a deterministic cache algorithm}
 \end{figure}
 
 \begin{theorem}
 	For any $f(n)=o(n)$ delay, no algorithm has asymptotic competitiveness better than $1-\frac{1}{e}$
 \end{theorem}
 \begin{proof}
-	For $\mathrm{ALG}$ construct the adversary graph in a manner similar to the one above, with $f(n)$ copies of $G_A$, a graph on which $\mathrm{ALG}$ has a performance of $1-\frac{1}{e}$. Notice that the size of individual $G_A$ is $\frac{n}{f(n)}$ and since $\lim_{n\to\infty}\frac{n}{f(n)}\to\infty$, the size of individual $G_A$ instances is growing with $n$, leading to $\mathrm{ALG}$ being forced to solve isolated instances of size growing to infinity, yielding the stated competitiveness.
+	For $\mathrm{ALG}$ construct the adversary graph in a manner similar to the one above, with $f(n)$ isolated copies of $I(\frac{n}{f(n)},\mathrm{id})$ from chapter 3, and vertices arriving to each copy in the same adversarial order while all copies only have one online vertex in the delay window, implying that they receive their $k$-th online vertex before any receives it's $k+1$'st online vertex. This way there is no advantage from a delay of $f(n)$ and the algorithm behaves like an algorithm without delay on an instance $I(\frac{f(n)}{n},\mathrm{id})$. Because $f(n)=o(n)$ $\lim_{n\to\infty}\frac{n}{f(n)}=\infty$, implying that the copies grow in size infinitely as the instance size grows, resulting in a competitiveness of $1-\frac{1}{e}$.
 \end{proof}
 
 \section{Corrections}
@@ -60,7 +59,7 @@ We will prove the competitiveness with the above lemma, combined with a simple i
 As $v$ arrives:
 \begin{itemize}
 	\item if no short augmenting path is created, then matching $M$ is unchanged and invariant is maintained
-	\item if a short augmenting path $P=(v,v_1,\dots,v_k)$ is created and swapped, then new augmenting paths may be created. However, they must be joined to the swapped path with an unmatched edge adjacent to $v_i$ and  another unmatched edge, WLOG from $v_0$ to some $u$. Assuming that this new augmenting path $R=(w,v_i,\dots,v_0,u)$ is short (and would break the invariant) notice that, before $P$ was swapped, $(w,\dots,v_k)$ was also augmenting paths and if $R$ is short then it has to be as well, breaking the assumption. Do note that $u$ may be connected like $w$ (denoted $u'$), but a simmetrical proof by contradiction but with two augmenting paths still applies.
+	\item if a short augmenting path $P=(v,v_1,\dots,v_k)$ is created and swapped, then new augmenting paths may be created. However, they must be joined to the switched path with an unmatched edge adjacent to $v_i$ and another unmatched edge, WLOG from $v_0$ to some $u$. Assuming that this new augmenting path $R=(w,v_i,\dots,v_0,u)$ is short (and would break the invariant) notice that, before $P$ was swapped, $(w,\dots,v_k)$ was also augmenting paths and if $R$ is short then it has to be as well, breaking the assumption. Do note that $u$ may be connected like $w$ (denoted $u'$) an is then defined as the endpoint whoseseparation point from $P$ is closer to $v$, but a simmetrical proof by contradiction still applies.
 \end{itemize}
 \begin{figure}[H]
 	\centering

@@ -24,8 +24,12 @@ First, we will prove SAP's correctness
 		\item At time $t$, the matching $M_t$ is maximum, and
 		\item A matching is maximum iff there are no augmenting paths
 	\end{enumerate}
-	we conclude that if $M_t$ isn't maximum at time $t+1$ then there must be an augmenting path that didn't exist at time $t$, meaning that the newly arriving $v$ must be it's starting point
+	we conclude that if $M_t$ isn't maximum at time $t+1$ then there must be an augmenting path $P$ that didn't exist at time $t$, meaning that the newly arriving $v$ must be it's starting point implying $P=(v,v_1,\dots,v_k)$. If switching $P$ creates a new augmenting path $R$ it must be joined to the switched path with an unmatched edge adjacent to $v_i$ and another unmatched edge, WLOG from $v_0$ to some $u$. Notice that, before $P$ was swapped, $(w,\dots,v_k)$ was an augmenting path as well, contradicting the assumption. Do note that $u$ may be connected like $w$ (denoted $u'$) an is then defined as the endpoint whoseseparation point from $P$ is closer to $v$, but a simmetrical proof by contradiction still applies.
 \end{proof}
+\begin{figure}
+	\centering
+	\input{figures/corrections/augpath.tikz}
+\end{figure}
 
 Then, we'll prove the Recourse bound using \autoref{recourse-crucial}
 \begin{proof}
