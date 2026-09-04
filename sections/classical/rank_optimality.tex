@@ -47,7 +47,7 @@ notice that perfect matching is achieved only if $u_i$ is matched with $v_{\sigm
 		for $\mathrm{RGA}$.
 		\[\Pr[S\ \text{available at time }t+1]=\sum\limits_{v\not\in S}\Pr[S\cup\{v\}\ \text{available at time }t]\Pr[v\ \text{picked at time }t]\]
 		and since probabilities at time $t$ are equal and the probability of choosing all $v$ is either equal or $0$ then the condition is maintained\\
-		for $\mathrm{DGA}$, since it is deterministic and the algorithm can't read labels, then the subsequent matching is determined by the current available set, which is uniformly random, implying the next one is also uniformly random.
+		for $\mathrm{DGA}$, since it is deterministic and the labels do not provide infomation on the graph structure, the subsequent matching is determined by the current available set, which is uniformly random, implying the next one is also uniformly random.
 	\end{proof}
 	\begin{proof} of Claim 2\\
 		It is a direct consequence of Claim 1. If the offline vertices eligible for matching are uniformly distributed in both cases, then the probability that a vertex becomes unmatchable is also equal for both algorithms, and that probability is the probability that the amount of eligible vertices decreases by $2$ instead of $1$
@@ -111,6 +111,8 @@ giving us the final approximation
 	\avl=1+\rem\left(\frac{n-1}{n}-\ln\frac{\rem}{n}\right)
 \end{equation}
 
-Bearing in mind that the initial Markov chain doesn't perfectly emulate the last step, we substitute $\rem=1$ instead $\rem=0$ and from \autoref{rank-opt-final} we receive that, when only 1 online vertex has yet to arrive, the number of remaining columns is $n\frac{1}{e}+o(1)$. Bearing in mind that the last arriving vertex will affect the performance by at most 1, the expected size of the final matching is $n\left(1-\frac{1}{e}\right)$
+Seeing as this continuous function doesn't emulate the Markov chain perfectly when there is only $1$ eligible offline vertex, we substitute $\avl=1$ to receive the following:\\
+When there is only $1$ eligible offline vertex, there are $\frac{n}{e}+o(n)$ remaining online vertices\\
+Which results in a matching of size $n(1-\frac{1}{e})+o(1)$, implying that the competitiveness bound is $1-\frac{1}{e}$
 
 %NOTE HERE: cite Yao, Kurtz precisely, finish RGA DGA lemma. This is a draft
