@@ -115,7 +115,7 @@ We will now prove that the balanced server flow is unique (regarding $x$-values)
 \end{lemma}
 Do note that we do not claim that the corresponding $x$-values are unique, only the corresponding $\alpha$
 \begin{proof}
-	Using \autoref{balanced-sf-aux} we can argue that the balanced server flow is the optimum of the linear program in the proof of \autoref{balanced-sf-iff}.\\
+	Using \autoref{balanced-sf-aux} we can argue that the balanced server flow is the optimum of the convex program in the proof of \autoref{balanced-sf-iff}.\\
 	We can treat a feasible solution $\alpha'$ as a vector, with \autoref{balanced-sf-aux} showing that $||\alpha||\leq \alpha\alpha'$ which with non-negativity implies $||\alpha||\leq||\alpha'||$\\
 	Therefore, any balanced server flow is the optimum of the convex program, which in turn implies that it must be unique since the optimum is unique.
 \end{proof}
