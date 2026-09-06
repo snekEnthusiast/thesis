@@ -15,8 +15,7 @@ This model isn't well-studied as despite the fact that delay (sometimes referred
 	Consider the following graph $G$: There are $k=n/2$ groups $\{Z_i|i\in[k]\}$. of two offline vertices\\
 	First, $k$ vertices $z_i^D$ arrive, each connected to both vertices of $Z_i$.\\
 	As $z_k^D$ arrives the cache is full, and $z_1^D$ has to be matched. Let the offline vertex it was matched to be $z_1^B$. Next, $z_1^C$ arrives, only connected to $z_1^B$, which is unmatchable. Let $z_1^A$ be the unmatched offline vertex.\\
-	After $z_1^A$ has arrived $z_2^D$ has to be matched. The procedure above is repeated until $z\
-	_k^C$ has arrived.\\
+	After $z_1^C$ has arrived $z_2^D$ has to be matched. The procedure above is repeated until $z_k^C$ has arrived.\\
 	The perfect matching of $G$ connects all $z_i^A,z_i^D$ and $z_i^B,z_i^C$ pairs, while the algorithm connects only $z_i^B,z_i^D$ pairs, making the competitiveness $0.5$. The final graph is illustrated in the figure below.
 \end{proof}
 
@@ -29,17 +28,18 @@ This model isn't well-studied as despite the fact that delay (sometimes referred
 	For any $f(n)=o(n)$ delay, no algorithm has asymptotic competitiveness better than $1-\frac{1}{e}$
 \end{theorem}
 \begin{proof}
-	For $\mathrm{ALG}$ construct the adversary graph in a manner similar to the one above, with $f(n)$ isolated copies of $I(\frac{n}{f(n)},\mathrm{id})$ from chapter 3, and vertices arriving to each copy in the same adversarial order while all copies only have one online vertex in the delay window, implying that they receive their $k$-th online vertex before any receives it's $k+1$'st online vertex. This way there is no advantage from a delay of $f(n)$ and the algorithm behaves like an algorithm without delay on an instance $I(\frac{f(n)}{n},\mathrm{id})$. Because $f(n)=o(n)$ $\lim_{n\to\infty}\frac{n}{f(n)}=\infty$, implying that the copies grow in size infinitely as the instance size grows, resulting in a competitiveness of $1-\frac{1}{e}$.
+	For $\mathrm{ALG}$ construct the adversary graph in a manner similar to the one above, with $f(n)$ isolated copies of $I(\frac{n}{f(n)},\mathrm{id})$ from chapter 3, and vertices arriving to each copy in the same adversarial order while all copies only have one online vertex in the delay window, implying that they receive their $k$-th online vertex before any receives it's $k+1$'st online vertex. This way there is no advantage from a delay of $f(n)$ and the algorithm behaves like an algorithm without delay on an instance $I(\frac{f(n)}{n},\mathrm{id})$ since the history of other copies doesn't carry information about the current copy. Because $f(n)=o(n)$ $\lim_{n\to\infty}\frac{n}{f(n)}=\infty$, implying that the copies grow in size infinitely as the instance size grows, resulting in a competitiveness of $1-\frac{1}{e}$.
 \end{proof}
 
 \section{Corrections}
 \autoref{thm:recourse} proves that there is an algorithm that maintains a maximal matching with amortized $O(\log^2n)$ corrections per arriving vertex. This produces a question: what would be the competitiveness of an algorithm that has a strict correction budget. The following model and proof are an extension of those ideas, producing an algorithm that doesn't guarantee a maximal matching but has a good competitiveness under more strict resource requirements.
 
-We acknowledge that \cite{obmCorrections} arrived at the same conclusions independently of us.
+The following section is our independent analysis. \cite{obmCorrections} proved similar findings in a very similar model, but they are not identical so their optimality findings cannot be carried over without proof.
+
 \begin{definition}[Correction Model]
 	In the correction model, every turn, the algorithm can remove up to a constant $d$ edges from the formed matching. There are no restrictions on adding edges
 \end{definition}
-An algorithm that improves the matching by changing some $d$ edges for each arrival, for some constant $d$, can be derived from a known lemma proven by Hopcroft and Karp in 1973. We note that others may have described a very similar model earlier, but our analysis is independent. During the following analysis we will only consider augmenting paths that are maximal in terms of inclusion, ie that aren't part of longer augmenting paths.
+An algorithm that improves the matching by changing some $d$ edges for each arrival, for some constant $d$, can be derived from a known lemma proven by Hopcroft and Karp in 1973 \cite{hopcroft-karp}. During the following analysis we will only consider augmenting paths that are maximal in terms of inclusion, ie that aren't part of longer augmenting paths.
 \begin{lemma}
 	for a matching $M$, if all augmenting paths are of length no less than $2k-1$, then $\frac{|M|}{|M^\star|}\geq\frac{k-1}{k}$
 \end{lemma}
@@ -47,24 +47,27 @@ we will follow the proof from \cite{correction}
 \begin{proof}
 	Consider that graph $G'=(U,V,E')$ where $E'$ is the symmetric difference between some matching $M$ and $M^\star$, which is $(M\backslash M^\star)\cup(M^\star\backslash M)$, which in turn is the difference between $M$ and $M^\star$. Vertices in $G'$ have a degree of either $0,1$ or $2$. Vertices which are either isolated or in cycles (which must be of even length) in $G'$ have the same amount of edges adjacent from $M,M^\star$. Augmenting paths, of which there are no more than $|M^\star|-|M|$, must account for the difference in cardinality.
 
-	When the difference in cardinality is greatest, $G'$ contains only augmenting paths, of which each has at least $k-1$ edges in $M$ and $k$ edges in $M^\star$. Let $P$ be a path. Then $\frac{|M\cap P|}{|M^\star\cap P|}\geq\frac{k-1}{k}$ which can be generalized ove all paths to $\frac{|M|}{|M^\star|}\geq\frac{k-1}{k}$
+	When the difference in cardinality is greatest, $G'$ contains only augmenting paths, of which each has at least $k-1$ edges in $M$ and $k$ edges in $M^\star$. Let $P$ be a path. Then $\frac{|M\cap P|}{|M^\star\cap P|}\geq\frac{k-1}{k}$ which can be generalized over all paths to $\frac{|M|}{|M^\star|}\geq\frac{k-1}{k}$
 \end{proof}
 From here we can construct the algorithm. We will call an augmenting path short if it is of length no greater than $2d+1$, meaning it has $d$ edges in the matching. Notice that an augmenting path of length $2k-1$ only has $k-1$ edges from the matching.
 \begin{algorithm}
 	\caption{$d$-augmenting correction}
 	\label{alg:correction}
 	\begin{algorithmic}
-		\item on Arrival of vertex $v$: if a short augmenting path $P$ (starting at $v$) is created, $N=M\cap P$, $N'=P\backslash N$ for current matching $M$, $M:=N'\cup M\backslash N$. otherwise do nothing
+		\item on Arrival of vertex $v$: if short augmenting path's (starting at $v$) are created, switch the shortest. otherwise do nothing
 	\end{algorithmic}
 \end{algorithm}
-We will prove the competitiveness with the above lemma, combined with a simple invariant: after an arriving vertex is handled, there are no short augmenting paths.\\
+We will prove the competitiveness with the above lemma, combined with a simple invariant: after an arriving vertex is handled, there are no short augmenting paths.\\ The invariant is proven by induction, with it being trivial at time $t=0$\\
 As $v$ arrives:
 \begin{itemize}
 	\item if no short augmenting path is created, then matching $M$ is unchanged and invariant is maintained
-	\item if a short augmenting path $P=(v,v_1,\dots,v_k)$ is created and swapped, then new augmenting paths may be created. However, they must be joined to the switched path with an unmatched edge adjacent to $v_i$ and another unmatched edge, WLOG from $v_0$ to some $u$. Assuming that this new augmenting path $R=(w,v_i,\dots,v_0,u)$ is short (and would break the invariant) notice that, before $P$ was swapped, $(w,\dots,v_k)$ was also augmenting paths and if $R$ is short then it has to be as well, breaking the assumption. Do note that $u$ may be connected like $w$ (denoted $u'$) an is then defined as the endpoint whoseseparation point from $P$ is closer to $v$, but a simmetrical proof by contradiction still applies.
+	\item if a short augmenting path $P=(v,v_1,\dots,v_k)$ is created and swapped, then new augmenting paths may be created. However, they must be joined to the switched path with an unmatched edge adjacent to $v_i$ and another unmatched edge, WLOG from $v_0$ to some $u$. Assuming that this new augmenting path $R=(w,v_i,\dots,v_0,u)$ is short (and would break the invariant) notice that, before $P$ was swapped, $(w,\dots,v_k)$ was also augmenting paths and if $R$ is short then it has to be as well, contradicting the assumption since $R$ existed before $v$ arrived. Do note that $u$ may be connected like $w$ (denoted $u'$) an is then defined as the endpoint whose separation point from $P$ is closer to $v$, but a symmetrical proof by contradiction still applies.
 \end{itemize}
 \begin{figure}[H]
 	\centering
 	\input{figures/corrections/augpath.tikz}
 \end{figure}
-Therefore, $d$-augmenting correction has a competitiveness of $\frac{d}{d+1}$
+Therefore, since there are no augmenting paths shorter than $2d+3$
+\begin{theorem}
+	$d$-augmenting correction has a competitiveness of $\frac{d+1}{d+2}$
+\end{theorem}

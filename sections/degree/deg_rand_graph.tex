@@ -2,7 +2,7 @@ as shown before, despite it's potential the Final Degree model doesn't allow for
 
 \begin{definition}
 	\label{CLV-B Model}
-	The CLV-B model is a bipartite adaptation of the CLV model for general graphs introduced by Fan Chung, Linyuan Lu, and Van Vu. It is defined by two vectors, $p\in[0,1]^n,q\in[0,1]^m$.An edge between $u_j\in U,v_i\in V$ appears with probability $p_jq_i$. 
+	The CLV-B model is a bipartite adaptation of the CLV model for general graphs introduced by Fan Chung, Linyuan Lu, and Van Vu in \cite{clv-b}. It is defined by two vectors, $p\in[0,1]^n,q\in[0,1]^m$.An edge between $u_j\in U,v_i\in V$ appears with probability $p_jq_i$. 
 	We assume WLOG that elements of $p$ are in non-increasing order.\\
 	We denote the random graph of vectors $p,q$ $I_{p,q}$
 \end{definition}
@@ -19,7 +19,7 @@ Adapting the RED algorithm to the CLV-B model, with consideration to the fact th
 \begin{theorem}
 	\label{thm:deg-opt}
 	MPD is optimal in CLV-B model, meaning\\
-	for any algorithm $\mathrm{A}, t\in\mathbb{Z}_{+},p\in[0,1]^n,q\in[0,1]^m$ $\Pr[\mathrm{A}(I_{p,q})>t]\leq \Pr[\MPD(I_{p,q})>t]$
+	for any algorithm $\mathrm{A}, t\in\mathbb{Z}_{+},p\in[0,1]^n,q\in[0,1]^m$ $\Pr[\mathrm{A}(I_{p,q})\geq t]\leq \Pr[\MPD(I_{p,q})\geq t]$
 \end{theorem}
 
 the proof, as well as the algorithm itself if from \cite{obmDegree} whose work concerned a slightly different model, where the algorithm has (possibly imperfect) degree predictors, but the analysis assumed that predictors follow the expected degrees, so is applicable here. It is conducted by proving, with induction, two relatively simple properties of MPD from which the theorem is proven by induction on the amount of online vertices.

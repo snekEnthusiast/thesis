@@ -8,7 +8,7 @@ The approach is to
 	\item derive a family of Strongly Factor-Revealing linear program $\mathrm{PolyLP'}(n)$
 	\item use computing machines to solve some linear programs from $\mathrm{PolyLP'}(n)$ to obtain a lower bound
 \end{enumerate}
-Do note that the last step is computational and does not prove an exact competitiveness ratio. Indeed, this approach merely shows that the ratio is at least $0.696$, and other analysis show it can be no larger than $0.727$. The exact competitiveness ratio is currently unknown.
+Do note that the last step is computational and does not prove an exact competitiveness ratio. Indeed, this approach merely shows that the ratio is at least $0.696$, and other analysis show it can be no larger than $0.727$ according to \cite{rank-ra-upper-bound}. The exact competitiveness ratio is currently unknown.
 
 \subsection{Ranking properties}
 
@@ -72,7 +72,7 @@ for the purposes of creating $\mathrm{expLP}(n,k)$ for a graph $G$ with $n$ vert
 \begin{proof}
 	Let $n\in\mathbb{N},n'\in\{x\in N|x>n\}$.\\
 	Suppose we want to run Ranking on a $n\times n$ graph $G$. By adding isolated vertices we can change it into a $n'\times n'$ graph with the identical run to that on $G$ when ignoring the isolated vertices\\
-	As shown in the lammas in the previous section, a valuation of $x$ is a feasible solution to $\mathrm{expLP}(n,k)$. The value of the objective function is the average over all $\sigma$ and $\pi$ divided by $n$, making it the performance of Ranking on that graph.  Note that the linear program is a relaxation, and so provides a lower bound on the competitiveness ration
+	As shown in the lemmas in the previous section, a valuation of $x$ is a feasible solution to $\mathrm{expLP}(n,k)$. The value of the objective function is the average over all $\sigma$ and $\pi$ divided by $n$, making it the performance of Ranking on that graph.  Note that the linear program is a relaxation, and so provides a lower bound on the competitiveness ration
 \end{proof}
 
 \subsection[relaxation to PolyLP(n)]{relaxation to $\mathrm{PolyLP}(n)$}

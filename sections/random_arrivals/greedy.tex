@@ -1,17 +1,17 @@
-We will present a proof of \autoref{thm:rga-ra-comp} by \cite{obmRaGreedy} which goes in three phases, first proving properties of RGA, then more 3 complex lammas and finally using those to prove the theorem with the help of linear programming
+We will present a proof of \autoref{thm:rga-ra-comp} by \cite{obmRaGreedy} which goes in three phases, first proving simple properties, then more 3 complex lemmas and finally using those to prove the theorem with the help of linear programming
 
 \subsection{basic properties}
 
-We will begin by proving several properties of RGA.
+We will begin by proving several properties.
 \begin{lemma}[Prefix]
 	\label{ra-greedy-prefix}
-	$\forall\sigma_1,\sigma_2\in\mathrm{Perm}([n]),t\in[n]|(\forall 0\leq k\leq t| \sigma_1(k)=\sigma_2(k))\\ \implies\text{runs of RGA on }\sigma_1\ \text{and}\ \sigma_2\ \text{are identical}$
+	$\forall\sigma_1,\sigma_2\in\mathrm{Perm}([n]),t\in[n]|(\forall 0\leq k\leq t| \sigma_1(k)=\sigma_2(k))\\ \implies\text{runs on }\sigma_1\ \text{and}\ \sigma_2\ \text{are identical}$
 \end{lemma}
 \begin{proof}
-	This lemma is relatively trivial. RGA doesn't have access to $\sigma$ so, while both permutations are identical the runs will be identical as well.
+	This lemma is relatively trivial. Since the algorithm is deterministic and both permutations are identical the runs will be identical as well.
 \end{proof}
 
-Let $\Omega_p$ be a set of permutations where all vertices but $v_p$ have fixed positions, $\sigma_k\in\Omega_p$ be the permutation where $x_p$ is on position $k$, $G_s(t)$ be the set of offline vertices matched in time $1,\dots,t$ by RGA on $\sigma_s$
+Let $\Omega_p$ be a set of permutations where all vertices but $v_p$ have fixed positions, $\sigma_k\in\Omega_p$ be the permutation where $x_p$ is on position $k$, $G_s(t)$ be the set of offline vertices matched in time $1,\dots,t$ by the algorithm on $\sigma_s$
 
 \begin{lemma}[Monotonicity]
 	\label{ra-greedy-monotone}
@@ -26,7 +26,7 @@ Another way of phrasing this lemma is to say that, if a vertex is moved up in th
 
 \begin{proof}
 	The first part is a direct consequence of \autoref{ra-greedy-prefix}. Proof of the second part will be by induction over time $t$, starting with $s-1$ which is directly implied by the first part.\\
-	Assuming the lemma holds at time $k$, $G_m(k)\subseteq G_s(k+1)$. Notice that $\sigma_m(k+1)=\sigma_s(k+2)$. Denote $v:=v_{\sigma_m(k+1)}$, matched to $u$ on RGA run on $\sigma_m$. Suppose $u\not\in G_s(k+2)$. Then $u$ was available when RGA was matching $v$ on $\sigma_s$, but $v$ was instead matched to $u'\not\in G_s(k+1)$. By induction hypothesis $u'\not\in G_m(k)$ implying $u,u'$ available at $t=k+1$ in run $\sigma_m$, RGA should have chosen $u'$ over $u$, contradiction implying $u\in G_s(k+2)$ implying step condition for $t=k+1$
+	Assuming the lemma holds at time $k$, $G_m(k)\subseteq G_s(k+1)$. Notice that $\sigma_m(k+1)=\sigma_s(k+2)$. Denote $v:=v_{\sigma_m(k+1)}$, matched to $u$ on a run on $\sigma_m$. Suppose $u\not\in G_s(k+2)$. Then $u$ was available when the algorithm was matching $v$ on $\sigma_s$, but $v$ was instead matched to $u'\not\in G_s(k+1)$. By induction hypothesis $u'\not\in G_m(k)$ implying $u,u'$ available at $t=k+1$ in run $\sigma_m$, the algorithm should have chosen $u'$ over $u$, contradiction implying $u\in G_s(k+2)$ implying step condition for $t=k+1$
 \end{proof}
 
 As context for the last lemma, we need to establish the following: what it means to miss a vertex, what is a good match and what is a bad match.
@@ -34,7 +34,7 @@ As context for the last lemma, we need to establish the following: what it means
 A vertex is considered missed if it remains unmatched by the end of the run
 
 \[\miss_\sigma(s,p)=\begin{cases}
-	1 & \sigma(s)=p\land\ v_p\text{ unmatched at the end of RGA run on }\sigma\\
+	1 & \sigma(s)=p\land\ v_p\text{ unmatched at the end run on }\sigma\\
 	0 & \text{ else}
 \end{cases}\]
 
@@ -54,7 +54,7 @@ in contrast, a good match occurs when $v_{p'}$ arrives after $v_p$. In that situ
 
 \begin{lemma}[Partitioning]
 	\label{ra-greedy-partition}
-	$\forall p,\Omega_p$, during a run of RGA on $\sigma_n$. If $u_p$ is matched to $v_t$ then
+	$\forall p,\Omega_p$, during a run on $\sigma_n$. If $u_p$ is matched to $v_t$ then
 	\begin{align}
 		\forall x\in[1,t]: & \sum\limits_{1\leq s\leq t+1} \good_{\sigma_x}(s,p)=1
 		\forall x\in[t+1,n]: & \bad_{\sigma_x}(t,p)=1
@@ -161,7 +161,11 @@ which can in turn be rewritten with $m_t=\good(t)+\bad(t),v_t=\frac{\bad(t)}{n-t
 \end{align*}
 
 $\mathrm{LP}'$ is obtained by dropping $m_{t+1}$ from equation 1\\
-According to \cite{obmRaGreedy}, doing this will not change the optimum value, supported by the fact that \cite{karp} proved a very similar statement
+According to \cite{obmRaGreedy}, Appendix A,
+\begin{quote}
+	It can be shown that dropping the term $m_{t+1}$ from we need to first define the following: the first set of equations does not affect the LP solution by much
+\end{quote}
+which is supported by the fact that \cite{karp} proved a very similar statement
 
 The following is $\mathrm{LP}'$ and it's dual
 

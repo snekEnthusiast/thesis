@@ -1,5 +1,5 @@
 \begin{definition}[iid Model]
-	In the iid model the algorithm always knows a set of offline vertices $U$, but there is no determined set of online vertices $V$. Instead, there is a set $V'$ of vertex 'archetypes' consisting of a neighborhood $N\subseteq U$ and a probability $p$. When a new vertex $v$ arrives, for each $(N,p)\in V'$ $v$ has of $p$ to have neighborhood $N$. The archetype set $V'$ is known to the algorithm. The amount of vertices that will arrive in total, $n$, is also known.
+	In the iid model the algorithm always knows a set of offline vertices $U$, but there is no determined set of online vertices $V$. Instead, there is a set $V'$ of vertex 'archetypes' consisting of a neighborhood $N\subseteq U$ and a probability $p$. When a new vertex $v$ arrives, for each $(N,p)\in V'$ $v$ has of $p$ to have neighborhood $N$. The archetype set $V'$ is known to the algorithm. The amount of vertices that will arrive in total, $n$, is also known. The expected amount of arriving vertices, $p_vn$, is an integer.
 \end{definition}
 We note two things here:
 \begin{enumerate}
@@ -7,17 +7,23 @@ We note two things here:
 	\item This model is still a game, but the adversary has been stripped of almost all agency and now cannot even control the final graph
 \end{enumerate}
 
-Since the graph is now random, competitiveness has to be redefined as $M^\star$ is also random. In this context, we define the competitiveness ratio as $\frac{\E[\mathrm{ALG}]}{\E[\mathrm{OPT}]}$. We also note that \cite{obmStochastic}, whose analysis we follow, didn't redefine competitiveness, though their analysis is consistent with this definition.
+Since this is a random graph, the previously defined competitiveness isn't sufficient. We will instead follow \cite{obmStochastic} and use the "approximation factor $\alpha$ with high probability" defined as
+
+\begin{definition}
+	For any iid instance $\Gamma$ where $G$ is drawn from it, with high probability $\frac{\mathrm{ALG}(G)}{\mathrm{OPT}(G)}\geq\alpha$
+\end{definition}
+
+Which we will refer to as the approximation factor. We note that an approximation ratio of $\alpha$ implies that $\frac{\E[\mathrm{ALG}]}{\E[\mathrm{OPT}]}$ is at least $\alpha-o(1)$
 
 We will present the proof of two theorems in this chapter:
 
 \begin{theorem}
-	No algorithm has a competitiveness of $1-\epsilon$ for some $\epsilon>0$ in the iid model
+	No algorithm has an approximation factor of $1-\epsilon$ for some $\epsilon>0$ in the iid model
 \end{theorem}
 meaning that there is no perfect algorithm, and
 \begin{theorem}
 	\label{thm:sa-alg}
-	The stochastic arrival model is strictly easier than the Semi-Online model since there is an algorithm, TSM, with competitiveness $\approx 0.670$
+	The stochastic arrival model is strictly easier than the Semi-Online model since there is an algorithm, TSM, with an approximation factor of $\approx 0.670$
 \end{theorem}
 In actuality, there is an algorithm with a competitiveness of $0.729$ by \cite{obmStochasticBest}, better than the proven competitiveness of Ranking in the random arrival model. However, this algorithm is very complicated so we will instead showcase a simpler one to show that the $1-\frac{1}{e}$ barrier can be beaten
 

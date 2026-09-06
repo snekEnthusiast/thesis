@@ -1,4 +1,4 @@
-we present tha algorithm and proof from \cite{obmRecourse}
+we present the algorithm and proof from \cite{obmRecourse}
 \begin{algorithm}
 	\caption{SAP}
 	\label{alg:sap}
@@ -111,9 +111,8 @@ We will now prove that the balanced server flow is unique (regarding $x$-values)
 
 \begin{lemma}
 	\label{balanced-sf-unique}
-	The server flow in \autoref{balanced-sf-iff} if it exists
+	The server flow in \autoref{balanced-sf-iff} is unique in terms of $\alpha$ if it exists
 \end{lemma}
-Do note that we do not claim that the corresponding $x$-values are unique, only the corresponding $\alpha$
 \begin{proof}
 	Using \autoref{balanced-sf-aux} we can argue that the balanced server flow is the optimum of the convex program in the proof of \autoref{balanced-sf-iff}.\\
 	We can treat a feasible solution $\alpha'$ as a vector, with \autoref{balanced-sf-aux} showing that $||\alpha||\leq \alpha\alpha'$ which with non-negativity implies $||\alpha||\leq||\alpha'||$\\
@@ -207,7 +206,7 @@ An augmenting tail from vertex $v\in U\cup V$ is an alternating path starting at
 
 \begin{lemma}[Expansion]
 	\label{recourse-expansion}
-	Assume $\alpha_M(u)=1-\epsilon$ for some $u\in U,\epsilon>0$. There is an active augmenting tail for $u$ of length at most $\frac{2}{e}\ln(|V_M|)$
+	Assume $\alpha_M(u)=1-\epsilon$ for some $u\in U,\epsilon>0$. There is an active augmenting tail for $u$ of length at most $\frac{2}{\epsilon}\ln(|V_M|)$
 \end{lemma}
 \begin{proof}
 	Notice that any offline vertex $u'$ reachable from $u$ by an active augmenting tail has $\alpha_M(u')\leq 1-\epsilon$\\

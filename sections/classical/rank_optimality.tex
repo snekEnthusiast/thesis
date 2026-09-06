@@ -1,5 +1,5 @@
 \label{section:rank-opt}
-In this section we present a proof for Ranking Optimality (\autoref{thm:rank-optimal}) by \cite{karp}. The main vehicle for this is Yao's lemma with a construction of a class of matching instances. Using the lemma, performance of any algorithm is bounded by the performance of a deterministic greedy algorithm on a randomized instance, which we will prove is equivalent to the performance of RGA on a specific instance, which we will approximate using differential equations
+In this section we present the sketch of a proof for Ranking Optimality (\autoref{thm:rank-optimal}) by \cite{karp}. The main vehicle for this is Yao's lemma with a construction of a class of matching instances. Using the lemma, performance of any algorithm is bounded by the performance of a deterministic greedy algorithm on a randomized instance, which we will prove is equivalent to the performance of RGA on a specific instance, which we will approximate using differential equations
 
 \begin{algorithm}
 	\caption{RGA}
@@ -33,14 +33,12 @@ notice that perfect matching is achieved only if $u_i$ is matched with $v_{\sigm
 	\[\underset{i\sim U(I)}{\E}[|\mathrm{DGA}(i)|]=\E[\mathrm{RGA}(I^\star)]\]
 \end{lemma}
 \begin{proof} To prove the lemma we first need to prove two claims:\\
-% -- ??? -- ??? -- ???
 	\begin{claim}[1]
 		for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $I^\star$ if at time $t$ there are $k$ eligible offline vertices then they are equally likely to be any set of $k$ vertices among the last $n-t+1$
 	\end{claim}
 	\begin{claim}[2]
 		for each $k$ the probability that there are $k$ eligible offline vertices at time $t$ is the same for $\mathrm{DGA}$ on $(n,\sigma)$ as well as $\mathrm{RGA}$ on $I^\star$
 	\end{claim}
-	% -- ??? -- ??? -- ??? Think this is supposed to be 'all rows are equally likely to be eligible' since the n-t+1 applies only to RGA
 	Claim 1 is proven with induction over time - the amount of online vertices that have already arrived. Note that induction base at step 0 is trivial since all offline vertices are eligible.\\
 	Note that a vertex is available if it can still be matched ie isn't matched and isn't unmatchable
 	\begin{proof} of Claim 1\\
@@ -59,6 +57,8 @@ By using Yao's lemma we receive the following: for any algorithm $\mathrm{ALG}$
 \begin{equation}
 	|\mathrm{ALG}(M)|:=\underset{i\in I}{\min}\E[|\mathrm{ALG(i)}|]\leq \underset{\mathrm{DALG}}{\max}\underset{i\sim U(I)}{\E}[|\mathrm{DALG}(i)|]=\E[|\mathrm{RGA}(I^\star)|]
 \end{equation}
+
+We note that WLOG that the best algorithm is greedy. The Argument given by Karp et al is simple: for any algorithm $\mathrm{A}$, a greedy algorithm that matches like $\mathrm{A}$ when possible and arbitrarily when not performs at least as well as $\mathrm{A}$, with the proof following from \autoref{dga-rga-equiv}
 
 Since (as proven in the previous section) only instances with perfect matchings need be considered in competitiveness analysis, competitiveness of all algorithms is upper bounded by $\frac{\E[|\mathrm{RGA}(I^\star)|]}{n}$
 
@@ -86,23 +86,12 @@ finally
 	\E[\Delta\avl]==-1-\frac{\avl(t)-1}{\rem(t)}
 \end{equation}
 implying $\frac{\mathrm{E}[\Delta\avl]}{\mathrm{E}[\mathrm{\Delta\rem}]}=1+\frac{\rem(t)-1}{\avl(t)}$ since $\Delta\rem$ is always $-1$\\
-Though this is a discrete Markov Chain, we can approximate it by treating it as a continuous function, whose rate of growth is already known. Moreover, from Kurtz's theorem (\cite{kurtz}) this approximation's accuracy increases as $n$ increases
+Though this is a discrete Markov Chain, we can approximate it by treating it as a continuous function, whose rate of growth is already known. Here, Karp et al state that, from Kurtz's theorem (\cite{kurtz}) this approximation's accuracy increases as $n$ increases
 \begin{equation}
 	\label{rank-opt-diff}
 	\frac{d\avl}{d\rem}=1+\frac{\avl-1}{\rem}
 \end{equation}
 We also have the initial conditions, $\avl=\rem=n$, meaning we can find an approximating equation by solving $\autoref{rank-opt-diff}$
-
-\begin{align*}
-	\frac{d\avl}{d\rem}=1+\frac{\avl-1}{\rem} & \text{ can be rewritten as}\\
-	\frac{d\avl}{d\rem}-\frac{\avl}{\rem}=\frac{\rem-1}{\rem} & \text{ multiply both sides by }m(\rem)=e^{\int -1/\rem \,d\rem}\\
-	\frac{\frac{d\avl}{d\rem}}{\rem}+\frac{d}{d\rem}\left(\frac{1}{\rem}\right)\avl=\frac{\rem-1}{\rem^2} & \text{ apply product rune to LHS}\\
-	\frac{d}{d\rem}\left(\frac{\avl}{\rem}\right)=\frac{rem-1}{\rem^2} & \text{ integrate both sides}\\
-	\int\frac{d}{d\rem}\left(\frac{\avl}{\rem}\right)=\int\frac{\rem-1}{\rem^2}\\
-	\frac{\avl}{\rem}=\frac{1}{\rem} + \ln\rem + c & \text{ apply initial condition }\avl=\rem=n\\
-	1=\frac{1}{n}+\ln n + c\implies c=1-\frac{1}{n}-\ln n\implies&\\
-	\avl=1+\rem\left(\ln\rem-\ln n+1-\frac{1}{n}\right)
-\end{align*}
 
 giving us the final approximation
 
@@ -113,6 +102,4 @@ giving us the final approximation
 
 Seeing as this continuous function doesn't emulate the Markov chain perfectly when there is only $1$ eligible offline vertex, we substitute $\avl=1$ to receive the following:\\
 When there is only $1$ eligible offline vertex, there are $\frac{n}{e}+o(n)$ remaining online vertices\\
-Which results in a matching of size $n(1-\frac{1}{e})+o(1)$, implying that the competitiveness bound is $1-\frac{1}{e}$
-
-%NOTE HERE: cite Yao, Kurtz precisely, finish RGA DGA lemma. This is a draft
+Which results in a matching of size $n(1-\frac{1}{e})+o(n)$, implying that the competitiveness bound is $1-\frac{1}{e}$

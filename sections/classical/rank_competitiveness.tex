@@ -37,7 +37,7 @@ We will therefore perform analysis on graphs are assumed to have a perfect match
 
 \begin{lemma}
 	\label{rank-cmp-unmatched-complicated}
-	Let $v$ online vertex,$u=M^\star(v)$, $\sigma$ permutation, $\sigma_i$ permutation obtained by removing $v$ and inserting it into $\sigma$ at the $i$-th place.\\
+	Let $v$ online vertex,$u=M^\star(v)$, $\sigma$ permutation, $\sigma_i$ permutation obtained by removing $u$ and inserting it into $\sigma$ at the $i$-th place.\\
 	If $u$ isn't matched by $\mathrm{Ranking}(\sigma)$ then for every $i$ $\mathrm{Ranking}(\sigma_i)$ matches $v$ with a vertex $u_i$ such that $\sigma_i(v_i)\leq\sigma(v)=t$
 \end{lemma}
 
@@ -54,13 +54,12 @@ The final lemma required to complete the proof uses this result directly.
 \end{lemma}
 
 \begin{proof}
-	Let $\sigma$ be a random permutation of offline vertices. Define $\sigma'$ with the following random process: choose an offline vertex randomly with equal probability, take it out of $\sigma$ and insert it into the $t$-th rank. Let $u$ be the vertex of rank $t,v=M^*(u),R_{t-1}$ the online vertices matched by the algorithm to offline vertices of rank $\leq t-1$\\
+	Let $\sigma$ be a random permutation of offline vertices. Define $\sigma'$ with the following random process: choose an offline vertex randomly with equal probability, take it out of $\sigma$ and insert it into the $t$-th rank. Let $u$ be the vertex of rank $t$, $v=M^*(u)$, $R_{t-1}$ the online vertices matched by the algorithm to offline vertices of rank $\leq t-1$\\
 	probability that $u$ is not matched is $1-p_t$. Expected cardinality of $R_{t-1}$ is $\sum\limits_{1\leq s\leq t-1}p_s$.\\
 	Applying \autoref{rank-cmp-unmatched-complicated} with $\sigma:=\sigma',i$ chosen such that $\sigma'_i=\sigma$\ : if $u$ isn't matched by $\mathrm{Ranking}(\sigma')$ then $v$ is matched by $\mathrm{Ranking}(\sigma)$ to a vertex $u'$ such that $\sigma^{-1}(u)\leq t$ implying $u\in R_t$\\
-	Conditional on $\sigma$, $u\in R_t$ has a probability of $\frac{|R_t|}{n}$ since they are independent.\\
+	Conditional on $\sigma$, $v\in R_t$ has a probability of $\frac{|R_t|}{n}$ since they are independent.\\
 	We now have two random events $E,F$ that fulfill the condition that $E\implies F$. It is obvious to see that $\Pr[E]\leq\Pr[F]$\\
 	The lemma follows
-	
 \end{proof}
 
 With \autoref{rank-cmp-probability} the Theorem can be proved directly.\\
