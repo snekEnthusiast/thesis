@@ -48,14 +48,14 @@ Let $U_{BR}$ be the offline vertices incident to a blue and red edge, $U_{BB}$ t
 \end{equation}
 
 
-Consider $u\in U_B$ with blue edge to archetype $(u,v')$. $u$ is matched iff $v$ from $V'$ is ever drawn, and since the expected amount of arrivals from any archetype os $1$ this is also the probability that a particular bin is non-empty in a balls-in-bins problem with $n$ balls and bins. Applying \autoref{ball-bin-simple} we conclude that, with a high probability that the number of offline vertices from $U_B$ that are matched is at least $|U_B|(1-\frac{1}{e})n \epsilon$\\
+Consider $u\in U_B$ with blue edge to archetype $(u,v')$. $u$ is matched iff $v$ from $V'$ is ever drawn, and since the expected amount of arrivals from any archetype os $1$ this is also the probability that a particular bin is non-empty in a balls-in-bins problem with $n$ balls and bins. Applying \autoref{ball-bin-simple} we conclude that, with a high probability that the number of offline vertices from $U_B$ that are matched is at least $|U_B|(1-\frac{1}{e})-n \epsilon$\\
 
 We conduct a similar reasoning for $U_{BR}$. with blue edge to archetype $v'_1$ and red towards archetype $v'_2$: if $1$ vertex from $v'_2$ of $2$ from $v'_1$ have arrived then $u$ is matched. We apply \autoref{ball-bin-complex} with bin sequences being the neighborhood sets of $U_{BR}$ along, in order, blue and red edges $c=2$, $d=2$ since each online vertex is an endpoint of at most $2$ colored edges and $R$ being the second (red) bin of the sequence. We conclude that, with high probability, the number of of offline vertices from $U_{BR}$ that are matched is at least $|U_{BR}|(1-\frac{2}{e^2})-n \epsilon$.
 
-Symmetric arguments give the high probability bounds for $U_R$: $|U_R|(1-\frac{2}{e})n \epsilon$ and $U_{BB}:$ $|U_{BB}|(1-\frac{1}{e^2})-n \epsilon$ implying the bound
+Symmetric arguments give the high probability bounds for $U_R$: $|U_R|(1-\frac{2}{e})-n \epsilon$ and $U_{BB}:$ $|U_{BB}|(1-\frac{1}{e^2})-n \epsilon$ implying the bound
 \begin{equation}
 	\label{st-eq2}
-	\mathrm{ALG}\geq (1-\frac{1}{e^2})|U_{BB}|+(1-\frac{2}{e^2})|U_{BR}|+(1-\frac{3}{2e})(|U_b|+|U_R|)-4n \epsilon
+	\mathrm{ALG}\geq (1-\frac{1}{e^2})|U_{BB}|+(1-\frac{2}{e^2})|U_{BR}|+(1-\frac{3}{2e})(|U_b|+|U_R|)-4n\epsilon
 \end{equation}
 given that $|U_B|\geq |U_R|$ as creation of blue edges is prioritized
 
@@ -111,10 +111,10 @@ For this inequality to be useful we must prove a correlation between the sizes o
 With that relation proven we can proceed to the proof of the \autoref{thm:sa-alg}
 
 \begin{proof}
-	Bounds in \autoref{st-eq2},\autoref{st-eq4} hold with probability $1-e^{\Omega(n)}$, by union bound both hold with probability $1-e^{\Omega(n)}$\\
+	Bounds in \autoref{st-eq2},\autoref{st-eq4} hold with probability $1-e^{-\Omega(n)}$, by union bound both hold with probability $1-e^{-\Omega(n)}$\\
 	From \autoref{sa-lm}, \autoref{st-eq4} we get
 	\begin{align*}
-		\mathrm{OPT}\leq\left(\frac{4}{3}-\frac{2}{3e}\right)U_{BR}+\left(\frac{5}{3}-\frac{4}{3e}\right)U_{BB}+\left(1-\frac{1}{e}\right)(U_B,U_R)+n \epsilon
+		\mathrm{OPT}\leq\left(\frac{4}{3}-\frac{2}{3e}\right)U_{BR}+\left(\frac{5}{3}-\frac{4}{3e}\right)U_{BB}+\left(1-\frac{1}{e}\right)|U_B|+|U_R|+n \epsilon
 	\end{align*}
 	By choosing a small enough $\epsilon$ and Applying \autoref{st-eq2} results in
 	\begin{align*}

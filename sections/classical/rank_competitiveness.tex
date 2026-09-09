@@ -1,6 +1,6 @@
 In this section we present a simple proof for \autoref{thm:rank-competitiveness} by \cite{obmSimple}. Many proofs of this theorem use linear programming, but this one uses no special tools.
 
-We treat $\sigma$, a permutation of $U$ representing a ranking, as an ordered list or a function $[|U|]\to U$ meaning $\sigma(i)$ is the vertex at rank $i$ in $\sigma$ and $\sigma^{-1}(u)$ is the rank of $v$ in $\sigma$
+We treat $\sigma$, a permutation of $U$ representing a ranking, as an ordered list or a function $[|U|]\to U$ meaning $\sigma(i)$ is the vertex at rank $i$ in $\sigma$ and $\sigma^{-1}(u)$ is the rank of $u$ in $\sigma$
 
 \begin{lemma}
 	\label{rank-cmp-compete-perfect}
@@ -38,7 +38,7 @@ We will therefore perform analysis on graphs are assumed to have a perfect match
 \begin{lemma}
 	\label{rank-cmp-unmatched-complicated}
 	Let $v$ online vertex,$u=M^\star(v)$, $\sigma$ permutation, $\sigma_i$ permutation obtained by removing $u$ and inserting it into $\sigma$ at the $i$-th place.\\
-	If $u$ isn't matched by $\mathrm{Ranking}(\sigma)$ then for every $i$ $\mathrm{Ranking}(\sigma_i)$ matches $v$ with a vertex $u_i$ such that $\sigma_i(v_i)\leq\sigma(v)=t$
+	If $u$ isn't matched by $\mathrm{Ranking}(\sigma)$ then for every $i$ $\mathrm{Ranking}(\sigma_i)$ matches $v$ with a vertex $u_i$ such that $\sigma^{-1}_i(u_i)\leq\sigma^{-1}(u)=t$
 \end{lemma}
 
 \begin{proof}
@@ -56,7 +56,7 @@ The final lemma required to complete the proof uses this result directly.
 \begin{proof}
 	Let $\sigma$ be a random permutation of offline vertices. Define $\sigma'$ with the following random process: choose an offline vertex randomly with equal probability, take it out of $\sigma$ and insert it into the $t$-th rank. Let $u$ be the vertex of rank $t$, $v=M^*(u)$, $R_{t-1}$ the online vertices matched by the algorithm to offline vertices of rank $\leq t-1$\\
 	probability that $u$ is not matched is $1-p_t$. Expected cardinality of $R_{t-1}$ is $\sum\limits_{1\leq s\leq t-1}p_s$.\\
-	Applying \autoref{rank-cmp-unmatched-complicated} with $\sigma:=\sigma',i$ chosen such that $\sigma'_i=\sigma$\ : if $u$ isn't matched by $\mathrm{Ranking}(\sigma')$ then $v$ is matched by $\mathrm{Ranking}(\sigma)$ to a vertex $u'$ such that $\sigma^{-1}(u)\leq t$ implying $u\in R_t$\\
+	Applying \autoref{rank-cmp-unmatched-complicated} with $\sigma:=\sigma',i$ chosen such that $\sigma'_i=\sigma$\ : if $u$ isn't matched by $\mathrm{Ranking}(\sigma')$ then $v$ is matched by $\mathrm{Ranking}(\sigma)$ to a vertex $u'$ such that $\sigma^{-1}(u)\leq t$ implying $v\in R_t$\\
 	Conditional on $\sigma$, $v\in R_t$ has a probability of $\frac{|R_t|}{n}$ since they are independent.\\
 	We now have two random events $E,F$ that fulfill the condition that $E\implies F$. It is obvious to see that $\Pr[E]\leq\Pr[F]$\\
 	The lemma follows

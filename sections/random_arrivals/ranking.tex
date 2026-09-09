@@ -180,7 +180,7 @@ resulting in
 	the family of linear programs $\mathrm{PolyLP'}(n)$ is strongly factor-revealing for Ranking with random arrivals
 \end{lemma}
 \begin{proof}
-Take any integer $m>0$. For any instance of size $n=km,k\in\mathbb{Z}$. We will prove that the competitiveness ratio of Ranking is lower-bounded by $\mathrm{PolyLP'}(m)$. We know that $\inf\limits_d\mathrm{PolyLP}(md)$ is greater or equal to the desired competitiveness ratio. We will take an optimal solution $(x,y)$ of $\mathrm{PolyLP}(md)$ and project it to a feasible solution of $\mathrm{PolyLP'}(m)$ as follows
+Take any integer $m>0$. For any instance of size $n=km,k\in\mathbb{Z}$. We will prove that the competitiveness ratio of Ranking is lower-bounded by $\mathrm{PolyLP'}(m)$. We know that $\inf\limits_d\mathrm{PolyLP}(md)$ is a lower bound on the desired competitiveness ratio. We will take an optimal solution $(x,y)$ of $\mathrm{PolyLP}(md)$ and project it to a feasible solution of $\mathrm{PolyLP'}(m)$ as follows
 	\begin{definition}
 		For any $i,j,k\in[m]$ define $f(i)=\{d(i-1)+1,\dots,d * i\}, f(i,j)=f(i)\times f(j), f(i,j,k)=f(i)\times f(j)\times f(k)$ ($\times$ denotes Cartesian product)\\
 		For any $u',v',p'\in[m]$ define $x'(u',v',p')=\frac{1}{d}\sum\limits_{(u,v,p)\in f(u',v',p')}x(u,v,p)$,$y'(u',v',p')\allowbreak=\frac{1}{d}\sum\limits_{(v,p)\in f(v',p')}y(u'd,v,p)$

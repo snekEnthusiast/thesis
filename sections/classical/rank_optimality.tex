@@ -45,7 +45,7 @@ notice that perfect matching is achieved only if $u_i$ is matched with $v_{\sigm
 		for $\mathrm{RGA}$.
 		\[\Pr[S\ \text{available at time }t+1]=\sum\limits_{v\not\in S}\Pr[S\cup\{v\}\ \text{available at time }t]\Pr[v\ \text{picked at time }t]\]
 		and since probabilities at time $t$ are equal and the probability of choosing all $v$ is either equal or $0$ then the condition is maintained\\
-		for $\mathrm{DGA}$, since it is deterministic and the labels do not provide infomation on the graph structure, the subsequent matching is determined by the current available set, which is uniformly random, implying the next one is also uniformly random.
+		for $\mathrm{DGA}$, since it is deterministic and the labels do not provide information on the graph structure, the subsequent matching is determined by the current available set, which is uniformly random, implying the next one is also uniformly random.
 	\end{proof}
 	\begin{proof} of Claim 2\\
 		It is a direct consequence of Claim 1. If the offline vertices eligible for matching are uniformly distributed in both cases, then the probability that a vertex becomes unmatchable is also equal for both algorithms, and that probability is the probability that the amount of eligible vertices decreases by $2$ instead of $1$
@@ -66,7 +66,7 @@ Now, all that is required to prove the following lemma
 
 \begin{lemma}
 	\label{rga-performance}
-	$\E[|\mathrm{RGA}(I^\star)|]\leq n(1-\frac{1}{e})+o(1)$
+	$\E[|\mathrm{RGA}(I^\star)|]\leq n(1-\frac{1}{e})+o(n)$
 \end{lemma}
 The rest of this section is the proof of this lemma.
 

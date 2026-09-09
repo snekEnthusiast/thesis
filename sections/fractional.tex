@@ -33,7 +33,7 @@ We note that this both the algorithm and it's competitiveness are well-known. Ou
 		\text{subject to} & \forall u,v\in E: \alpha_u+\beta_v\geq 1\\
 		& \forall u\in U: \sum\limits_{v\in N(u)}x_{uv}\leq 1&&
 		& \forall (u,v)\in E: x_{uv}\geq 0\\
-		& \forall (u,v)\in E: x_{uv}\geq 0\\
+		& \forall (u,v)\in U\times V: \alpha_u,\beta_v\geq 0\\
 	\end{align*}
 	We define a dual solution as follows
 	\begin{align*}
@@ -63,8 +63,8 @@ We note that this both the algorithm and it's competitiveness are well-known. Ou
 	\begin{proof}
 		Define $\beta'$ as follows: $n_v(t)$ is the amount of $u\in N(v)$ such that the inequality $d(u)\leq t$ holds when $v$ arrives.\\
 		$\int\limits_0^{l(v)}n_v(t) dt=1$ if $l(v)<1$\\
-		$\beta_j'=\int\limits_0^{l(v)}(1-g(t))n_v(t) dt$\\
-		Note that $\beta'_j\geq\beta_j$ because, $l(v)=1$ is implied by $\beta_v=0$ and $l(v)<1$ is implied by $1-g(t)$ being a decreasing function and therefore\\
+		$\beta_v'=\int\limits_0^{l(v)}(1-g(t))n_v(t) dt$\\
+		Note that $\beta'_v\geq\beta_v$ because, $l(v)=1$ is implied by $\beta_v=0$ and $l(v)<1$ is implied by $1-g(t)$ being a decreasing function and therefore\\
 		\begin{align*}
 			\beta'_v=\int\limits_0^{l(v)}(1-g(t))n_v(t) dt > (1-g(l(v)))\int\limits_0^{l(v)}n_v(t) dt= 1-g(l(v))=\beta_v
 		\end{align*}
@@ -73,7 +73,7 @@ We note that this both the algorithm and it's competitiveness are well-known. Ou
 		\begin{align*}
 			&\beta_v+\sum\limits_{u\in N(v)}g(l(v))-g(\deg(u))\\
 			=&1-g(l(v))+\sum\limits_{u\in N(v)}\int\limits_{\deg(u)}^{l(v)}g'(t)dt\\
-			=&1-g(l(v))+\int\limits_{\deg(u)}^{l(v)}n_v(t)g'(t)dt\\
+			=&1-g(l(v))+\int\limits_{0}^{l(v)}n_v(t)g'(t)dt\\
 			&\leq\int\limits_{0}^{l(v)}\left(1-g(t)+g'(t)\right)n_v(t)dt\\
 			=&\frac{e}{e-1}\int\limits_0^{l(v)}n_v(t)dt\\
 			=&\frac{e}{e-1}\sum\limits_{u\in N(v)}x_{uv}
