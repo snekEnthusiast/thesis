@@ -188,4 +188,6 @@ Notice that both primal and dual constraints are satisfied when all inequalities
 
 And in the above solution $\sum m_t=\sum \alpha_t$, then this solution is optimal by strong duality.
 
-with the objective being $\sum m_t\approx n(1-\frac{1}{e})$, concluding the proof. This result is unsurprising as it is related to the basis of the competitiveness of Ranking in \cite{karp}
+with the objective being $\sum m_t\approx n(1-\frac{1}{e})$, concluding the proof.
+
+This result is unsurprising given the previous chapter. Indeed, if this value was any lower it would contradict the first section as, via an argument symmetric to the second section, the optimal competitiveness ratio would be lower than $1-\frac{1}{e}$, contradicting the proof from the first section. On the other hand, if this value was higher, then it would constitute a guarantee on a competitiveness ratio higher than $1-\frac{1}{e}$, contradicting the result from the second section where, on $I$, deterministic algorithms have been shown to have this exact competitiveness ratio.

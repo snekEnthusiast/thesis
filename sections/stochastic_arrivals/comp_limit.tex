@@ -9,9 +9,9 @@ In this section we will follow a proof from \cite{obmStochastic}. Consider a 6-C
 If $x$ arrives first, if it is matched to $1$ and then two $y$ vertices $y_1,y_2$ arrive, the second will be unmatchable. In this scenario there is a perfect matching $M^\star=\set{(2,x),(1,y_1),(3,y_2)}$
 
 This argument is symmetric, for any first arrival $v$ matched to $u$ there is an archetype $v'$ that forces this scenario.\\
-The probability of this scenario is therefore the probability of $(v',v')$ arriving after $v$, which is $\frac{1}{9}$. Assuming that in all other scenarios the algorithm find the perfect matching, aproximation ratio is at most $\frac{1}{9}\frac{2}{3}+\frac{8}{9}1=\frac{26}{27}$.
+The probability of this scenario is therefore the probability of $(v',v')$ arriving after $v$, which is $\frac{1}{9}$. Assuming that in all other scenarios the algorithm find the perfect matching, approximation ratio is at most $\frac{1}{9}\frac{2}{3}+\frac{8}{9}1=\frac{26}{27}$.
 
-This means that $\frac{\E[\mathrm{ALG}]}{\E[\mathrm{OPT}]}<1$, implying that no algirithm finds a maximal matching with high probability.
+This means that $\frac{\E[\mathrm{ALG}]}{\E[\mathrm{OPT}]}<1$, implying that no algorithm finds a maximal matching with high probability.
 
 Therefore, the theorem is proven and the approximation ratio of any algorithm in the iid model is bounded by $\approx0.962<1$.
 

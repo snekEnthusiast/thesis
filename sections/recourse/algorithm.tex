@@ -24,7 +24,7 @@ First, we will prove SAP's correctness
 		\item At time $t$, the matching $M_t$ is maximum, and
 		\item A matching is maximum iff there are no augmenting paths
 	\end{enumerate}
-	we conclude that if $M_t$ isn't maximum at time $t+1$ then there must be an augmenting path $P$ that didn't exist at time $t$, meaning that the newly arriving $v$ must be it's starting point implying $P=(v,v_1,\dots,v_k)$. If switching $P$ creates a new augmenting path $R$ it must be joined to the switched path with an unmatched edge adjacent to $v_i$ and another unmatched edge, WLOG from $v_0$ to some $u$. Notice that, before $P$ was swapped, $(w,\dots,v_k)$ was an augmenting path as well, contradicting the assumption. Do note that $u$ may be connected like $w$ (denoted $u'$) an is then defined as the endpoint whoseseparation point from $P$ is closer to $v$, but a simmetrical proof by contradiction still applies.
+	we conclude that if $M_t$ isn't maximum at time $t+1$ then there must be an augmenting path $P$ that didn't exist at time $t$, meaning that the newly arriving $v$ must be it's starting point implying $P=(v,v_1,\dots,v_k)$. If switching $P$ creates a new augmenting path $R$ it must be joined to the switched path with an unmatched edge adjacent to $v_i$ and another unmatched edge, WLOG from $v_0$ to some $u$. Notice that, before $P$ was swapped, $(w,\dots,v_k)$ was an augmenting path as well, contradicting the assumption. Do note that $u$ may be connected like $w$ (denoted $u'$) an is then defined as the endpoint whose separation point from $P$ is closer to $v$, but a symmetrical proof by contradiction still applies.
 \end{proof}
 \begin{figure}
 	\centering
@@ -149,7 +149,7 @@ Or, more informally ans simplistically, arrival of $v$ only connected to $s$ can
 \begin{proof}
 	consider the balanced server flow at time $t$ (before inserting $v$)\\
 	Let $U^+=\set{u\in U|\alpha(u)\geq\underset{u'\in N(v)}{\min}\alpha(u')}$\\
-	Ler $U^-=U\backslash U^+$ be complement of $U^+$\\
+	Let $U^-=U\backslash U^+$ be complement of $U^+$\\
 	Let $V^+=\set{v\in V|N(v)\subseteq U^+}$. Note that, before the insertion of $v$, there are no edges between $V^+$ and $U^-$, together with the fact that there are no active edges from $V^-$ to $U^+$ because the flow is balanced implying $\sum\limits_{u\in U}\alpha(u)=|V^-|$\\
 	After the insertion of $v$, by definition of $U^-$ $v$ has no neighbors in $U^-$, maintaining previous property, implying the new balanced flow $\alpha'$ has the property $\sum\limits_{u\in U}\alpha'(u)\leq |V^-|$, meaning that $\sum\limits_{u\in U}\Delta\alpha(u)\leq 0$\\
 	If, for some $u_1$, $\Delta\alpha(u_1)>0$ then $\Delta\alpha(u_2)<0$ for some other $u_2$, contradicting \autoref{balanced-sf-insert}

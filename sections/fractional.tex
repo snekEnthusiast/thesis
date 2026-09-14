@@ -13,7 +13,7 @@ Note that in an offline setting the sizes of a graph's matching and fractional m
 	\label{alg:waterlevel}
 	\begin{algorithmic}
 		\item on Initialization: create water level of all offline vertices $\forall u\in U:d(u)=\sum\limits_{v\in V,\text{visible}}w_{u,v}$
-		\item on Arrival of vertex $v$: Increase $w$ of edges towards neighbors with the lowest water level, to maximize $\underset{u\in N(v)}{\min}d(u)$ until $1$ unit has been alloted or all neighbors have a water level of $1$
+		\item on Arrival of vertex $v$: Increase $w$ of edges towards neighbors with the lowest water level, to maximize $\underset{u\in N(v)}{\min}d(u)$ until $1$ unit has been allotted or all neighbors have a water level of $1$
 	\end{algorithmic}
 \end{algorithm}
 

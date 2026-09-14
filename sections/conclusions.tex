@@ -10,7 +10,7 @@ Recall the results we have proven
 	\item A high recourse cannot be forced \label{Recourse}
 	\item Waterlevel fractional matching has a competitiveness of $1-\frac{1}{e}=0.632$ \label{FRAC}
 	\item A deterministic algorithm, even allowed to make small corrections, has a good competitiveness of $\frac{d+1}{d+2}$, being more competitive than Ranking with just $1$ correction per arriving vertex. \label{COR}
-	\item none of the mentioned competitiveness models allow for a perfect algorithm, which always finds a perfect matching, ei with a competitiveness ratio of $1$.
+	\item none of the mentioned competitiveness models allow for a perfect algorithm, which always finds a perfect matching, ie with a competitiveness ratio of $1$.
 \end{enumerate}
 
 and our research questions
@@ -26,4 +26,4 @@ Another interesting pattern is in whether randomness is utilized in various mode
 
 We also note that, in the case of Online Bipartite Matching with One-Sided Vertex Arrivals, allowing for corrections appears to be a very strong algorithm enhancement as the required correction budges to surpass Ranking in the Semi-Online Model in terms of competitiveness is only $d=1$ yielding an algorithm with a competitiveness of $\frac{2}{3}>1-\frac{1}{e}$ and maintaining a significantly lower Recourse of $O(n\log^2n)$ is achievable compared to Edge Arrival or Two-Sided Vertex Arrival.
 
-Lastly, none of these models, aside from Recourse, allows for a perfect algorithm. It is unsurprising as we know that a matching is maximum iff there are no augmenting paths and no models we showcased, and indeed no conventional modification to models of online problems, gives this information. It is therefore unsurprising that making the right decision as a vertex arrives is difficult.
+Lastly, none of these models, aside from Recourse where competitiveness isn't a concern, allows for a perfect algorithm. It is unsurprising as we know that a matching is maximum iff there are no augmenting paths and no models we showcased, and indeed no conventional modification to models of online problems, gives this information. It is therefore unsurprising that making the right decision as a vertex arrives is difficult.
