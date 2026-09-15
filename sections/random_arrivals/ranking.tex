@@ -67,7 +67,7 @@ for the purposes of creating $\mathrm{expLP}(n,k)$ for a graph $G$ with $n$ vert
 
 
 \begin{lemma}
-	The competitiveness ratio of Ranking in the Random Arrival model is lower bounded by $\inf\limits_{n\in N}\inf\limits_{u}\mathrm{expLP}(n,k)$ for any infinite subset of natural numbers $N$
+	The competitiveness ratio of Ranking in the Random Arrival model is lower bounded by $\inf\limits_{n\in N}\inf\limits_{k}\mathrm{expLP}(n,k)$ for any infinite subset of natural numbers $N$
 \end{lemma}
 \begin{proof}
 	Let $n\in\mathbb{N},n'\in\{x\in N|x>n\}$.\\
@@ -109,7 +109,7 @@ and taking expectation over random $\sigma,\pi$ results in
 
 \begin{equation}
 	\label{ra-rank-eq4}
-	y_i(u,v,u)+y_2(v-1,u,v)\geq \frac{k}{n^2}
+	y_1(u,v,u)+y_2(v-1,u,v)\geq \frac{k}{n^2}
 \end{equation}
 
 We multiply \autoref{ra-rank-eq2} similarly, for a fixed $p$ let $u_{\mathrm{old}}=n$ and again take expectation over random $\sigma,\pi$. RHS is $y_1(u,v,p)$.

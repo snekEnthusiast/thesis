@@ -60,7 +60,7 @@ RGA (\autoref{alg:RGA}) having an expected matching size of $\frac{n}{2}+O(\log 
 	In the first phase the arriving vertices are always matchable since they are connected to all offline vertices\\
 	In the second phase arriving vertices are connected to incrementally smaller parts of the upper $k$ vertices\\
 	The lower $k+1$ offline and online vertices form a biclique, meaning that all matches made between the first $k+1$ online vertices and the lower $k+1$ offline vertices do not make any vertex unmatchable. Since matches are chosen randomly, we expect half of the online agents from the first phase to be matched there\\
-	In the second phase $k$ vertices arrive connected to incrementally smaller parts of the upper $k$ offline vertices of which we expect half to be available for matching. Using an argument symmetrical to the one in \autoref{deg-diff-degree} we know that the matching here is maximum\\
+	In the second phase $k$ vertices arrive connected to incrementally smaller parts of the upper $k$ offline vertices of which we expect half to be available for matching. Using an argument symmetrical to the one in \autoref{deg-diff-degree} we know that the matching here is the best possible, however we expect only half of the lower offline vertices to be matchable\\
 	In total - all online vertices in the first phase have been matched and an expected half of the vertices in the second phase has been matched, combined with the fact that both phases have half of all online vertices implying that an expected performance of $0.75$
 \end{proof}
 

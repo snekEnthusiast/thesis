@@ -3,13 +3,13 @@ Recall the results we have proven
 	\item In the simplest Semi-Online model, Ranking has a competitiveness of $1-\frac{1}{e}=0.632$ and is optimal \label{RNK}
 	\item If vertices arrive in a random order, Ranking has a competitiveness above $0.696$ \label{RA1}
 	\item If vertices arrive in a random order, any deterministic algorithm with consistent tie-breaking has a competitiveness of $1-\frac{1}{e}$ \label{RA2}
-	\item If vertices arrive from a known distribution, a deterministic algorithm with consistent tie-breaking has a competitiveness of $1-\frac{1}{e}$ \label{TSM}
+	\item If vertices arrive from a known distribution, a deterministic TSM algorithm has a competitiveness of $0.670$ \label{TSM}
 	\item Even a substantial delay in decision time doesn't increase competitiveness \label{delay}
-	\item Prioritizing matching based on the knowledge of final degrees reduces competitiveness \label{RED}
+	\item Prioritizing matching based on the knowledge of final degrees doesn't increase competitiveness and may even reduce it for certain randomized algorithms \label{RED}
 	\item In a more random graph the usage of final degrees leads to an optimal algorithm (MPD) \label{MPD}
 	\item A high recourse cannot be forced \label{Recourse}
 	\item Waterlevel fractional matching has a competitiveness of $1-\frac{1}{e}=0.632$ \label{FRAC}
-	\item A deterministic algorithm, even allowed to make small corrections, has a good competitiveness of $\frac{d+1}{d+2}$, being more competitive than Ranking with just $1$ correction per arriving vertex. \label{COR}
+	\item A deterministic algorithm, even allowed to make small corrections, has a good competitiveness of $\frac{d+1}{d+2}$, being more competitive than Ranking in the Semi-Online model with just $1$ correction per arriving vertex. \label{COR}
 	\item none of the mentioned competitiveness models allow for a perfect algorithm, which always finds a perfect matching, ie with a competitiveness ratio of $1$.
 \end{enumerate}
 

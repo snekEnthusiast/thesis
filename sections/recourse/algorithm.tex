@@ -80,7 +80,7 @@ where $A(v)$ are called active neighbors of $v$
 	Observe that the optimum is a balanced server flow: constraint ensure that it is a server flow and if it wasn't balanced there would be an online vertex $v$ that sends non-zero flow to $u,u'$ and $\alpha(u)<\alpha(u')$. Notice that the objective function can be decreased by increasing $\alpha(u)$ and reducing $\alpha(u')$ until they are identical, therefore the flow must be balanced.
 \end{proof}
 
-We will now prove that the balanced server flow is unique (regarding $x$-values) using an auxiliary lemma
+We will now prove that the balanced server flow is unique (regarding $\alpha$-values) using an auxiliary lemma
 
 %insert above, unify proofs
 \begin{lemma}
@@ -123,7 +123,7 @@ Let $\alpha$ be the balanced server flow at time $t$ and $\alpha'$ be the balanc
 $\Delta\alpha(u)=\alpha(u)'-\alpha(u)$
 \begin{lemma}
 	\label{balanced-sf-insert}
-	$\forall u\in U:\Delta\alpha(s)\geq 0$
+	$\forall u\in U:\Delta\alpha(u)\geq 0$
 \end{lemma}
 \begin{proof}
 	Let $U'=\set{u|\Delta\alpha(u)<0}$\\
@@ -134,8 +134,8 @@ $\Delta\alpha(u)=\alpha(u)'-\alpha(u)$
 	Let $U^+=\set{u\in U|\alpha(u)>\alpha'\land\alpha'(u)>\alpha^\star}$\\
 	These three partition $U$, $\emptyset\neq U^\Delta\subseteq U'$\\
 	Let $V^\Delta$ be the set of all $v\in V$ with an active neighbor at time $t$. Since each sends one unit of flow, $\sum\limits_{u\in U}\alpha(u)\leq|V^\Delta|$\\
-	The server flow being balanced at $t$ implies there is no edges from $V^\Delta$ to $S^-$ at time $t$.\\
-	Further, there are no active edges from $V^\Delta$ to $S^+$ at time $t+1$\\
+	The server flow being balanced at $t$ implies there is no edges from $V^\Delta$ to $U^-$ at time $t$.\\
+	Further, there are no active edges from $V^\Delta$ to $U^+$ at time $t+1$\\
 	Therefore, all active edges incident to $V^\Delta$ must connect to $U^\Delta$ implying $\sum\limits_{u\in U}\alpha'(u)\geq|V^\Delta|$.
 	This in turn, when combined with the previous inequality implies $\sum\limits_{u\in U}\alpha'(u)\geq \sum\limits_{u\in U}\alpha(u)$\\
 	This is a contradiction as, by definition of $U^\Delta$, $\sum\limits_{u\in U}\alpha'(u)< \sum\limits_{u\in U}\alpha(u)$ 
@@ -166,7 +166,7 @@ Or, more informally ans simplistically, arrival of $v$ only connected to $s$ can
 \end{proof}
 
 \begin{lemma}
-	Let $\overline{\alpha}=\underset{u\in U}{\max}\alpha(u)$ be maximal necessity, $\overline{U}=\set{u\in U|\alpha(u)=\overline{\alpha}}$ maximally necessary servers, $K'=\set{v\in V|A(v)\cap\overline{S}\neq\emptyset}$ active neighbors, then $N(K')=\overline{U}$, $|K'|=\overline{\alpha}|\overline{U}|$
+	Let $\overline{\alpha}=\underset{u\in U}{\max}\alpha(u)$ be maximal necessity, $\overline{U}=\set{u\in U|\alpha(u)=\overline{\alpha}}$ maximally necessary servers, $K'=\set{v\in V|A(v)\cap\overline{U}\neq\emptyset}$ active neighbors, then $N(K')=\overline{U}$, $|K'|=\overline{\alpha}|\overline{U}|$
 \end{lemma}
 \begin{proof}
 	Let $K=\set{v\in V|A(v)\subseteq\overline{U}}$\\
@@ -184,8 +184,8 @@ Or, more informally ans simplistically, arrival of $v$ only connected to $s$ can
 	and $\forall K\subseteq V:|K|=\overline{\alpha}|N(K)|\implies\forall u\in N(K)\alpha(u)=\overline{\alpha}$
 \end{lemma}
 \begin{proof}
-	Definition of server flow implies, for $K\subseteq V$ $|K|\leq\sum\limits_{u\in N(K)}\alpha(s)\leq\overline{\alpha}|N(K)|$ implying $|K|\leq\overline{\alpha}|N(K)|$.\\
-	Let $K'$ be defined as in above lemma. Then $\overline{\alpha}=\frac{|K'|}{N(K')}\leq\underset{\emptyset\subset K\subseteq V}{\min}\frac{|K|}{|N(K)|}\leq\overline{\alpha}$\\
+	Definition of server flow implies, for $K\subseteq V$ $|K|\leq\sum\limits_{u\in N(K)}\alpha(u)\leq\overline{\alpha}|N(K)|$ implying $|K|\leq\overline{\alpha}|N(K)|$.\\
+	Let $K'$ be defined as in above lemma. Then $\overline{\alpha}=\frac{|K'|}{N(K')}\leq\underset{\emptyset\subset K\subseteq V}{\max}\frac{|K|}{|N(K)|}\leq\overline{\alpha}$\\
 	If $|K|=\sum\limits_{u\in N(K)}\alpha(u)=\overline{\alpha}|N(K)|$ then $\forall u\in U:\alpha(u)\leq\overline{\alpha}$ implies $\forall u\in N(K):\alpha(u)=\overline{\alpha}$
 \end{proof}
 

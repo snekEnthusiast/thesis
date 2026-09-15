@@ -8,8 +8,8 @@ This algorithm works on the basis of creating a realization graph, where there i
 	\item on Initialization:\\
 	construct realization graph $G$, build boosted flow graph $G_f$ as follows: create source $s$ connected to all offline vertices, sink $t$ connected to all online vertices, set capacity of edges as follows
 	\begin{enumerate}
-		\item edges $(s,v)$ from source have capacity 2
-		\item edges $(t,u)$ from sink have capacity 2
+		\item edges $(s,u)$ from source have capacity 2
+		\item edges $(t,v)$ from sink have capacity 2
 		\item regular edges $(u,v)$ have capacity 1
 	\end{enumerate}
 	Find maximum flow of this graph. Let $E_f$ be the regular edges with non-zero flow. Assign colors, blue or red, to $E_f$ as follows
@@ -114,7 +114,7 @@ With that relation proven we can proceed to the proof of the \autoref{thm:sa-alg
 	Bounds in \autoref{st-eq2},\autoref{st-eq4} hold with probability $1-e^{-\Omega(n)}$, by union bound both hold with probability $1-e^{-\Omega(n)}$\\
 	From \autoref{sa-lm}, \autoref{st-eq4} we get
 	\begin{align*}
-		\mathrm{OPT}\leq\left(\frac{4}{3}-\frac{2}{3e}\right)U_{BR}+\left(\frac{5}{3}-\frac{4}{3e}\right)U_{BB}+\left(1-\frac{1}{e}\right)|U_B|+|U_R|+n \epsilon
+		\mathrm{OPT}\leq\left(\frac{4}{3}-\frac{2}{3e}\right)U_{BR}+\left(\frac{5}{3}-\frac{4}{3e}\right)U_{BB}+\left(1-\frac{1}{e}\right)\left(|U_B|+|U_R|\right)+n \epsilon
 	\end{align*}
 	By choosing a small enough $\epsilon$ and Applying \autoref{st-eq2} results in
 	\begin{align*}

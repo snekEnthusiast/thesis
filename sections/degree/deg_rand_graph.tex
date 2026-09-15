@@ -44,7 +44,7 @@ the proof, as well as the algorithm itself if from \cite{obmDegree} whose work c
 		\item[Case 2] \MPD matches $u_i$ to $v_j$ when running on $I$\\
 		$\forall j'<j: M_{j'}=M'_{j'}$, particularly for $j'=j-1$
 		\begin{description}
-			\item[Case 2.1] If $v_j$ is unmatchable on $I'$ then \MPD on both $I,I'$ behave identically from this point onwards, $\MPD(I)=\MPD(I')\cup\set{(u_i,v_j)}$, implying $|\MPD(I)|=|\MPD(I')\cup\set{(u_i,v_j)|=|\MPD(I)|+1}$, condition holds
+			\item[Case 2.1] If $v_j$ is unmatchable on $I'$ then \MPD on both $I,I'$ behave identically from this point onwards, $\MPD(I)=\MPD(I')\cup\set{(u_i,v_j)}$, implying $|\MPD(I)|=|\MPD(I')\cup\set{(u_i,v_j)|=|\MPD(I')|+1}$, condition holds
 			\item[Case 2.2] If $v_j$ is matched to $u_{i'}$ on $I'$\\
 			Then, $|M_j|=|M'_j|$ and, by the induction hypothesis $|M_m\backslash M_j|\leq|M'_m\backslash M'_j|+1$ as $M_m\backslash m_j$ and $M_m'\backslash M'_j$ correspond to another graph where only $v_j,\dots,v_m$ arrive, which has smaller $m$ and is therefore covered by induction.\\
 			Finally $\MPD(I)=|M_j|+|M_m\backslash M_j|\leq|M'_j|+|M'_m\backslash M'_j|+1=\MPD(I')+1$, condition holds
@@ -136,7 +136,7 @@ with these lemmas we can prove \autoref{thm:deg-opt}
 		&\sum\limits_{S\subseteq[n]\backslash R_A}\Pr_p[N_S]\Pr[\MPD(I_{p(\MPD,S),q'})\geq t-1]\\
 		=&\Pr_p[N_\emptyset]\Pr[\MPD(I_{p,q'})\geq t]+\\
 		&\sum\limits_{\emptyset\neq S\subseteq[n]}\Pr_p[N_S]\Pr[\MPD(I_{p(\MPD,S),q'})\geq t-1]\\
-		=&\Pr(\MPD(I_{p,q'})\geq t)
+		=&\Pr(\MPD(I_{p,q})\geq t)
 	\end{align*}
 \end{proof}
 concluding the proof
