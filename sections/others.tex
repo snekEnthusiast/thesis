@@ -28,8 +28,12 @@ This model isn't well-studied as despite the fact that delay (sometimes referred
 	For any $f(n)=o(n)$ delay, no algorithm has asymptotic competitiveness better than $1-\frac{1}{e}$
 \end{theorem}
 \begin{proof}
-	Let $m=\ceil{f(n)}+1$
-	For $\mathrm{ALG}$ construct the adversary graph in a manner similar to the one above, with $m$ isolated adversarial subgraphs whose construction will be described after their purpose is clear, and vertices arriving to each copy in the same adversarial order while all copies only have one online vertex in the delay window, implying that they receive their $k$-th online vertex before any receives it's $k+1$'st online vertex. The behavior of the algorithm, isolated to a single subgraph, is identical to the behavior of some Semi-Online algorithm on that graph. Therefore, by \autoref{thm:rank-optimal}, each subgraph is to be an adversarial graph for that specific algorithm, where that algorithm would achieve a competitive ratio of $1-\frac{1}{e}$. The first one will be $I^\star$ as the algorithm cannot derive any suggestion about it's $k+1$-st vertex from the $k$-th vertices of other copies. This combined with random vertex labels ensures that the algorithm cannot derive useful information from the delay window. Because $f(n)=o(n)$ $\lim_{n\to\infty}\frac{n}{f(n)}=\infty$, implying that the copies grow in size infinitely as the instance size grows, resulting in a competitiveness of $1-\frac{1}{e}$.
+	Let $m=\ceil{f(n)}+1$.
+	For $\mathrm{ALG}$ construct the adversary graph in a manner similar to the one above, with $m$ isolated $I^\star$ (from 3.2) adversarial subgraphs whose construction will be described after their purpose is clear, and vertices arriving to each subgraph in the same adversarial order while all subgraphs only have one online vertex in the delay window, implying that they receive their $k$-th online vertex before any receives it's $k+1$'st online vertex. Vertex labels are random.
+
+	The behavior of the algorithm, isolated to a single subgraph, creates a family of some Semi-Online algorithms. This is evident as an algorithm for Semi-Online Matching can pretend that there are $m-1$ other subgraphs and this specific delay window exists. By solving this false instance, a true Semi-Online instance is also solved. To achive a competitiveness ratio above $1-\frac{1}{e}$, at least one of the subgraphs algorithms would have achived this same higher ratio on $I^\star$, which we know is impossible from the proof of \autoref{thm:rank-optimal} as all algorithms have aperformance upper bound of $1-\frac{1}{e}$ on $I^\star$.
+	
+	Because $f(n)=o(n)$ $\lim_{n\to\infty}\frac{n}{f(n)}=\infty$, implying that the subgraphs grow in size infinitely as the instance size grows, resulting in a competitiveness of $1-\frac{1}{e}$.
 \end{proof}
 
 \section{Corrections}
@@ -48,7 +52,7 @@ we will follow the proof from \cite{correction}
 \begin{proof}
 	Consider that graph $G'=(U,V,E')$ where $E'$ is the symmetric difference between some matching $M$ and $M^\star$, which is $(M\backslash M^\star)\cup(M^\star\backslash M)$, which in turn is the difference between $M$ and $M^\star$. Vertices in $G'$ have a degree of either $0,1$ or $2$. Vertices which are either isolated or in cycles (which must be of even length) in $G'$ have the same amount of edges adjacent from $M,M^\star$. Augmenting paths, of which there are no more than $|M^\star|-|M|$, must account for the difference in cardinality.
 
-	When the difference in cardinality is greatest, $G'$ contains only augmenting paths, of which each has at least $k-1$ edges in $M$ and $k$ edges in $M^\star$. Let $P$ be a path. Then $\frac{|M\cap P|}{|M^\star\cap P|}\geq\frac{k-1}{k}$ which can be generalized over all paths to $\frac{|M|}{|M^\star|}\geq\frac{k-1}{k}$
+	The difference in cardinality between $M$ and $M^\star$ is the difference between the amount of their edges in the symmetric difference graph $G'$, which in turn is the sum over connected components, being paths and cycles. Therefore, the difference in cardinality is greatest, $G'$ contains only augmenting paths, of which each has at least $k-1$ edges in $M$ and $k$ edges in $M^\star$. Let $P$ be a path. Then $\frac{|M\cap P|}{|M^\star\cap P|}\geq\frac{k-1}{k}$ which can be generalized over all paths to $\frac{|M|}{|M^\star|}\geq\frac{k-1}{k}$
 \end{proof}
 From here we can construct the algorithm. We will call an augmenting path short if it is of length no greater than $2d+1$, meaning it has $d$ edges in the matching. Notice that an augmenting path of length $2k-1$ only has $k-1$ edges from the matching.
 \begin{algorithm}
@@ -62,13 +66,12 @@ We will prove the competitiveness with the above lemma, combined with a simple i
 As $v$ arrives:
 \begin{itemize}
 	\item if no short augmenting path is created, then matching $M$ is unchanged and invariant is maintained
-	\item if a short augmenting path $P=(v,v_1,\dots,v_k)$ is created and swapped, then new augmenting paths may be created. However, they must be joined to the switched path with an unmatched edge adjacent to $v_i$ and another unmatched edge, WLOG from $v_0$ to some $u$. Assuming that this new augmenting path $R=(w,v_i,\dots,v_0,u)$ is short (and would break the invariant) notice that, before $P$ was swapped, $(w,\dots,v_k)$ was also augmenting paths and if $R$ is short then it has to be as well, contradicting the assumption since $R$ existed before $v$ arrived.
+	\item if a short augmenting path $P=(v,v_1,\dots,v_k)$ is created and swapped, then new augmenting paths may be created. However, they must be joined to the switched path with an unmatched edge adjacent to $v_i$ and another unmatched edge, WLOG from $v_0$ to some $u$. Assuming that this new augmenting path $R=(w,v_i,\dots,v_0,u)$ is short (and would break the invariant) notice that, before $P$ was swapped, $S=(w,\dots,v_k)$ was also augmenting paths and if $R$ is short then it has to be as well, contradicting the assumption since $S$ existed before $v$ arrived.
 	
-	In other words, to break the invariants $(v,v_k)$ and $(w,u)$ must be short while $(u,v_k)$ must be long, which is impossible, since:\\
+	In other words, to break the invariants $P=(v,v_k)$ and $R=(w,u)$ must be short while $S=(w,v_k)$ must be long, which is impossible, since:\\
 	let $a=|(u,v)|$,$b=|(v,v_i)|$,$c=|(v_i,v_k)|$,$|(v_i,w)|$, $x$ maximal length of a short path. We can derive the following inequalities:\\
 	\begin{align*}
 		d+c&>x\\
-		a+b+d&\leq x\\
 		b+c&\leq x\\
 	\end{align*}
 	resulting in the following

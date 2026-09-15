@@ -165,9 +165,9 @@ which can in turn be rewritten with $m_t=\good(t)+\bad(t),v_t=\frac{\bad(t)}{n-t
 $\mathrm{LP}'$ is obtained by dropping $m_{t+1}$ from equation 1\\
 According to \cite{obmRaGreedy}, Appendix A,
 \begin{quote}
-	It can be shown that dropping the term $m_{t+1}$ from we need to first define the following: the first set of equations does not affect the LP solution by much
+	It can be shown that dropping the term $m_{t+1}$ from the first set of equations does not affect the LP solution by much
 \end{quote}
-which is supported by the fact that \cite{karp} proved a very similar statement. Therefore $m_{t+1}$ can be dropped without affecting the competitiveness bound by more than $o(1)$
+Meaning that $m_{t+1}$ can be dropped without affecting the competitiveness bound by more than $o(1)$, which is supported by the fact that \cite{karp} proved a very similar statement. 
 
 The following is $\mathrm{LP}'$ and it's dual
 
@@ -184,7 +184,7 @@ The following is $\mathrm{LP}'$ and it's dual
 
 Notice that both primal and dual constraints are satisfied when all inequalities are tight. This means that the following is a feasible solution\\
 
-\[m_t=\alpha_{n+1-t}=(1-\frac{1}{n})^{i-1}\\v_t=\beta_{n+1-t}=\frac{1}{n}(1-\frac{1}{n})^{i-1}\]
+\[m_t=\alpha_{n+1-t}=(1-\frac{1}{n})^{t-1}\\v_t=\beta_{n+1-t}=\frac{1}{n}(1-\frac{1}{n})^{t-1}\]
 
 And in the above solution $\sum m_t=\sum \alpha_t$, then this solution is optimal by strong duality.
 

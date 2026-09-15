@@ -13,12 +13,12 @@ Since this is a random graph, the previously defined competitiveness isn't suffi
 	For any iid instance $\Gamma$ where $G$ is drawn from it, with high probability $\frac{\mathrm{ALG}(G)}{\mathrm{OPT}(G)}\geq\alpha$
 \end{definition}
 
-Which we will refer to as the approximation factor. We note that an approximation ratio of $\alpha$ implies that $\frac{\E[\mathrm{ALG}]}{\E[\mathrm{OPT}]}$ is at least $\alpha-o(1)$
+Which we will refer to as the approximation factor. We note that an approximation ratio of $\alpha$ implies that expected competitiveness $\frac{\E[\mathrm{ALG}]}{\E[\mathrm{OPT}]}$ is at least $\alpha-o(1)$
 
 We will present the proof of two theorems in this chapter:
 
 \begin{theorem}
-	No algorithm has an approximation factor of $1$ in the iid model, ie there is a constant $c$ such that $\alpha<c$ for all algorithms
+	No algorithm has an expected competitiveness of $1$ in the iid model, ie there is a constant $c$ such that $\alpha<c$ for all algorithms
 \end{theorem}
 meaning that there is no perfect algorithm, and
 \begin{theorem}
