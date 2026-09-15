@@ -28,7 +28,7 @@ Another way of phrasing this lemma is to say that, if a vertex is moved up in th
 
 \begin{proof}
 	The first part is a direct consequence of \autoref{ra-greedy-prefix}. Proof of the second part will be by induction over time $t$, starting with $s-1$ which is directly implied by the first part.\\
-	Assuming the lemma holds at time $k$, $G_m(k)\subseteq G_s(k+1)$. Notice that $\xigma_m(k+1)=\xigma_s(k+2)$. Denote $v:=v_{\xigma_m(k+1)}$, matched to $u$ on a run on $\xigma_m$. Suppose $u\not\in G_s(k+2)$. Then $u$ was available when the algorithm was matching $v$ on $\xigma_s$, but $v$ was instead matched to $u'\not\in G_s(k+1)$. By induction hypothesis $u'\not\in G_m(k)$ implying $u,u'$ available at $t=k+1$ in run $\xigma_m$, the algorithm should have prioritized $u'$ over $u$, contradiction implying $u\in G_s(k+2)$ implying step condition for $t=k+1$
+	Assuming the lemma holds at time $k$, $G_m(k)\subseteq G_s(k+1)$. Notice that $\xigma_m(k+1)=\xigma_s(k+2)$. Denote $v:=v_{\xigma_m(k+1)}$, matched to $u$ on a run on $\xigma_m$. Suppose $u\not\in G_s(k+2)$. Then $u$ was available when the algorithm was matching $v$ on $\xigma_s$, but $v$ was instead matched to $u'\not\in G_s(k+1)$. By induction hypothesis $u'\not\in G_m(k)$ implying $u,u'$ available at $t=k+1$ in run $\xigma_m$, the algorithm should have prioritized $u'$ over $u$ due to it's consistency, contradiction implying $u\in G_s(k+2)$ implying step condition for $t=k+1$
 \end{proof}
 
 As context for the last lemma, we need to establish the following: what it means to miss a vertex, what is a good match and what is a bad match.
